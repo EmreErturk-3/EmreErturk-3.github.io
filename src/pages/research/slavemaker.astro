@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const fields = [
+ ['Formica trail', 'host foragers and slaves returning with food', 'host and slave foragers', '0.988', '0.10'],
+ ['Lasius trail', 'Lasius returning with food', 'Lasius only', '0.988', '0.10'],
+ ['Raid trail', 'a scout returning from a host nest; raiders', 'raiders, steering outward to the target', '0.9975', '0.015'],
+ ['Alarm', 'hosts fighting, dying or detecting raiders', 'host colony: defenders, evacuation', '0.90', '0.35'],
+ ["Dufour's secretion", 'raiders near the target (dose = appeasement gene)', 'hosts: less attack, more panic', '0.965', '0.25'],
+];
+const finds = [
+ ['Raid cadence matches the field.', 'The founding colony raided about once per simulated day, always in the late-afternoon window: 13 raids in 12.5 days, against 38 raids in 32 days observed by Topoff et al. Colonies returned to productive targets.'],
+ ['The enslavement pipeline runs end to end.', 'Stolen brood matured and eclosed as tagged slaves, which took over foraging; their trails linked the slavemaker nest to food. Without slaves, Polyergus egg-laying stops by construction.'],
+ ['Usurpation is the bottleneck for spread.', 'Queen takeovers succeeded 25–35% of the time. One successful usurpation converted 28–300 host workers at once, worth many raids.'],
+ ['Two regimes from the same parameters.', 'In one seed the parasite persisted at a roughly constant size. In another, three usurpations in quick succession started a positive feedback, from 1 to 7 Polyergus colonies, while free Formica fell by about 21% in two days.'],
+];
+const cite = `@misc{erturk2026slavemaker,
+  author = {Ertürk, Emre},
+  title  = {Slavemaker Swarm: an individual-based simulation of {Polyergus} slave raids on {Formica} colonies},
+  year   = {2026},
+  note   = {Project report v0.2},
+  url    = {https://github.com/EmreErturk-3/slavemaker-swarm}
+}`;
+---
+<Base title="Slavemaker Swarm" description="An individual-based 3-D simulation of Polyergus slave raids on Formica colonies, coordinated only by pheromone fields.">
+<div class="wrap pagehead"><span class="tag work">Agent-based model · report v0.2</span><h1>Slavemaker Swarm</h1><p class="lead">An individual-based simulation of <i>Polyergus</i> slave raids on <i>Formica</i> colonies, where thousands of agents coordinate only through local sensing and diffusing pheromones.</p><p class="kicker" style="margin-top:12px">Emre Ertürk · 2026 · <a href="/slavemaker-swarm/">Open the 3-D simulation</a> · <a href="https://github.com/EmreErturk-3/slavemaker-swarm/blob/main/docs/REPORT.md">Report</a> · <a href="https://github.com/EmreErturk-3/slavemaker-swarm">Code</a></p></div>
+
+<div class="wrap grid2">
+ <div class="prose rv"><h2 class="h2">The system</h2>
+  <p>Slave-making (dulosis) has evolved several times in ants. Obligate slavemakers such as <i>Polyergus</i> cannot forage, dig or care for brood: their sickle-shaped mandibles are made for fighting. They raid nests of <i>Formica fusca</i>-group hosts and carry the brood home, and the workers that eclose there become a slave workforce that does everything else.</p>
+  <p>The model follows the documented raid sequence step by step. Scouts search for host nests and judge their size. A successful scout returns laying a trail. The colony musters and leaves in a column in the late afternoon. Raiders take one brood item each and snatch brood from fleeing hosts, and the loot is reared at home.</p>
+  <p>Hosts defend with alarm-recruited fighters and partial brood evacuation. Mated slavemaker queens found colonies only by usurping a host nest, and enslaved workers can rebel by killing slavemaker pupae. Colony traits are inherited through dispersing queens with mutation, so host defence and raid strategy <b>coevolve with no explicit fitness function</b>.</p></div>
+ <div class="rv"><div class="arena"><canvas id="ants" style="width:100%;aspect-ratio:1" aria-label="2-D sketch of a slave raid"></canvas></div><div class="met" id="anth"></div><p class="note">A 2-D sketch of the raid cycle for this page. Scouts (red) find a host nest and lay a raid trail (shaded) home, the column follows it and returns with brood, and the brood ecloses as slaves (green). The real model is 3-D, with five pheromone fields and about 4,000 agents.</p></div>
+</div>
+
+<div class="wrap section"><figure class="fig rv"><video src={`${b}/media/research/sm_teaser.mp4`} poster={`${b}/media/research/sm_poster.webp`} autoplay muted loop playsinline></video><figcaption>The real simulation (WebGL2), with the camera following a raid. Red-brown Polyergus raiders leave in a column along the scout’s trail, swarm a Formica nest (blue ring) and carry its brood home (orange ring).</figcaption></figure></div>
+
+<div class="wrap section"><h2 class="h2 rv">Chemical communication</h2><p class="prose rv">Each signal is its own grid, updated with a five-point diffusion stencil and multiplicative evaporation, at rates suited to its function. A raid trail must last for a whole raid; alarm must fade within seconds. Homing uses path integration.</p>
+<div class="tw rv" style="margin-top:14px"><table class="tbl lin"><thead><tr><th>Channel</th><th>Laid by</th><th>Read by</th><th>Evaporation / step</th><th>Diffusion</th></tr></thead><tbody>{fields.map((r)=><tr>{r.map((c)=><td>{c}</td>)}</tr>)}</tbody></table></div></div>
+
+<div class="wrap section"><h2 class="h2 rv">Results</h2><p class="prose rv">Two headless runs of 60,000 ticks (12.5 simulated days) with default settings: 14 Formica, 3 Lasius and 1 Polyergus colony at the start.</p>
+<div class="finds" style="margin-top:16px">{finds.map(([h,p])=><div class="rv"><h3>{h}</h3><p>{p}</p></div>)}</div>
+<figure class="fig rv" style="margin-top:28px"><img src={`${b}/media/research/sm_ui.webp`} alt="Slavemaker Swarm interface during a raid" loading="lazy"><figcaption>The interface during a raid: enslavement statistics, population curves and the colony means of the evolving traits.</figcaption></figure></div>
+
+<div class="wrap section grid2"><div class="prose rv"><h2 class="h2">Limits, stated</h2><p>Raid yields and slave-to-slavemaker ratios are below field values. 12.5 days is too short to see directional coevolution, since most colonies are still first-generation. Raider Dufour’s appeasement is a hypothesis for <i>Polyergus</i> workers, and slave rebellion is documented in <i>Temnothorax</i> hosts, not <i>Formica</i>; both can be switched off. Sizes are scaled down and rates are calibrated qualitatively, not fitted.</p></div>
+<div class="prose rv"><h2 class="h2">Why this model</h2><p>Ant raids are a clear case of collective behaviour built from local rules: recruitment by trail, alarm spreading through a colony, and a division of labour between two species. These are the same mechanisms swarm robotics borrows, through pheromone-based aggregation, virtual-pheromone foraging and stigmergy, so the model is also a sandbox for testing them before they go onto robots.</p></div></div>
+
+<div class="wrap section"><h2 class="h2 rv">Cite</h2><pre class="cite rv">{cite}</pre></div>
+</Base>
+<style is:global>
+.finds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 36px}.finds h3{font-size:21px;margin-bottom:5px}.finds>div{min-width:0;border-top:1px solid var(--line);padding-top:10px}
+.lin td,.lin th{text-align:left!important;vertical-align:top}.lin td:first-child{font-weight:500;white-space:nowrap}
+@media(max-width:760px){.finds{grid-template-columns:minmax(0,1fr)}}
+</style>
+<script>
+import { Ants, fit, reduce, metrics } from '../../scripts/sims';
+let raf=0;
+document.addEventListener('astro:page-load',()=>{const c=document.getElementById('ants') as HTMLCanvasElement;if(!c)return;let f=fit(c);const w=new Ants(),h=document.getElementById('anth')!;new ResizeObserver(()=>{f=fit(c);w.draw(f.g,f.W,f.H)}).observe(c);
+const l=()=>{raf=requestAnimationFrame(l);const r=c.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;w.step();w.step();w.draw(f.g,f.W,f.H);metrics(h,w.metrics(),true)};if(reduce()){for(let i=0;i<900;i++)w.step();w.draw(f.g,f.W,f.H);metrics(h,w.metrics())}else l()});
+document.addEventListener('astro:before-swap',()=>cancelAnimationFrame(raf));
+</script>

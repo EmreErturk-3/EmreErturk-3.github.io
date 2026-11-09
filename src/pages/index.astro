@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/Base.astro';
+import { interests, papers } from '../data/site';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base>
+<section class="hero" data-hero>
+  <div class="wrap hin">
+    <div class="idrow"><img src={`${b}/media/emre.webp`} alt="Portrait of Emre Ertürk" width="640" height="640"><div><h1>Emre Ertürk</h1><p class="kicker">Computer Engineering · İzmir Institute of Technology</p></div></div>
+    <div class="hgrid">
+      <div class="intro">
+        <p class="big">Evolutionary computation, artificial life and robotics: how simple local rules produce adaptive, collective behaviour.</p>
+        <p>I study and build systems where structure is not designed directly but emerges: memetic search on hard constraint problems, an evolving artificial chemistry, ant colonies coordinated by pheromones, and paper reproductions from swarm robotics. I have also built two mobile robots in course projects. I am extending this work toward <b>swarm robotics</b>, <b>evolutionary robotics</b> and <b>morphogenetic robotics</b>, and I am learning computer graphics to build better simulators.</p>
+        <!-- TODO(Emre): one sentence on your current status and plans, e.g. graduation date and graduate study. -->
+        <div class="cta"><a class="btn" href={`${b}/research/`}>Research</a><a class="btn" href={`${b}/robotics/`}>Robotics</a><a class="btn" href={`${b}/cv/`}>CV</a><a class="btn" href="https://github.com/EmreErturk-3">GitHub</a><a class="btn" href="mailto:emreerturk@std.iyte.edu.tr">Email</a></div>
+      </div>
+      <div class="live"><span class="kicker">Live: Conway's Game of Life, a Gosper glider gun. Click to add gliders.</span><div class="arena"><canvas id="life" aria-label="Conway's Game of Life with a Gosper glider gun"></canvas></div><div class="hudline" id="lifeh"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="worlds wrap">
+  <div class="stick"><div class="arena"><canvas id="world" aria-label="Animated model of the selected project"></canvas><canvas id="ghost" aria-hidden="true"></canvas></div><div class="met" id="whud"></div><p class="note" id="wnote"></p></div>
+  <div>
+    <article class="ep" data-m="evo"><span class="kicker">Artificial life · 2026</span><h2>EvoMaxx</h2><p>An artificial chemistry on the GPU. The red, green and blue of every pixel are three chemicals, and an eight-gene regulatory network decides how each one grows from what its neighbourhood senses. The rule space was mapped by controlled experiments on about 18,000 worlds, and the A-life models it builds on, from Lenia to Physarum, are reproduced one by one.</p><a href={`${b}/research/evomaxx/`}>How it works →</a></article>
+    <article class="ep" data-m="ants"><span class="kicker">Agent-based model · 2026</span><h2>Slavemaker Swarm</h2><p>An individual-based model of slave-making ants. Polyergus scouts find a Formica nest and lay a raid trail home. The colony musters, follows the trail and carries the brood back, where it ecloses as slaves that work for their captors. Every agent senses only locally, through five pheromone fields.</p><a href={`${b}/research/slavemaker/`}>The model and results →</a></article>
+    <article class="ep" data-m="sudoku"><span class="kicker">Evolutionary computation · paper</span><h2>AEASS v3</h2><p>A memetic algorithm for Sudoku: a genetic algorithm with Lamarckian min-conflicts local search, running on candidate domains already shrunk by logic. It solved all 65,201 verified runs over 52,458 benchmark puzzles, and an ablation shows why the local search is essential.</p><a href={`${b}/research/aeass/`}>Read about it →</a></article>
+    <article class="ep" data-m="vicsek"><span class="kicker">Reproductions · swarm</span><h2>Swarm paper reproductions</h2><p>Classic models re-implemented from the paper alone, with the published results measured again: BEECLUST aggregation with simulated Kilobots in ARGoS, the Vicsek flocking transition, NEAT and Gray–Scott patterns. What did not reproduce is reported too.</p><a href={`${b}/research/#reproductions`}>See the results →</a></article>
+    <article class="ep" data-m="zebra"><span class="kicker">B.Sc. thesis · TÜBİTAK 2209-A</span><h2>Smart Zebra</h2><p>With Onur Kansoy, equal contribution. A training recipe that teaches a 3B language model to solve logic-grid puzzles, with a prompt that follows AC-3 constraint propagation. Puzzle accuracy on small instances rose from 18.75% to 66.56% after fine-tuning.</p><a href={`${b}/research/smart-zebra/`}>Read about it →</a></article>
+    <article class="ep" data-m="robot"><span class="kicker">Robotics · CENG 483</span><h2>P.C.B delivery robot</h2><p>An indoor robot built through three prototypes on a small budget. An Arduino Mega runs real-time control and a Jetson Nano runs the mission. It follows corridors with a servo-scanned ultrasonic sensor, holds its heading with IMU-aided PID, and stops at ArUco markers.</p><a href={`${b}/robotics/`}>Robotics →</a></article>
+  </div>
+</section>
+
+<section class="wrap section now">
+  <div class="tri">
+    <div class="rv"><span class="kicker">Interests</span><h2 class="h2">What I work on</h2><ul class="clist">{interests.map((i) => <li>{i}</li>)}</ul></div>
+    <div class="rv"><span class="kicker">Writing</span><h2 class="h2">Papers and reports</h2><ul class="plist">{papers.slice(0, 3).map((p) => <li><a href={`${b}${p.to}`}>{p.title}</a><span set:html={p.authors} /></li>)}</ul><p style="margin-top:10px"><a class="mono" style="font-size:14px" href={`${b}/research/`}>All research →</a></p></div>
+    <div class="rv"><span class="kicker">Live in the browser</span><h2 class="h2">Try the real thing</h2><p>The full simulators run in WebGL2, with nothing to install.</p><div class="cta"><a class="btn" href="/evomaxx/">EvoMaxx</a><a class="btn" href="/evomaxx/reproductions/live/">A-life reproductions</a><a class="btn" href="/slavemaker-swarm/">Slavemaker Swarm</a><a class="btn" href="/aeass/">AEASS solver</a></div></div>
+  </div>
+</section>
+<video id="robotv" src={`${b}/media/robotics/pcb.mp4`} muted loop playsinline preload="none" hidden></video>
+</Base>
+<style is:global>
+.hero{position:relative;overflow:hidden;border-bottom:2px solid var(--wall)}
+.hin{padding-block:40px 40px}
+.hero h1{font-size:clamp(42px,6.6vw,84px);line-height:1.04;letter-spacing:-.03em}
+.idrow{display:flex;align-items:center;gap:clamp(16px,2.4vw,30px)}.idrow img{width:clamp(92px,11vw,150px);height:clamp(92px,11vw,150px);object-fit:cover;object-position:50% 40%;border:2px solid var(--wall);flex:none;filter:saturate(.92) sepia(.06)}
+.idrow .kicker{display:block;margin-top:6px;font-size:14px}
+.hgrid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:44px;margin-top:22px;align-items:start}
+.intro{display:flex;flex-direction:column;gap:16px;min-width:0}.intro .big{font-family:var(--serif);font-size:clamp(21px,2.2vw,27px);line-height:1.32;letter-spacing:-.005em;max-width:24em}.intro p:not(.big){max-width:60ch}
+.cta{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}.cta .btn{font-size:14px;padding:8px 13px;background:var(--bg)}
+.live{min-width:0}.live .kicker{display:block;margin-bottom:6px}
+#life{width:100%;aspect-ratio:16/11;cursor:crosshair;display:block}
+.worlds{overflow-anchor:none;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;padding-block:30px}
+.stick{position:sticky;top:calc(var(--navh,100px) + 16px);align-self:start;min-width:0}.stick canvas{width:100%;aspect-ratio:1;max-height:calc(100svh - var(--navh,100px) - 120px)}
+.stick .note{min-height:5.8em}.stick .met{min-height:52px;align-content:start}.stick .arena{contain:paint}
+#ghost{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0}
+.ep{min-height:62svh;display:flex;flex-direction:column;justify-content:center;gap:10px;border-bottom:1px solid var(--line);min-width:0}.ep:last-child{border:0}
+.ep h2{font-size:clamp(28px,3.4vw,40px);letter-spacing:-.022em}.ep p{max-width:52ch}.ep a{font:14px var(--mono)}
+.tri{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:36px;border-top:2px solid var(--wall);padding-top:24px}.tri>div{min-width:0}.tri .h2{margin-top:6px}
+@media(max-width:860px){.tri{grid-template-columns:minmax(0,1fr)}}
+.clist{list-style:none;padding:0;margin:0;display:grid;gap:0}.clist li{padding-block:7px;border-bottom:1px solid var(--line)}
+.plist{list-style:none;padding:0;margin:0;display:grid;gap:12px}.plist a{font-weight:500;text-decoration:none;line-height:1.35;display:block}.plist a:hover{text-decoration:underline}.plist span{display:block;font:13px var(--mono);color:var(--mut);margin-top:3px}
+@media(max-width:860px){.hgrid,.worlds{grid-template-columns:minmax(0,1fr);gap:18px}.stick{top:calc(var(--navh,100px) + 6px);z-index:4;background:var(--bg);padding-bottom:6px}.stick canvas{aspect-ratio:auto;height:34svh;max-height:none}.ep{min-height:56svh}}
+</style>
+<script>
+import { fit, reduce, metrics, Life, RD, Ants, Sudoku, Vicsek, ZEBRA, drawZebra, drawVideo } from '../scripts/sims';
+let cleanup: (() => void)[] = [];
+document.addEventListener('astro:page-load', () => {
+  const hero = document.querySelector<HTMLElement>('[data-hero]'); if (!hero) return;
+
+  // ---- hero: Game of Life
+  const lc = document.getElementById('life') as HTMLCanvasElement, lh = document.getElementById('lifeh')!;
+  let lf = fit(lc); const CW = 64, CH = 44; const life = new Life(CW, CH).gun(2, 3); life.soup(40, 26, 14, 0.38);
+  const cell = () => Math.min(lf.W / CW, lf.H / CH);
+  lc.addEventListener('pointerdown', (e) => { const r = lc.getBoundingClientRect(), c = cell(); life.glider(Math.floor((e.clientX - r.left) / c), Math.floor((e.clientY - r.top) / c)); life.draw(lf.g, lf.W, lf.H, c); });
+  let lraf = 0, lt = 0;
+  const lstep = (t: number) => { lraf = requestAnimationFrame(lstep); const r = lc.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return; if (t - lt > 70) { lt = t; life.step(); if (life.gen % 400 === 0) life.soup(30 + Math.floor(Math.random() * 25), 18 + Math.floor(Math.random() * 18), 10, 0.4); life.draw(lf.g, lf.W, lf.H, cell()); lh.textContent = `generation ${life.gen} · ${life.pop()} live cells · B3/S23`; } };
+  const lro = new ResizeObserver(() => { lf = fit(lc); life.draw(lf.g, lf.W, lf.H, cell()); }); lro.observe(lc);
+  if (!reduce()) lraf = requestAnimationFrame(lstep); else { for (let i = 0; i < 120; i++) life.step(); life.draw(lf.g, lf.W, lf.H, cell()); }
+
+  // ---- worlds: one sticky canvas, a sketch per project
+  const cv = document.getElementById('world') as HTMLCanvasElement, hud = document.getElementById('whud')!, note = document.getElementById('wnote')!;
+  let f = fit(cv), mode = 'evo', raf = 0;
+  const rd = new RD(128), ants = new Ants(), sud = new Sudoku(), vic = new Vicsek(), vid = document.getElementById('robotv') as HTMLVideoElement;
+  let gone = new Set<string>(), zi = 0, zt = 0;
+  const notes: Record<string, string> = {
+    evo: 'A Gray–Scott reaction–diffusion sketch, from the family of models EvoMaxx generalises. It cycles through four parameter regimes. The real EvoMaxx has three chemicals, 17 kernels and an evolving gene network.',
+    ants: 'A 2-D sketch of the raid cycle: scouts (red) find a Formica nest and lay a raid trail (shaded) home, the column follows it and carries brood back, and the brood ecloses as slaves (green).',
+    sudoku: 'Logic reduction fills forced cells (blue), then min-conflicts swaps within rows remove clashes (red), as in the local search inside AEASS. Puzzles come from its benchmark set.',
+    vicsek: 'The Vicsek model: each particle takes its neighbours’ mean heading plus noise. The noise sweeps slowly through the transition, and order v_a rises and falls with it. Colours mark the heading.',
+    zebra: 'Clues: ' + ZEBRA.clues.map((c, i) => `(${i + 1}) ${c}`).join(' '),
+    robot: 'The P.C.B robot in a corridor test run.',
+  };
+  const ghost = document.getElementById('ghost') as HTMLCanvasElement;
+  const fade = () => { if (reduce()) return; ghost.width = cv.width; ghost.height = cv.height; ghost.getContext('2d')!.drawImage(cv, 0, 0); ghost.getAnimations().forEach((a) => a.cancel()); ghost.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 900, easing: 'cubic-bezier(.4,0,.2,1)' }); };
+  const set = (m: string) => { if (m === mode) return; fade(); mode = m; note.textContent = notes[m]; hud.innerHTML = ''; if (m === 'robot') { vid.preload = 'auto'; vid.play().catch(() => {}); } else vid.pause(); if (reduce()) still(); };
+  note.textContent = notes.evo;
+  const eps = [...document.querySelectorAll<HTMLElement>('.ep')]; let want = mode, timer = 0, queued = false;
+  const stick = document.querySelector<HTMLElement>('.stick')!;
+  const pick = () => { queued = false; const stacked = innerWidth <= 860, bottom = stick.getBoundingClientRect().bottom, line = stacked ? bottom + (innerHeight - bottom) * 0.4 : innerHeight * 0.5; let best = eps[0].dataset.m!; eps.forEach((e) => { if (e.getBoundingClientRect().top <= line) best = e.dataset.m!; }); if (best !== want) { want = best; clearTimeout(timer); timer = window.setTimeout(() => set(want), 50); } };
+  const onScroll = () => { if (!queued) { queued = true; requestAnimationFrame(pick); } };
+  addEventListener('scroll', onScroll, { passive: true });
+  const ro = new ResizeObserver(() => { f = fit(cv); if (reduce()) still(); }); ro.observe(cv);
+  const still = () => {
+    if (mode === 'evo') { rd.step(1500); rd.draw(f.g, f.W, f.H); }
+    if (mode === 'ants') { for (let i = 0; i < 900; i++) ants.step(); ants.draw(f.g, f.W, f.H); }
+    if (mode === 'sudoku') sud.draw(f.g, f.W, f.H);
+    if (mode === 'vicsek') { for (let i = 0; i < 200; i++) vic.step(); vic.draw(f.g, f.W, f.H); }
+    if (mode === 'zebra') { ZEBRA.steps.forEach((s) => s.rm.forEach((x) => gone.add(x))); drawZebra(f.g, f.W, f.H, gone); }
+    if (mode === 'robot') { vid.preload = 'auto'; vid.addEventListener('loadeddata', () => drawVideo(f.g, f.W, f.H, vid), { once: true }); vid.load(); }
+  };
+  const step = () => {
+    raf = requestAnimationFrame(step); const r = cv.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+    if (mode === 'evo') { rd.step(10); if (rd.t > 9000) rd.next(); rd.draw(f.g, f.W, f.H); metrics(hud, [['Regime', rd.params.name], ['F', rd.params.F], ['k', rd.params.k], ['Steps', rd.t]], true); }
+    if (mode === 'ants') { ants.step(); ants.step(); ants.draw(f.g, f.W, f.H); metrics(hud, ants.metrics(), true); }
+    if (mode === 'sudoku') { sud.step(); sud.draw(f.g, f.W, f.H); metrics(hud, sud.metrics(), true); }
+    if (mode === 'vicsek') { vic.step(); vic.draw(f.g, f.W, f.H); metrics(hud, vic.metrics(), true); }
+    if (mode === 'zebra') { zt++; if (zt % 110 === 0) { if (zi < ZEBRA.steps.length) { ZEBRA.steps[zi].rm.forEach((x) => gone.add(x)); zi++; } else { zi = 0; gone = new Set(); } } drawZebra(f.g, f.W, f.H, gone); metrics(hud, [['Step', `${zi}/${ZEBRA.steps.length}`], ['Removed', `${gone.size}/12`]]); note.textContent = zi ? ZEBRA.steps[zi - 1].say : notes.zebra; }
+    if (mode === 'robot') { drawVideo(f.g, f.W, f.H, vid); metrics(hud, [['Control', 'Arduino Mega'], ['Mission', 'Jetson Nano'], ['Landmarks', 'ArUco']]); }
+  };
+  if (!reduce()) raf = requestAnimationFrame(step); else still();
+  cleanup.push(() => { cancelAnimationFrame(raf); cancelAnimationFrame(lraf); ro.disconnect(); lro.disconnect(); removeEventListener('scroll', onScroll); clearTimeout(timer); vid.pause(); });
+});
+document.addEventListener('astro:before-swap', () => { cleanup.forEach((f) => f()); cleanup = []; });
+</script>

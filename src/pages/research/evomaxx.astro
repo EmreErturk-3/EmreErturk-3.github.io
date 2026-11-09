@@ -1,0 +1,66 @@
+---
+import Base from '../../layouts/Base.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const cite = `@misc{erturk2026evomaxx,
+  author = {Ertürk, Emre},
+  title  = {{EvoMaxx}: three chemicals that evolve visuals and music},
+  year   = {2026},
+  url    = {https://github.com/EmreErturk-3/evomaxx}
+}`;
+const R = 'https://github.com/EmreErturk-3/evomaxx/tree/main/reproductions/';
+const lineage = [
+ ['Update rule', 'x ← x(1 − decay) + speed · (bias + growth): reaction plus spreading at three ranges', 'Reaction–diffusion: Turing 1952; Gierer & Meinhardt 1972', '10_turing_gierer_meinhardt1972'],
+ ['Genome', 'Eight genes, each a rule by which one chemical regulates another', 'Gene regulatory networks: Kauffman 1969', '11_boolean_networks_kauffman1969'],
+ ['Gene structure', 'Kernel → growth function → target channel', 'Multi-channel Lenia (Chan 2020), reached independently in v1', '01_lenia_chan2019'],
+ ['Mexican-hat kernel', 'Positive centre, negative surround', 'Local activation, lateral inhibition: Turing 1952; Young 1984', '03_activator_inhibitor_young1984'],
+ ['Mass-conserving transport', 'Reintegration tracking of each chemical', 'Moroz 2020; Flow-Lenia (Plantec et al. 2023)', '02_flow_lenia_plantec2023'],
+ ['Physarum physics', 'Sense ahead-left and ahead-right, turn, move', 'Jones 2010', '04_physarum_jones2010'],
+ ['Colour flocking', 'Hue turns toward the neighbourhood hue', 'Kuramoto 1975; Vicsek et al. 1995', '06_kuramoto1975'],
+ ['Cyclic dominance', 'x_c += ρ x_c (x_{c+1} − x_{c−1})', 'May & Leonard 1975', '05_cyclic_dominance_mayleonard1975'],
+ ['Health classes', 'Dead, frozen, alive, noise, from block statistics', "Langton's λ and the edge of chaos (1990)", '12_edge_of_chaos_langton1990'],
+ ['Discovery', 'An 8 × 8 atlas of elites by colour and activity', 'MAP-Elites (Mouret & Clune 2015)', '07_map_elites_mouret2015'],
+ ['Phyllotaxis kernel', 'Taps on the sunflower spiral', 'Vogel 1979', '08_phyllotaxis_vogel1979'],
+];
+const own = [
+ ['Colour as chemistry', 'The three channels are not a palette over a hidden state. They are the state: three interacting chemicals.'],
+ ['The shader is the organism', 'The genome is compiled into the GPU program that runs the world, and the field it writes is both the body and the picture.'],
+ ['Hue is heading', 'A cell’s chroma is a vector in the plane orthogonal to grey. In hue transport every cell moves by v = τc / max(r, g, b): hue sets direction, saturation sets speed, and each chemical is conserved.'],
+ ['Physarum on the colour wheel', 'Jones’s slime-mould rule without particles: the hue is the heading, the cell senses its own colour ahead-left and ahead-right, turns its hue, and moves.'],
+ ['Measuring life', 'Health from 8 × 8-cell block statistics (alive, frozen, noise or dead, with motion, drift and emptiness). Every experiment is built on these measures.'],
+];
+---
+<Base title="EvoMaxx" description="EvoMaxx: an evolving artificial chemistry on the GPU, its lineage in artificial life, and controlled experiments on 18,000 worlds.">
+<div class="wrap pagehead"><span class="tag live">Artificial life · 2026</span><h1>EvoMaxx</h1><p class="lead">An evolving artificial chemistry on the GPU, and what controlled experiments say about which rules produce life.</p><p class="kicker" style="margin-top:12px">Emre Ertürk · v1 April 2026, v10 November 2026 · <a href="/evomaxx/">Open the live sandbox</a> · <a href="https://github.com/EmreErturk-3/evomaxx">Code</a> · <a href="https://github.com/EmreErturk-3/evomaxx/blob/main/EXPLAINED.md">Full explainer</a></p></div>
+
+<div class="wrap"><figure class="fig rv"><video src={`${b}/media/research/evo_teaser.mp4`} poster={`${b}/media/research/evo_poster.webp`} autoplay muted loop playsinline></video><figcaption>Three organisms from the preset menu, recorded live at 60 fps: cell-like bodies seen as a lava lamp, physarum creatures in the flat view, and a colour-flocking world.</figcaption></figure></div>
+
+<div class="wrap section grid2">
+ <div class="prose rv"><h2 class="h2">The idea</h2>
+  <p>Every pixel of an EvoMaxx world holds a colour <i>x</i> = (<i>r</i>, <i>g</i>, <i>b</i>) ∈ [0,1]³, and the three channels are three chemicals. A genome of eight genes decides how each chemical responds to the others around it. Gene <i>i</i> reads chemical <i>src</i> in one of three neighbourhood fields and adds <i>w</i>·<i>f</i>((N − μ)/σ) to chemical <i>dst</i>. Nothing is drawn: every colour is a concentration, and every pattern is grown by the rule.</p>
+  <p>The first version (v1, about 200 lines of Python and OpenGL) compiled this genome into a compute shader and evolved a pool of twelve organisms in real time, with fitness read from the field itself. Measured later, v1’s rule was lifelike for only 7% of fresh genomes, and its fitness could not tell a pattern from a solid colour. Heredity mattered: replacing mutation and crossover with fresh random genomes dropped v1’s score from 9.96 to 2.55 in all ten paired runs (p = 0.002).</p>
+  <p>v10 turns each part of the rule into an interchangeable choice: 17 kernels, 10 update deltas, 16 response functions and 9 colour physics, or 24,480 rules before any gene is drawn. It then asks which choices make life likely.</p></div>
+ <div class="rv"><div class="stats"><div><b>7% → 95%</b><span>fresh genomes that are lifelike, v1 rule vs new default</span></div><div><b>22% → 82%</b><span>genomes that form creatures, before vs with physarum physics</span></div><div><b>≈18,000</b><span>worlds in the experiments</span></div></div>
+  <figure class="fig"><img src={`${b}/media/research/evo_gallery.webp`} alt="Six organisms, each shown as lava lamp and flat view" loading="lazy"><figcaption>Six presets, each as lava lamp and flat view. All come from fresh random genomes under rules the experiments selected.</figcaption></figure></div>
+</div>
+
+<div class="wrap section"><h2 class="h2 rv">Lineage: what it borrows, reproduced first</h2><p class="prose rv">Each idea EvoMaxx takes from the artificial-life literature was first re-implemented on its own from the original paper, and its published results measured again, including what did not reproduce. All of them <a href="/evomaxx/reproductions/live/">run live in the browser</a>.</p>
+<div class="tw rv" style="margin-top:14px"><table class="tbl lin"><thead><tr><th>Part</th><th>In EvoMaxx</th><th>Source</th><th>Reproduction</th></tr></thead><tbody>{lineage.map(([p,e,s,r])=><tr><td>{p}</td><td>{e}</td><td>{s}</td><td><a class="mono" href={R + r}>{r.split('_')[0]}</a></td></tr>)}</tbody></table></div></div>
+
+<div class="wrap section"><h2 class="h2 rv">What is new</h2><div class="finds">{own.map(([h,p])=><div class="rv"><h3>{h}</h3><p>{p}</p></div>)}</div></div>
+
+<div class="wrap section grid2"><div class="prose rv"><h2 class="h2">Experiments</h2>
+ <p>All experiments ran the app’s own engine, nine worlds at a time on the GPU in headless Firefox. Each used fresh random genomes: a randomised factorial screen first, then confirmation on held-out genomes with paired comparisons and exact McNemar tests.</p>
+ <ul class="dl"><li><b>Lifelike worlds.</b> Mexican hat · v1 decay · tangent · hue transport was lifelike for 93–95% of genomes, against 7% for v1’s rule (+26 / −0, p = 3 × 10⁻⁸). Hue transport was the strongest single ingredient.</li>
+ <li><b>Creatures.</b> Gaze or Gaussian kernel · multiplicative delta · Gabor response · physarum physics gave localised creatures for 80–82% of held-out genomes, against 22% for the previous best (+24 / −0, p = 1.2 × 10⁻⁷).</li>
+ <li><b>Negative results.</b> Bessel-ring kernels and the Hill response rarely live; most centred deltas, the colour game and chemotaxis did not help.</li></ul></div>
+ <div class="prose rv"><h2 class="h2">Why it matters to me</h2><p>EvoMaxx is a testbed for the questions I want to take to robots. How should a search space be built so that evolution can find working solutions? How do we measure “alive” without a hand-written fitness? And how do growth rules, rather than blueprints, produce bodies? The same questions sit at the centre of evolutionary and morphogenetic robotics.</p>
+ <figure class="fig" style="margin-top:16px"><img src={`${b}/media/research/evo_music.webp`} alt="The Music tab" loading="lazy"><figcaption>The world also plays itself: the genome picks instruments and the colour balance picks harmony.</figcaption></figure></div>
+</div>
+<div class="wrap section"><h2 class="h2 rv">Cite</h2><pre class="cite rv">{cite}</pre></div>
+</Base>
+<style is:global>
+.dl{padding-left:18px;margin:0}.dl li{margin-block:8px}
+.finds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 36px}.finds h3{font-size:21px;margin-bottom:5px}.finds>div{min-width:0;border-top:1px solid var(--line);padding-top:10px}
+.lin td,.lin th{text-align:left!important;vertical-align:top}.lin td:first-child{font-weight:500;white-space:nowrap}.lin td:nth-child(3){color:var(--mut)}
+@media(max-width:760px){.finds{grid-template-columns:minmax(0,1fr)}}
+</style>

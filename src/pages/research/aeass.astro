@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const rows = [
+ ['SudokuWiki “unsolvable” (v1 puzzle)', '1', '100', '44 ms', '0.22 s'],
+ ['Famous hardest (AI Escargot, Easter Monster, …)', '7', '700', '102 ms', '1.50 s'],
+ ['“Unsolvable” stress set', '3', '300', '71 ms', '0.61 s'],
+ ['Norvig hardest', '11', '1,100', '3 ms', '1.66 s'],
+ ['Norvig top95', '95', '1,900', '24 ms', '1.06 s'],
+ ['magictour top1465 (test split)', '1,140', '5,700', '20 ms', '3.30 s'],
+ ['Exchange diabolical', '500', '1,500', '0.9 ms', '0.10 s'],
+ ['Royle 17-clue (all)', '49,151', '49,151', '0.5 ms', '9.95 s'],
+];
+const parts = [
+ ['Logic reduction', 'Naked and hidden singles, locked candidates and naked pairs fix forced cells and shrink every free cell’s candidate domain before any search. Mean time falls 2–3×.'],
+ ['Domain-filtered encoding', 'Each row is a permutation of 1–9 that respects its givens, so only column and box conflicts remain. Initialisation and mutation only place values a cell can legally hold, and fitness updates in O(1) per swap.'],
+ ['Lamarckian min-conflicts', 'With probability λ, an individual is improved by local search that swaps, within the row of a conflicting cell, to the value pair that removes the most conflicts, and the improvement is written back into the genome. This is the component that matters most, a speed-up of more than 20×.'],
+ ['Iterated-local-search escapes', 'After τ generations without improvement, the best individual is perturbed and part of the population reseeded, instead of restarting from scratch.'],
+];
+const cite = `@misc{erturk2026aeass,
+  author = {Ertürk, Emre},
+  title  = {{AEASS} v3: Revisiting an Adaptive Evolutionary Algorithm for Solving Sudokus},
+  year   = {2026},
+  note   = {CENG 482 project, Izmir Institute of Technology (2025), revised 2026},
+  url    = {https://github.com/EmreErturk-3/aeass}
+}`;
+---
+<Base title="AEASS v3" description="AEASS v3: a memetic algorithm that solves the hardest known 9×9 Sudoku puzzles, with verification, an audit and an ablation.">
+<div class="wrap pagehead"><span class="tag pause">Paper · 2026</span><h1>AEASS v3</h1><p class="lead">Revisiting an Adaptive Evolutionary Algorithm for Solving Sudokus</p><p class="kicker" style="margin-top:12px">Emre Ertürk · CENG 482 Evolutionary Computation (January 2025), revised and extended November 2026 · <a href="https://github.com/EmreErturk-3/aeass/blob/main/paper/AEASS_v3_paper.pdf">Paper (PDF)</a> · <a href="/aeass/">Live solver</a> · <a href="https://github.com/EmreErturk-3/aeass">Code</a></p></div>
+
+<div class="wrap grid2">
+ <div class="prose rv"><h2 class="h2">The question</h2>
+  <p>Sudoku is NP-complete and a standard test problem for evolutionary computation. Exact solvers are far faster on 9×9 puzzles; the interest here is the evolutionary method itself, and what it needs in order to work on such a tightly constrained problem.</p>
+  <p>The original course version (v1) needed 39–106 s per run on one SudokuWiki “unsolvable” puzzle and often stalled. A rewrite (v2) seemed to solve the hardest known puzzles in about a second, but an audit showed that its row-swap operator moved the given clues: only 2 of the 205 solutions it reported were valid. v3 fixes this, checks every reported solution independently against the givens, and comes with a Python reference, an operator-for-operator C99 port and a WebGL2 web solver.</p>
+  <div class="stats"><div><b>65,201 / 65,201</b><span>C runs solved and verified within 60 s</span></div><div><b>52,458</b><span>benchmark puzzles</span></div><div><b>≈50%</b><span>of hard runs solved by the GA without local search</span></div></div></div>
+ <div class="rv"><div class="arena"><canvas id="sud" style="width:100%;aspect-ratio:1" aria-label="Logic reduction and min-conflicts search on a Sudoku"></canvas></div><div class="met" id="sudh"></div><p class="note">A simplified live sketch of two AEASS ingredients: logic reduction fills forced cells (blue), then min-conflicts swaps within rows remove clashes (red). The real solver wraps this local search in a genetic algorithm with ILS escapes. Puzzles come from its benchmark set.</p></div>
+</div>
+
+<div class="wrap section"><figure class="fig rv"><video src={`${b}/media/research/ae_teaser.mp4`} poster={`${b}/media/research/ae_poster.webp`} autoplay muted loop playsinline></video><figcaption>The web solver on AI Escargot, with playback slowed to show individual moves. Logic-derived cells are purple, evolved cells blue and conflicts red. The run ends with “Solved in 5.15 s · verified”.</figcaption></figure></div>
+
+<div class="wrap section"><h2 class="h2 rv">Method</h2><div class="grid2"><div class="finds one">{parts.map(([h,p])=><div class="rv"><h3>{h}</h3><p>{p}</p></div>)}</div><figure class="fig rv"><img src={`${b}/media/research/aeass_fig_pipeline.webp`} alt="AEASS v3 pipeline" loading="lazy"><figcaption>Pipeline. Logic reduction runs first. Each generation then applies tournament selection, row crossover, filtered-swap mutation and Lamarckian min-conflicts local search, with ILS escapes after τ generations without improvement.</figcaption></figure></div></div>
+
+<div class="wrap section"><h2 class="h2 rv">Results</h2><p class="prose rv">C implementation, 60 s limit, every solution verified. Times are over puzzles that still need search after logic reduction.</p>
+<div class="tw rv" style="margin-top:12px"><table class="tbl"><thead><tr><th>Set</th><th>Puzzles</th><th>Runs</th><th>Solved</th><th>Median</th><th>Max</th></tr></thead><tbody>{rows.map((r)=><tr><td>{r[0]}</td><td>{r[1]}</td><td>{r[2]}</td><td>100%</td><td>{r[3]}</td><td>{r[4]}</td></tr>)}</tbody></table></div>
+<div class="grid2" style="margin-top:28px"><figure class="fig rv"><img src={`${b}/media/research/aeass_fig_ablation.webp`} alt="Ablation study" loading="lazy"><figcaption>Ablation. Without local search (plain GA), or with the v2 operator set, the success rate collapses. The other components mainly affect speed (PAR-2, log scale).</figcaption></figure>
+<figure class="fig rv"><img src={`${b}/media/research/aeass_fig_ecdf.webp`} alt="Run-time distributions per benchmark set" loading="lazy"><figcaption>Fraction of runs solved against wall-clock time to a verified solution, per benchmark set.</figcaption></figure></div>
+<figure class="fig rv" style="margin-top:28px"><img src={`${b}/media/research/aeass_fig_v1_vs_v3.webp`} alt="v1 against v3 timing" loading="lazy"><figcaption>v1 vs v3 on the 27 configurations of the 2025 report: v3 is 42× faster in Python, and the C version a further 35× faster.</figcaption></figure></div>
+
+<div class="wrap section grid2"><div class="prose rv"><h2 class="h2">What I took from it</h2><p>The search needed problem knowledge to work: the right encoding, constraint propagation and a local search that knows where the conflicts are. Once local search was present, crossover added little at this size. The v2 episode taught me a second lesson: verify every result against the problem independently, because an operator that quietly breaks a constraint can look like a breakthrough.</p></div>
+<div class="rv"><h2 class="h2">Cite</h2><pre class="cite">{cite}</pre></div></div>
+</Base>
+<style is:global>
+.finds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 36px}.finds.one{grid-template-columns:minmax(0,1fr);gap:16px}.finds h3{font-size:21px;margin-bottom:5px}.finds>div{min-width:0;border-top:1px solid var(--line);padding-top:10px}
+</style>
+<script>
+import { Sudoku, fit, reduce, metrics } from '../../scripts/sims';
+let raf=0;
+document.addEventListener('astro:page-load',()=>{const c=document.getElementById('sud') as HTMLCanvasElement;if(!c)return;let f=fit(c);const w=new Sudoku(),h=document.getElementById('sudh')!;new ResizeObserver(()=>{f=fit(c);w.draw(f.g,f.W,f.H)}).observe(c);
+let t0=0;const l=(t:number)=>{raf=requestAnimationFrame(l);const r=c.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;if(t-t0>30){t0=t;w.step();w.draw(f.g,f.W,f.H);metrics(h,w.metrics(),true)}};if(reduce()){w.draw(f.g,f.W,f.H);metrics(h,w.metrics())}else raf=requestAnimationFrame(l)});
+document.addEventListener('astro:before-swap',()=>cancelAnimationFrame(raf));
+</script>

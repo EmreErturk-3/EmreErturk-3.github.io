@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const rules = [['B3/S23', 'Conway'], ['B36/S23', 'HighLife'], ['B2/S', 'Seeds'], ['B3678/S34678', 'Day & Night']];
+const seeds = [['gun', 'Glider gun'], ['rpent', 'R-pentomino'], ['acorn', 'Acorn'], ['soup', 'Random soup']];
+// TODO(Emre): add books as { t: 'Title', a: 'Author', img: 'file-name-in-public/media/books' }.
+const books: { t: string; a: string; img?: string; note?: string }[] = [];
+---
+<Base title="About" description="About Emre Ertürk.">
+<div class="wrap pagehead abt"><div><span class="kicker">About</span><h1>Emre Ertürk</h1><p class="lead">Computer engineering student at <a href="https://en.iyte.edu.tr/">İzmir Institute of Technology</a>, working on evolutionary computation, artificial life and robotics.</p></div><img src={`${b}/media/emre.webp`} alt="Portrait of Emre Ertürk"></div>
+
+<div class="wrap section me">
+  <div class="rv mtext">
+    <h2 class="h2">Hello</h2>
+    <div class="todo"><b>TODO(Emre):</b> a few paragraphs in your own words: where you are from, how you got into artificial life and evolutionary systems, and what you do away from the desk.</div>
+    <h3 class="sub">Languages</h3>
+    <ul class="mem"><li><b>Turkish</b><span>Native</span></li><li><b>English</b><span><!-- TODO(Emre): level -->…</span></li></ul>
+  </div>
+  <div class="rv lab">
+    <div class="arena"><canvas id="lab" aria-label="Life-like cellular automaton playground"></canvas></div>
+    <div class="ctrl" role="group" aria-label="Rule">{rules.map(([r, n], i) => <button type="button" data-rule={r} aria-pressed={i === 0 ? 'true' : 'false'}>{n}</button>)}</div>
+    <div class="ctrl" role="group" aria-label="Start">{seeds.map(([s, n], i) => <button type="button" data-seed={s} aria-pressed={i === 0 ? 'true' : 'false'}>{n}</button>)}</div>
+    <div class="hudline" id="labh"></div>
+    <p class="note">Life-like cellular automata: a cell is born with B neighbours and survives with S. Conway’s rule B3/S23 is one point in a space of 2¹⁸ rules; a few of its neighbours are here. Click the grid to draw.</p>
+  </div>
+</div>
+
+<div class="wrap section"><hr class="rule"><h2 class="h2 rv" style="margin-top:26px">Books</h2>
+  {books.length === 0 ? <div class="todo rv"><b>TODO(Emre):</b> books you are reading and recommend, with covers in <span class="mono">public/media/books/</span>.</div> :
+  <div class="shelf rv">{books.map(k=><figure class="book">{k.img?<img src={`${b}/media/books/${k.img}.webp`} alt={`Cover of ${k.t}`} loading="lazy">:<div class="plain"><span>{k.t}</span><small>{k.a}</small></div>}<figcaption><i>{k.t}</i><span>{k.a}</span>{k.note&&<em>{k.note}</em>}</figcaption></figure>)}</div>}
+</div>
+</Base>
+<style is:global>
+.abt{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,280px);gap:34px;align-items:end}.abt img{width:100%;border:2px solid var(--wall);filter:saturate(.92) sepia(.06)}
+.me{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;align-items:start}.mtext{min-width:0}.mtext p{max-width:58ch}.mtext p+p{margin-top:14px}
+.lab{min-width:0}#lab{width:100%;aspect-ratio:4/3;cursor:crosshair}
+.sub{font:500 13px var(--mono);color:var(--mut);margin:30px 0 8px;letter-spacing:0}
+.mem{list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}.mem li{display:flex;justify-content:space-between;gap:6px 16px;flex-wrap:wrap;padding-block:9px;border-bottom:1px solid var(--line)}.mem span{color:var(--mut)}
+.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:30px 26px;margin-top:12px}
+.book{margin:0;min-width:0}.book img,.book .plain{width:100%;aspect-ratio:2/3;object-fit:cover;border:1px solid var(--line);display:block;box-shadow:0 8px 18px -10px rgba(0,0,0,.45)}
+.book .plain{background:#5b3a29;color:#f5ead8;padding:16px 14px;display:flex;flex-direction:column;justify-content:space-between}.book .plain span{font-size:19px;font-weight:600;line-height:1.15}.book .plain small{font:12px var(--mono);opacity:.85}
+.book figcaption{margin-top:12px;font-size:15.5px;line-height:1.35}.book i{display:block;font-style:normal;font-weight:600}.book figcaption span{display:block;color:var(--mut);font-size:13px;margin-top:2px}
+@media(max-width:860px){.me{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:700px){.abt{grid-template-columns:minmax(0,1fr);gap:22px}.abt img{max-width:220px}}
+</style>
+<script>
+import { Life, fit, reduce } from '../scripts/sims';
+let raf = 0;
+document.addEventListener('astro:page-load', () => {
+  const c = document.getElementById('lab') as HTMLCanvasElement; if (!c) return;
+  let f = fit(c); const W = 72, H = 54, life = new Life(W, H), h = document.getElementById('labh')!;
+  let rule = 'B3/S23', seed = 'gun';
+  const start = () => { life.rule(rule).clear(); const cx = W >> 1, cy = H >> 1;
+    if (seed === 'gun') life.gun(3, 4);
+    if (seed === 'rpent') life.put(cx - 1, cy - 1, ['.OO', 'OO.', '.O.']);
+    if (seed === 'acorn') life.put(cx - 3, cy - 1, ['.O', '...O', 'OO..OOO']);
+    if (seed === 'soup') life.soup(cx - 14, cy - 10, 28, rule === 'B2/S' ? 0.08 : 0.38);
+  };
+  const cell = () => Math.min(f.W / W, f.H / H);
+  const draw = () => { life.draw(f.g, f.W, f.H, cell()); h.textContent = `${rule} · generation ${life.gen} · ${life.pop()} live`; };
+  const group = (attr: string, onPick: (v: string) => void) => document.querySelectorAll<HTMLButtonElement>(`[${attr}]`).forEach((btn, _, all) => btn.onclick = () => { all.forEach((x) => x.setAttribute('aria-pressed', String(x === btn))); onPick(btn.getAttribute(attr)!); start(); draw(); });
+  group('data-rule', (v) => rule = v); group('data-seed', (v) => seed = v);
+  let down = false; const paint = (e: PointerEvent) => { const r = c.getBoundingClientRect(), s = cell(), x = Math.floor((e.clientX - r.left) / s), y = Math.floor((e.clientY - r.top) / s); if (x >= 0 && y >= 0 && x < W && y < H) { life.a[y * W + x] = 1; draw(); } };
+  c.onpointerdown = (e) => { down = true; paint(e); }; c.onpointermove = (e) => { if (down) paint(e); }; addEventListener('pointerup', () => down = false);
+  new ResizeObserver(() => { f = fit(c); draw(); }).observe(c);
+  start(); draw();
+  let t0 = 0; const loop = (t: number) => { raf = requestAnimationFrame(loop); const r = c.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return; if (t - t0 > 80) { t0 = t; life.step(); draw(); } };
+  if (!reduce()) raf = requestAnimationFrame(loop);
+});
+document.addEventListener('astro:before-swap', () => cancelAnimationFrame(raf));
+</script>

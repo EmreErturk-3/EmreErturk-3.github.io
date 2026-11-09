@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const protos = [
+ ['Prototype 1', 'Cardboard chassis, DC motors on an L298N driver, four AA cells. Built only to validate driving and motor behaviour.', 'proto1'],
+ ['Prototype 2', 'A two-layer layout with the ultrasonic sensor, IMU and Jetson Nano. The extra mass made turns unstable, and sharing one powerbank between motors and compute caused current transients that disturbed the Jetson.', 'proto2'],
+ ['Prototype 3', 'A 3D-printed H-shaped skeleton with motor bays and printed D-type shaft adapters, a foam layer that damps vibration and carries the powerbank and Jetson, and a top layer with the locked cargo box.', 'proto3'],
+];
+---
+<Base title="Robotics" description="Robotics projects of Emre Ertürk: the P.C.B indoor delivery robot and PartyBot.">
+<div class="wrap pagehead"><span class="kicker">Robotics</span><h1>Robots, built and tested</h1><p class="lead">Two group projects where the software met motors, sensors and batteries. Most of what we learned came from the gap between a controller that works in principle and a robot that works in a corridor.</p></div>
+
+<div class="wrap section" id="pcb" style="padding-top:10px"><hr class="rule"><div class="grid2" style="margin-top:26px">
+ <div class="prose rv"><span class="kicker">CENG 483 · 2026 · with H. N. Kömürcü, D. Karabacak, T. İyiarı</span><h2 class="h2" style="margin-top:6px">P.C.B: corridor navigation and secure delivery</h2>
+  <p>An indoor robot that carries an item between two landmarks: it drives down a corridor to a target, waits while a user unlocks a keypad-secured cargo box, then turns and returns to base. The design goal was a cheap, reusable platform built from widely available parts.</p>
+  <p><b>Architecture.</b> An Arduino Mega runs real-time control: the MPU-6050 IMU, the ultrasonic sensor, two MG995 servos (head scan and cargo lock), the L298N motor driver, a keypad and an LCD. A Jetson Nano runs the mission: it reads a Raspberry Pi camera, detects ArUco markers with OpenCV and sends serial commands to the Arduino.</p>
+  <p><b>Straight-line control.</b> On start-up the robot runs an 8 s calibration. For 3 s it estimates the gyroscope’s Z-axis bias at rest. For 5 s it drives open-loop straight and learns a bounded motor-bias term that compensates mismatched motors. A gentle PID correction on the integrated heading then keeps it straight.</p>
+  <p><b>Reactive navigation.</b> If an obstacle appears within 200 cm, the robot stops and waits up to 10 s for it to clear before acting, which avoids needless detours around people. If the obstacle stays, a servo-scanned ultrasonic look-around chooses a way out, preferring the right, which gave consistent behaviour in L-shaped corridors.</p>
+  <p><b>Landmarks instead of learning.</b> Our first plan used camera-based learning, but small datasets made it unreliable. ArUco markers at the base and target gave dependable start and stop triggers without full SLAM.</p>
+  <div class="cta"><a class="btn" href="https://github.com/EmreErturk-3/robotics/blob/main/pcb-delivery-robot/report.pdf">Paper (PDF)</a><a class="btn" href="https://youtube.com/playlist?list=PLwDQJAClSxDNaZMpJzPJgvE02jZJuD9hk">Test videos (YouTube)</a><a class="btn" href="https://github.com/EmreErturk-3/robotics/tree/main/pcb-delivery-robot">Repository</a></div>
+  <!-- TODO(Emre): optionally add a line on which parts you personally built (e.g. calibration, navigation, Jetson side). -->
+ </div>
+ <div class="rv"><figure class="fig"><video src={`${b}/media/robotics/pcb.mp4`} poster={`${b}/media/robotics/pcb_photo.webp`} controls preload="none" playsinline></video><figcaption>Corridor test run of the final prototype.</figcaption></figure></div>
+</div>
+<h3 class="sub rv" style="margin-top:36px">Three prototypes</h3>
+<div class="protos">{protos.map(([h,p,img])=><figure class="rv"><img src={`${b}/media/robotics/${img}.webp`} alt={h} loading="lazy"><figcaption><b>{h}</b>{p}</figcaption></figure>)}<figure class="rv"><img src={`${b}/media/robotics/proto4.webp`} alt="Prototype 3, side view" loading="lazy"><figcaption><b>Prototype 3, side view</b>Cargo box with keypad and LCD on top; servo-mounted ultrasonic sensor at the front.</figcaption></figure></div>
+<div class="prose rv" style="margin-top:22px"><h3 class="sub">Lessons</h3><p>Power was the hardest part. An embedded GPU and a motor driver on the same supply interfere with each other, and mass decides more about turning stability than the controller does. A cheap calibration routine that learns the robot’s own biases did more for straight driving than tuning the PID gains.</p></div>
+</div>
+
+<div class="wrap section" id="partybot"><hr class="rule"><div class="grid2" style="margin-top:26px">
+ <div class="rv"><figure class="fig"><video src={`${b}/media/robotics/partybot.mp4`} poster={`${b}/media/robotics/partybot_poster.webp`} controls preload="none" playsinline></video><figcaption>PartyBot driven from the glove.</figcaption></figure></div>
+ <div class="prose rv"><span class="kicker">CENG 424 Embedded Computer Systems · 2026 · with T. Topcu, O. Kansoy, T. Yaraşlı</span><h2 class="h2" style="margin-top:6px">PartyBot: a gesture-controlled mecanum robot</h2>
+  <p>Most entertainment props sit in one place and respond to a single button. PartyBot is a mobile platform that the user drives continuously with hand movements.</p>
+  <p><b>Wearable controller.</b> A glove carries motion sensors and push buttons on an ESP32. It filters the sensor data, interprets gestures and sends command packets.</p>
+  <p><b>Link.</b> ESP-NOW, a low-latency peer-to-peer protocol between the two ESP32 boards, needing no external network.</p>
+  <p><b>Robot.</b> A mecanum-wheel base on a second ESP32 that drives, strafes, plays music and shows expressions on a dot-matrix display, with basic fail-safes when the link drops.</p>
+  <div class="cta"><a class="btn" href="https://github.com/EmreErturk-3/robotics/blob/main/partybot/presentation.pdf">Slides (PDF)</a><a class="btn" href="https://github.com/EmreErturk-3/robotics/tree/main/partybot">Repository</a></div></div>
+</div></div>
+
+<div class="wrap section"><hr class="rule"><div class="prose rv" style="margin-top:26px"><h2 class="h2">Where I want to go</h2><p>These robots were single machines with hand-written behaviours. The work I want to do next is with many simple robots, where useful behaviour comes from local interactions, and with controllers and bodies found by evolution rather than written by hand. My reproductions of <a href={`${b}/research/#reproductions`}>BEECLUST and the Vicsek model</a> are the first steps in that direction.</p></div></div>
+</Base>
+<style is:global>
+.sub{font:500 13px var(--mono);color:var(--mut);margin:0 0 10px;letter-spacing:0}
+.protos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.protos img{width:100%;aspect-ratio:4/3;object-fit:cover;border:2px solid var(--wall)}.protos figcaption{font-size:14.5px;line-height:1.45;margin-top:8px}.protos figcaption b{display:block;font:500 13px var(--mono);margin-bottom:3px}
+@media(max-width:860px){.protos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>

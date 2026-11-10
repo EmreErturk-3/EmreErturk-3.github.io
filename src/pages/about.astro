@@ -62,15 +62,24 @@ const shelves: { id: string; n: string; name: string; blurb: string; books: Book
     ['The Rules of Sociological Method', 'Émile Durkheim', '1895', ''],
     ['The Crowd: A Study of the Popular Mind', 'Gustave Le Bon', '1895', ''],
   ] },
-  { id: 'fiction', n: 'VII', name: 'Fiction', blurb: 'Dystopias, machines and minds.', books: [
+  { id: 'fiction', n: 'VII', name: 'Fiction', blurb: 'Science fiction, dystopia and horror.', books: [
     ['Brave New World', 'Aldous Huxley', '1932', 'huxley-bnw'],
+    ['Fahrenheit 451', 'Ray Bradbury', '1953', 'bradbury-451'],
+    ['Do Androids Dream of Electric Sheep?', 'Philip K. Dick', '1968', 'dick-androids'],
     ['Neuromancer', 'William Gibson', '1984', 'gibson-neuromancer'],
-    ['We', 'Yevgeny Zamyatin', '1924', 'zamyatin-we'],
+    ['The Great God Pan', 'Arthur Machen', '1894', 'machen-pan'],
     ['Solaris', 'Stanisław Lem', '1961', 'lem-solaris'],
+    ['We', 'Yevgeny Zamyatin', '1924', 'zamyatin-we'],
     ['The Invincible', 'Stanisław Lem', '1964', '', 'a swarm of tiny machines'],
-    ['Nineteen Eighty-Four', 'George Orwell', '1949', 'orwell-1984'],
     ['Permutation City', 'Greg Egan', '1994', '', 'life in a cellular automaton'],
-    ['Do Androids Dream of Electric Sheep?', 'Philip K. Dick', '1968', ''],
+  ] },
+  { id: 'literature', n: 'VIII', name: 'Literature', blurb: 'Novels and stories.', books: [
+    ['Pale Fire', 'Vladimir Nabokov', '1962', 'nabokov-palefire'],
+    ['Blood Meridian', 'Cormac McCarthy', '1985', 'mccarthy-meridian'],
+    ['No Country for Old Men', 'Cormac McCarthy', '2005', 'mccarthy-nocountry'],
+    ['Lord of the Flies', 'William Golding', '1954', 'golding-flies'],
+    ['Ficciones', 'Jorge Luis Borges', '1944', 'borges-ficciones'],
+    ['House of Leaves', 'Mark Z. Danielewski', '2000', 'danielewski-leaves'],
   ] },
 ];
 // books shown on the shelf: those with covers, plus up to one designed cover per shelf
@@ -111,7 +120,7 @@ const lastName = (a: string) => a.split(',')[0].trim().split(' ').slice(-1)[0];
 <section class="wrap block" id="reading">
   <div class="rlhead">
     <h2 class="big">Reading list</h2>
-    <p class="intro">The books behind the way I think about systems: cybernetics of the first and second order, systems theory, artificial life, the sciences of mind and of society, and some fiction.</p>
+    <p class="intro">The books behind the way I think about systems: cybernetics of the first and second order, systems theory, artificial life, the sciences of mind and of society, fiction and literature.</p>
   </div>
   <ol class="toc">{shelves.map((sh) => <li><a href={`#${sh.id}`}><span class="rn">{sh.n}</span><span class="tt">{sh.name}</span><span class="dots"></span><span class="ct">{sh.books.length}</span></a></li>)}</ol>
 
@@ -127,8 +136,8 @@ const lastName = (a: string) => a.split(',')[0].trim().split(' ').slice(-1)[0];
 </section>
 </Base>
 <style is:global>
-:root{--sp-cybernetics:#a2412a;--sp-second-order:#a8762a;--sp-systems:#5e5288;--sp-alife:#2d6e4a;--sp-mind:#8a4f6a;--sp-society:#2f5590;--sp-fiction:#3f3e39}
-[data-theme=dark]{--sp-cybernetics:#de7a5f;--sp-second-order:#dcab5c;--sp-systems:#a598d8;--sp-alife:#69c08f;--sp-mind:#d690b0;--sp-society:#86a8e4;--sp-fiction:#b8b2a2}
+:root{--sp-cybernetics:#a2412a;--sp-second-order:#a8762a;--sp-systems:#5e5288;--sp-alife:#2d6e4a;--sp-mind:#8a4f6a;--sp-society:#2f5590;--sp-fiction:#3f3e39;--sp-literature:#6b3a2e}
+[data-theme=dark]{--sp-cybernetics:#de7a5f;--sp-second-order:#dcab5c;--sp-systems:#a598d8;--sp-alife:#69c08f;--sp-mind:#d690b0;--sp-society:#86a8e4;--sp-fiction:#b8b2a2;--sp-literature:#d39a84}
 
 /* masthead */
 .mast{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(220px,.65fr);gap:clamp(28px,5vw,72px);align-items:end;padding-block:56px 40px;border-bottom:1px solid var(--line)}

@@ -1,4 +1,4 @@
-An artificial chemistry on the GPU. Every pixel holds three chemicals, its red, green and blue values, and eight genes decide how each chemical grows or decays depending on its neighbourhood. The organisms that appear are not drawn; they follow from the rule.
+An artificial life sandbox on the GPU. The red, green and blue values of every pixel interact, and eight genes decide how each channel grows or decays depending on its neighbourhood. The organisms that appear are not drawn; they follow from the rule.
 
 The world also produces its own music: the genome selects the instruments and the colour balance selects the harmony.
 

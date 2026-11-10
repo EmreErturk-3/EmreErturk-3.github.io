@@ -4,5 +4,5 @@ export default defineConfig({
   base: process.env.SITE_BASE || '/',
   trailingSlash: 'ignore',
   build: { format: 'directory' },
-  redirects: { '/personal': '/about/', '/projects': '/research/', '/projects/evomaxx': '/research/evomaxx/' },
+  redirects: { '/personal': '/about/', '/projects': '/research/', '/projects/evomaxx': '/research/evomaxx/', '/cv': '/docs/emre-erturk-cv.pdf' },
 });

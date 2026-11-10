@@ -1,3 +1,3 @@
-An artificial chemistry on the GPU in which the red, green and blue values of each pixel are three interacting chemicals. The world generates its own music, so turn the sound on.
+An artificial life sandbox on the GPU. The world generates its own music, so turn the sound on.
 
-Along the way I reproduced twelve artificial-life papers it builds on:
+Along the way I reproduced twelve papers it builds on, from artificial life and related fields:

@@ -23,7 +23,7 @@ const cite = `@misc{erturk2026slavemaker,
 }`;
 ---
 <Base title="Slavemaker Swarm" description="An individual-based 3-D simulation of Polyergus slave raids on Formica colonies, coordinated only by pheromone fields.">
-<div class="wrap pagehead"><span class="tag work">Agent-based model · report v0.2</span><h1>Slavemaker Swarm</h1><p class="lead">An individual-based simulation of <i>Polyergus</i> slave raids on <i>Formica</i> colonies, where thousands of agents coordinate only through local sensing and diffusing pheromones.</p><p class="kicker" style="margin-top:12px">Emre Ertürk · 2026 · <a href="/slavemaker-swarm/">Open the 3-D simulation</a> · <a href="https://github.com/EmreErturk-3/slavemaker-swarm/blob/main/docs/REPORT.md">Report</a> · <a href="https://github.com/EmreErturk-3/slavemaker-swarm">Code</a></p></div>
+<div class="wrap pagehead"><span class="tag work">Agent-based model · report v0.2</span><h1>Slavemaker Swarm</h1><p class="lead">An individual-based simulation of <i>Polyergus</i> slave raids on <i>Formica</i> colonies. The agents coordinate only through local sensing and pheromone fields.</p><p class="kicker" style="margin-top:12px">Emre Ertürk · 2026 · <a href="/slavemaker-swarm/">Open the 3-D simulation</a> · <a href="https://github.com/EmreErturk-3/slavemaker-swarm/blob/main/docs/REPORT.md">Report</a> · <a href="https://github.com/EmreErturk-3/slavemaker-swarm">Code</a></p></div>
 
 <div class="wrap grid2">
  <div class="prose rv"><h2 class="h2">The system</h2>
@@ -41,8 +41,8 @@ const cite = `@misc{erturk2026slavemaker,
 <div class="finds" style="margin-top:16px">{finds.map(([h,p])=><div class="rv"><h3>{h}</h3><p>{p}</p></div>)}</div>
 <figure class="fig rv" style="margin-top:28px"><img src={`${b}/media/research/sm_ui.webp`} alt="Slavemaker Swarm interface during a raid" loading="lazy"><figcaption>The interface during a raid: enslavement statistics, population curves and the colony means of the evolving traits.</figcaption></figure></div>
 
-<div class="wrap section grid2"><div class="prose rv"><h2 class="h2">Limits, stated</h2><p>Raid yields and slave-to-slavemaker ratios are below field values. 12.5 days is too short to see directional coevolution, since most colonies are still first-generation. Raider Dufour’s appeasement is a hypothesis for <i>Polyergus</i> workers, and slave rebellion is documented in <i>Temnothorax</i> hosts, not <i>Formica</i>; both can be switched off. Sizes are scaled down and rates are calibrated qualitatively, not fitted.</p></div>
-<div class="prose rv"><h2 class="h2">Why this model</h2><p>Ant raids are a clear case of collective behaviour built from local rules: recruitment by trail, alarm spreading through a colony, and a division of labour between two species. These are the same mechanisms swarm robotics borrows, through pheromone-based aggregation, virtual-pheromone foraging and stigmergy, so the model is also a sandbox for testing them before they go onto robots.</p></div></div>
+<div class="wrap section grid2"><div class="prose rv"><h2 class="h2">Limitations</h2><p>Raid yields and slave-to-slavemaker ratios are below field values. 12.5 days is too short to see directional coevolution, since most colonies are still first-generation. Raider Dufour’s appeasement is a hypothesis for <i>Polyergus</i> workers, and slave rebellion is documented in <i>Temnothorax</i> hosts, not <i>Formica</i>; both can be switched off. Sizes are scaled down and rates are calibrated qualitatively, not fitted.</p></div>
+<div class="prose rv"><h2 class="h2">Relevance</h2><p>Raids depend on trail recruitment, alarm signalling and a division of labour between two species, all coordinated by local sensing. Swarm robotics uses similar mechanisms, for example pheromone-based aggregation and stigmergy, so the model can serve as a test environment for them.</p></div></div>
 
 <div class="wrap section"><h2 class="h2 rv">Cite</h2><pre class="cite rv">{cite}</pre></div>
 </Base>

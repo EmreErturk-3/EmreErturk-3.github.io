@@ -8,7 +8,7 @@ const protos = [
 ];
 ---
 <Base title="Robotics" description="Robotics projects of Emre Ertürk: the P.C.B indoor delivery robot and PartyBot.">
-<div class="wrap pagehead"><span class="kicker">Robotics</span><h1>Robots, built and tested</h1><p class="lead">Two group projects where the software met motors, sensors and batteries. Most of what we learned came from the gap between a controller that works in principle and a robot that works in a corridor.</p></div>
+<div class="wrap pagehead"><span class="kicker">Robotics</span><h1>Robotics</h1><p class="lead">Two course projects in mobile robotics, each built by a team of four in spring 2026.</p></div>
 
 <div class="wrap section" id="pcb" style="padding-top:10px"><hr class="rule"><div class="grid2" style="margin-top:26px">
  <div class="prose rv"><span class="kicker">CENG 483 · 2026 · with H. N. Kömürcü, D. Karabacak, T. İyiarı</span><h2 class="h2" style="margin-top:6px">P.C.B: corridor navigation and secure delivery</h2>
@@ -24,7 +24,7 @@ const protos = [
 </div>
 <h3 class="sub rv" style="margin-top:36px">Three prototypes</h3>
 <div class="protos">{protos.map(([h,p,img])=><figure class="rv"><img src={`${b}/media/robotics/${img}.webp`} alt={h} loading="lazy"><figcaption><b>{h}</b>{p}</figcaption></figure>)}<figure class="rv"><img src={`${b}/media/robotics/proto4.webp`} alt="Prototype 3, side view" loading="lazy"><figcaption><b>Prototype 3, side view</b>Cargo box with keypad and LCD on top; servo-mounted ultrasonic sensor at the front.</figcaption></figure></div>
-<div class="prose rv" style="margin-top:22px"><h3 class="sub">Lessons</h3><p>Power was the hardest part. An embedded GPU and a motor driver on the same supply interfere with each other, and mass decides more about turning stability than the controller does. A cheap calibration routine that learns the robot’s own biases did more for straight driving than tuning the PID gains.</p></div>
+<div class="prose rv" style="margin-top:22px"><h3 class="sub">Notes</h3><p>Power distribution caused most of the problems: the Jetson Nano and the motor driver interfered when they shared a supply. Turning stability depended more on mass than on the controller, and the bias calibration improved straight driving more than PID tuning did.</p></div>
 </div>
 
 <div class="wrap section" id="partybot"><hr class="rule"><div class="grid2" style="margin-top:26px">
@@ -37,7 +37,7 @@ const protos = [
   <div class="cta"><a class="btn" href="https://github.com/EmreErturk-3/robotics/blob/main/partybot/presentation.pdf">Slides (PDF)</a><a class="btn" href="https://github.com/EmreErturk-3/robotics/tree/main/partybot">Repository</a></div></div>
 </div></div>
 
-<div class="wrap section"><hr class="rule"><div class="prose rv" style="margin-top:26px"><h2 class="h2">Where I want to go</h2><p>These robots were single machines with hand-written behaviours. The work I want to do next is with many simple robots, where useful behaviour comes from local interactions, and with controllers and bodies found by evolution rather than written by hand. My reproductions of <a href={`${b}/research/#reproductions`}>BEECLUST and the Vicsek model</a> are the first steps in that direction.</p></div></div>
+<div class="wrap section"><hr class="rule"><div class="prose rv" style="margin-top:26px"><h2 class="h2">Next</h2><p>Both robots use hand-designed behaviours. I am interested in multi-robot systems with behaviour based on local interaction, and in controllers and morphologies obtained by evolution. My reproductions of <a href={`${b}/research/#reproductions`}>BEECLUST and the Vicsek model</a> are a start in that direction.</p></div></div>
 </Base>
 <style is:global>
 .sub{font:500 13px var(--mono);color:var(--mut);margin:0 0 10px;letter-spacing:0}

@@ -83,16 +83,21 @@ const lastName = (a: string) => a.split(',')[0].trim().split(' ').slice(-1)[0];
   <div class="mtx">
     <p class="eyebrow">About</p>
     <h1>Emre Ertürk</h1>
-    <p class="dek">Bio-inspired computing, evolution, and the simulators in which to try them.</p>
-    <p class="bio">I am completing a B.Sc. in Computer Engineering at <a href="https://en.iyte.edu.tr/">İzmir Institute of Technology</a> and plan to continue with an M.Sc. in robotics at <a href="https://www.metu.edu.tr/">METU</a>. My work so far is mostly evolutionary: artificial chemistries, agent-based colonies and memetic search. I want to bring it to swarm, developmental and bio-inspired robotics.</p>
+    <p class="dek">Computer Engineering, İzmir Institute of Technology</p>
+    <p class="bio">I am a senior undergraduate student at <a href="https://en.iyte.edu.tr/">İzmir Institute of Technology</a> and plan to pursue graduate study in robotics at <a href="https://www.metu.edu.tr/">METU</a>. I am interested in bio-inspired computing; my work so far is mostly on evolutionary computation and artificial life.</p>
   </div>
   <figure class="print"><img src={`${b}/media/emre.webp`} alt="Portrait of Emre Ertürk" width="640" height="640"></figure>
 </header>
 
 <section class="wrap block two">
   <div>
-    <h2 class="sh">In my own words</h2>
+    <h2 class="sh">Background</h2>
     <div class="todo"><b>TODO(Emre)</b>: a few paragraphs: where you are from, how you came to artificial life and evolutionary systems, and what draws you to robots.</div>
+    <h2 class="sh" style="margin-top:44px">Education</h2>
+    <ul class="edu">
+      <li><b><a href="https://en.iyte.edu.tr/">İzmir Institute of Technology</a></b>; İzmir<span>B.Sc. in Computer Engineering, 2022–present</span><span class="sub2">Senior thesis: Smart Zebra, advised by Selma Tekir (TÜBİTAK 2209-A)</span></li>
+      <li><b>İzmir Atatürk Lisesi</b>; İzmir<span>High school</span><span class="sub2">Member of IALHUK, the school aviation club</span></li>
+    </ul>
     <h2 class="sh" style="margin-top:44px">Away from the desk</h2>
     <ul class="hob">{hobbies.map((h) => <li>{h}</li>)}</ul>
     <h2 class="sh" style="margin-top:44px">Languages</h2>
@@ -144,6 +149,7 @@ const lastName = (a: string) => a.split(',')[0].trim().split(' ').slice(-1)[0];
 .todo{border:0;border-left:2px solid var(--amber);background:none;padding:2px 0 2px 14px;font:italic 16px/1.55 var(--serif);color:var(--mut)}.todo b{font:500 12px var(--mono);color:var(--amber);font-style:normal}
 .hob{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 0;font-family:var(--serif);font-size:clamp(22px,2.4vw,28px);line-height:1.35}
 .hob li:not(:last-child)::after{content:"·";color:var(--mut);margin:0 .45em}
+.edu{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}.edu li{padding-block:12px;border-bottom:1px solid var(--line);font-size:16.5px}.edu li span{display:block;color:var(--mut);font-size:15.5px;margin-top:2px}.edu .sub2{font-family:var(--serif);font-style:italic}
 .lang{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;margin:0;font-size:17px}.lang dt{font-weight:500}.lang dd{margin:0;color:var(--mut);font-family:var(--serif);font-style:italic}
 
 /* plate */

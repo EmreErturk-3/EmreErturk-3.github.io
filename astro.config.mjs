@@ -4,5 +4,5 @@ export default defineConfig({
   base: process.env.SITE_BASE || '/',
   trailingSlash: 'ignore',
   build: { format: 'directory' },
-  redirects: { '/personal': '/about/' },
+  redirects: { '/personal': '/about/', '/projects': '/research/', '/projects/evomaxx': '/research/evomaxx/' },
 });

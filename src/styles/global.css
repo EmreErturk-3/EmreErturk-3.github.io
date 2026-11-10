@@ -83,3 +83,8 @@ figure{margin:0}
 .cite{font:13px/1.55 var(--mono);background:var(--panel);border:1px solid var(--line);padding:14px 16px;overflow-x:auto;white-space:pre}
 .todo{border:1px dashed var(--amber);background:color-mix(in srgb,var(--amber) 9%,transparent);padding:10px 14px;font:13px/1.5 var(--mono);color:var(--mut)}
 .todo b{color:var(--amber);font-weight:500}
+
+/* text links are always underlined; image cards, buttons and navigation are not */
+main a:not(.btn):not(.rimg):not(.plate):not(.wcard):not(.toc a):not(.mini-plates a),.foot a:not(.big){text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent)}
+main a:not(.btn):not(.rimg):not(.plate):not(.wcard):not(.toc a):not(.mini-plates a):hover,.foot a:hover{text-decoration-color:currentColor;text-decoration-thickness:2px}
+.toc a .tt{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent)}

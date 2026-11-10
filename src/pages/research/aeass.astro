@@ -45,7 +45,7 @@ const cite = `@misc{erturk2026aeass,
 <figure class="fig rv"><img src={`${b}/media/research/aeass_fig_ecdf.webp`} alt="Run-time distributions per benchmark set" loading="lazy"><figcaption>Fraction of runs solved against wall-clock time to a verified solution, per benchmark set.</figcaption></figure></div>
 <figure class="fig rv" style="margin-top:28px"><img src={`${b}/media/research/aeass_fig_v1_vs_v3.webp`} alt="v1 against v3 timing" loading="lazy"><figcaption>v1 vs v3 on the 27 configurations of the 2025 report: v3 is 42× faster in Python, and the C version a further 35× faster.</figcaption></figure></div>
 
-<div class="wrap section grid2"><div class="prose rv"><h2 class="h2">What I took from it</h2><p>The search needed problem knowledge to work: the right encoding, constraint propagation and a local search that knows where the conflicts are. Once local search was present, crossover added little at this size. The v2 episode taught me a second lesson: verify every result against the problem independently, because an operator that quietly breaks a constraint can look like a breakthrough.</p></div>
+<div class="wrap section grid2"><div class="prose rv"><h2 class="h2">Notes</h2><p>The genetic algorithm worked only with problem knowledge added: a suitable encoding, constraint propagation, and a local search directed at conflicting cells. With local search in place, crossover contributed little at this problem size. The v2 audit is the reason every reported solution is now checked against the givens.</p></div>
 <div class="rv"><h2 class="h2">Cite</h2><pre class="cite">{cite}</pre></div></div>
 </Base>
 <style is:global>

@@ -14,18 +14,18 @@ export const alsoInterested = 'Psychology, cognitive science, biology and neuros
 
 export const papers = [
   {
-    authors: '<b>E. Ertürk</b>',
-    title: 'AEASS v3: Revisiting an Adaptive Evolutionary Algorithm for Solving Sudokus',
-    venue: 'Technical report, 2026. Revises and extends a CENG 482 Evolutionary Computation project (2025).',
-    to: '/research/aeass/',
-    links: [{ label: 'PDF', href: 'https://github.com/EmreErturk-3/aeass/blob/main/paper/AEASS_v3_paper.pdf' }, ...gh('aeass')],
-  },
-  {
     authors: 'O. Kansoy, <b>E. Ertürk</b> (equal contribution)',
     title: 'Smart Zebra: A Prompt-to-GRPO Recipe for Logic-Grid Reasoning in Small Language Models',
     venue: 'Manuscript in revision, 2026. B.Sc. thesis, advised by Assoc. Prof. Selma Tekir. Funded by TÜBİTAK 2209-A.',
     to: '/research/smart-zebra/',
     links: [],
+  },
+  {
+    authors: '<b>E. Ertürk</b>',
+    title: 'AEASS v3: Revisiting an Adaptive Evolutionary Algorithm for Solving Sudokus',
+    venue: 'Technical report, 2026. Revises and extends a CENG 482 Evolutionary Computation project (2025).',
+    to: '/research/aeass/',
+    links: [{ label: 'PDF', href: 'https://github.com/EmreErturk-3/aeass/blob/main/paper/AEASS_v3_paper.pdf' }, ...gh('aeass')],
   },
   {
     authors: '<b>E. Ertürk</b>',
@@ -92,7 +92,7 @@ export const courses = {
   ],
 };
 export const record = [
-  ['3.12', 'cumulative GPA, rising: 3.83 in fall 2025–26'],
+  ['3.12', 'cumulative GPA (3.83 in fall 2025–26)'],
   ['93.5', 'YDS, English (C1)'],
   ['85', 'ALES'],
 ];

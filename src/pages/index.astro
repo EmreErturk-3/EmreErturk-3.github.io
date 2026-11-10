@@ -29,7 +29,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
   </div><div class="met" id="whud"></div><p class="note" id="wnote"></p></div>
 
   <div>
-    <article class="ep" data-m="evo"><span class="kicker">Main project · since spring 2026, now v10</span><h2>EvoMaxx</h2><p>An artificial chemistry on the GPU in which the red, green and blue values of each pixel are three interacting chemicals. The world generates its own music, so turn the sound on.</p><p>Along the way I reproduced twelve artificial-life papers it builds on:</p>
+    <article class="ep" data-m="evo"><span class="kicker">Main project · since spring 2026, now v10</span><h2>EvoMaxx</h2><Text name="home-evomaxx" />
       <div class="mini-plates">{plates.map(([n, t, a, dir, anim]) => <a href={REPRO + dir} title={`${t} (${a})`}>{anim ? <video src={`${b}/media/research/repro/r${n}.mp4`} poster={`${b}/media/research/repro/r${n}.webp`} muted loop playsinline autoplay></video> : <img src={`${b}/media/research/repro/r${n}.webp`} alt={t} loading="lazy" />}</a>)}</div>
       <p class="lk"><a href={`${b}/research/#evomaxx`}>EvoMaxx</a> · <a href="/evomaxx/">open it in the browser</a> · <a href="/evomaxx/reproductions/live/">reproductions, live</a></p></article>
     <article class="ep" data-m="zebra"><span class="kicker">B.Sc. thesis · TÜBİTAK 2209-A</span><h2>Smart Zebra</h2><p>With Onur Kansoy (equal contribution), advised by Selma Tekir. We trained a 3B language model on logic-grid puzzles with supervised fine-tuning and GRPO, using a prompt based on the AC-3 algorithm.</p><p class="lk"><a href={`${b}/research/smart-zebra/`}>Details</a> · <a href="/docs/smart-zebra.pdf">paper</a></p></article>
@@ -74,7 +74,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 .stage>*{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease}.stage>.on{opacity:1}.stage>.contain{object-fit:contain;background:#fff}.stage canvas{background:var(--panel)}
 .stick .note{min-height:5.8em}.stick .met{min-height:52px;align-content:start}.stick .arena{contain:paint}
 .ep{min-height:62svh;display:flex;flex-direction:column;justify-content:center;gap:10px;border-bottom:1px solid var(--line);min-width:0}.ep:last-child{border:0}
-.ep h2{font-size:clamp(28px,3.4vw,40px);letter-spacing:-.022em}.ep p{max-width:52ch}.ep .lk{font:14px var(--mono);color:var(--mut)}
+.ep h2{font-size:clamp(28px,3.4vw,40px);letter-spacing:-.022em}.ep p{max-width:52ch}.ep .md{max-width:52ch}.ep .lk{font:14px var(--mono);color:var(--mut)}
 .tri{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:36px;border-top:2px solid var(--wall);padding-top:24px}.tri>div{min-width:0}.tri .h2{margin-top:0}
 @media(max-width:860px){.tri{grid-template-columns:minmax(0,1fr)}}
 .clist{list-style:none;padding:0;margin:0;display:grid;gap:0}.clist li{padding-block:7px;border-bottom:1px solid var(--line)}

@@ -29,6 +29,7 @@ All editable text is in `src/content/`:
 | File | Where it appears |
 |---|---|
 | `home-intro.md` | home page, under your name |
+| `home-evomaxx.md` | home page, EvoMaxx text in the scrolling section |
 | `research-intro.md` | Research & Projects, top line |
 | `research-direction.md` | Research & Projects, "Current direction" |
 | `evomaxx-summary.md` | Research & Projects, next to the EvoMaxx video |

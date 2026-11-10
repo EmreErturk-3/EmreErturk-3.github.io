@@ -20,7 +20,15 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 </section>
 
 <section class="worlds wrap">
-  <div class="stick"><div class="arena"><canvas id="world" aria-label="Animated model of the selected project"></canvas><canvas id="ghost" aria-hidden="true"></canvas></div><div class="met" id="whud"></div><p class="note" id="wnote"></p></div>
+  <div class="stick"><div class="arena stage">
+    <video data-v="evo" src={`${b}/media/research/evo_teaser.mp4`} poster={`${b}/media/research/evo_poster.webp`} muted loop playsinline preload="metadata" class="on"></video>
+    <video data-v="ants" src={`${b}/media/research/sm_teaser.mp4`} poster={`${b}/media/research/sm_poster.webp`} muted loop playsinline preload="none"></video>
+    <video data-v="sudoku" src={`${b}/media/research/ae_teaser.mp4`} poster={`${b}/media/research/ae_poster.webp`} muted loop playsinline preload="none" style="object-position:30% 50%"></video>
+    <video data-v="vicsek" src={`${b}/media/research/vicsek.mp4`} poster={`${b}/media/research/vicsek_poster.webp`} muted loop playsinline preload="none" class="contain"></video>
+    <canvas data-v="zebra" id="world" aria-label="AC-3 constraint propagation on a three-house Zebra puzzle"></canvas>
+    <video data-v="robot" src={`${b}/media/robotics/pcb.mp4`} poster={`${b}/media/robotics/pcb_photo.webp`} muted loop playsinline preload="none"></video>
+  </div><div class="met" id="whud"></div><p class="note" id="wnote"></p></div>
+
   <div>
     <article class="ep" data-m="evo"><span class="kicker">Artificial life · 2026</span><h2>EvoMaxx</h2><p>An artificial chemistry on the GPU. The red, green and blue of every pixel are three chemicals, and an eight-gene regulatory network decides how each one grows from what its neighbourhood senses. The rule space was mapped by controlled experiments on about 18,000 worlds, and the A-life models it builds on, from Lenia to Physarum, are reproduced one by one.</p><a href={`${b}/research/evomaxx/`}>How it works →</a></article>
     <article class="ep" data-m="ants"><span class="kicker">Agent-based model · 2026</span><h2>Slavemaker Swarm</h2><p>An individual-based model of slave-making ants. Polyergus scouts find a Formica nest and lay a raid trail home. The colony musters, follows the trail and carries the brood back, where it ecloses as slaves that work for their captors. Every agent senses only locally, through five pheromone fields.</p><a href={`${b}/research/slavemaker/`}>The model and results →</a></article>
@@ -38,7 +46,6 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div class="rv"><span class="kicker">Live in the browser</span><h2 class="h2">Try the real thing</h2><p>The full simulators run in WebGL2, with nothing to install.</p><div class="cta"><a class="btn" href="/evomaxx/">EvoMaxx</a><a class="btn" href="/evomaxx/reproductions/live/">A-life reproductions</a><a class="btn" href="/slavemaker-swarm/">Slavemaker Swarm</a><a class="btn" href="/aeass/">AEASS solver</a></div></div>
   </div>
 </section>
-<video id="robotv" src={`${b}/media/robotics/pcb.mp4`} muted loop playsinline preload="none" hidden></video>
 </Base>
 <style is:global>
 .hero{position:relative;overflow:hidden;border-bottom:2px solid var(--wall)}
@@ -52,19 +59,20 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 .live{min-width:0}.live .kicker{display:block;margin-bottom:6px}
 #life{width:100%;aspect-ratio:16/11;cursor:crosshair;display:block}
 .worlds{overflow-anchor:none;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;padding-block:30px}
-.stick{position:sticky;top:calc(var(--navh,100px) + 16px);align-self:start;min-width:0}.stick canvas{width:100%;aspect-ratio:1;max-height:calc(100svh - var(--navh,100px) - 120px)}
+.stick{position:sticky;top:calc(var(--navh,100px) + 16px);align-self:start;min-width:0}
+.stage{position:relative;aspect-ratio:4/3;max-height:calc(100svh - var(--navh,100px) - 150px);overflow:hidden;background:#0d0d0f}
+.stage>*{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease}.stage>.on{opacity:1}.stage>.contain{object-fit:contain;background:#fff}.stage canvas{background:var(--panel)}
 .stick .note{min-height:5.8em}.stick .met{min-height:52px;align-content:start}.stick .arena{contain:paint}
-#ghost{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0}
 .ep{min-height:62svh;display:flex;flex-direction:column;justify-content:center;gap:10px;border-bottom:1px solid var(--line);min-width:0}.ep:last-child{border:0}
 .ep h2{font-size:clamp(28px,3.4vw,40px);letter-spacing:-.022em}.ep p{max-width:52ch}.ep a{font:14px var(--mono)}
 .tri{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:36px;border-top:2px solid var(--wall);padding-top:24px}.tri>div{min-width:0}.tri .h2{margin-top:6px}
 @media(max-width:860px){.tri{grid-template-columns:minmax(0,1fr)}}
 .clist{list-style:none;padding:0;margin:0;display:grid;gap:0}.clist li{padding-block:7px;border-bottom:1px solid var(--line)}
 .plist{list-style:none;padding:0;margin:0;display:grid;gap:12px}.plist a{font-weight:500;text-decoration:none;line-height:1.35;display:block}.plist a:hover{text-decoration:underline}.plist span{display:block;font:13px var(--mono);color:var(--mut);margin-top:3px}
-@media(max-width:860px){.hgrid,.worlds{grid-template-columns:minmax(0,1fr);gap:18px}.stick{top:calc(var(--navh,100px) + 6px);z-index:4;background:var(--bg);padding-bottom:6px}.stick canvas{aspect-ratio:auto;height:34svh;max-height:none}.ep{min-height:56svh}}
+@media(max-width:860px){.hgrid,.worlds{grid-template-columns:minmax(0,1fr);gap:18px}.stick{top:calc(var(--navh,100px) + 6px);z-index:4;background:var(--bg);padding-bottom:6px}.stage{aspect-ratio:auto;height:34svh;max-height:none}.ep{min-height:56svh}}
 </style>
 <script>
-import { fit, reduce, metrics, Life, RD, Ants, Sudoku, Vicsek, ZEBRA, drawZebra, drawVideo } from '../scripts/sims';
+import { fit, reduce, metrics, Life, ZEBRA, drawZebra } from '../scripts/sims';
 let cleanup: (() => void)[] = [];
 document.addEventListener('astro:page-load', () => {
   const hero = document.querySelector<HTMLElement>('[data-hero]'); if (!hero) return;
@@ -79,48 +87,34 @@ document.addEventListener('astro:page-load', () => {
   const lro = new ResizeObserver(() => { lf = fit(lc); life.draw(lf.g, lf.W, lf.H, cell()); }); lro.observe(lc);
   if (!reduce()) lraf = requestAnimationFrame(lstep); else { for (let i = 0; i < 120; i++) life.step(); life.draw(lf.g, lf.W, lf.H, cell()); }
 
-  // ---- worlds: one sticky canvas, a sketch per project
+  // ---- worlds: one sticky stage; the real recordings, and the Zebra worked example on a canvas
   const cv = document.getElementById('world') as HTMLCanvasElement, hud = document.getElementById('whud')!, note = document.getElementById('wnote')!;
-  let f = fit(cv), mode = 'evo', raf = 0;
-  const rd = new RD(128), ants = new Ants(), sud = new Sudoku(), vic = new Vicsek(), vid = document.getElementById('robotv') as HTMLVideoElement;
-  let gone = new Set<string>(), zi = 0, zt = 0;
-  const notes: Record<string, string> = {
-    evo: 'A Gray–Scott reaction–diffusion sketch, from the family of models EvoMaxx generalises. It cycles through four parameter regimes. The real EvoMaxx has three chemicals, 17 kernels and an evolving gene network.',
-    ants: 'A 2-D sketch of the raid cycle: scouts (red) find a Formica nest and lay a raid trail (shaded) home, the column follows it and carries brood back, and the brood ecloses as slaves (green).',
-    sudoku: 'Logic reduction fills forced cells (blue), then min-conflicts swaps within rows remove clashes (red), as in the local search inside AEASS. Puzzles come from its benchmark set.',
-    vicsek: 'The Vicsek model: each particle takes its neighbours’ mean heading plus noise. The noise sweeps slowly through the transition, and order v_a rises and falls with it. Colours mark the heading.',
-    zebra: 'Clues: ' + ZEBRA.clues.map((c, i) => `(${i + 1}) ${c}`).join(' '),
-    robot: 'The P.C.B robot in a corridor test run.',
+  const items = [...document.querySelectorAll<HTMLElement>('.stage [data-v]')];
+  let f = fit(cv), mode = 'evo', raf = 0, gone = new Set<string>(), zi = 0, zt = 0;
+  const info: Record<string, { note: string; met: [string, string][] }> = {
+    evo: { note: 'EvoMaxx, recorded live at 60 fps: cell-like bodies as a lava lamp, physarum creatures in the flat view, and a colour-flocking world.', met: [['Worlds tested', '≈18,000'], ['Lifelike genomes', '7% → 95%'], ['Creatures', '22% → 82%']] },
+    ants: { note: 'Slavemaker Swarm, recorded live: Polyergus raiders (red-brown) follow the scout’s trail to a Formica nest (blue ring), take its brood and carry it home (orange ring).', met: [['Agents', '≈4,000'], ['Pheromone fields', '5'], ['Raids', '≈1 per day']] },
+    sudoku: { note: 'The AEASS web solver on AI Escargot, slowed down: logic-derived cells purple, evolved cells blue, conflicts red. Every solution is verified against the givens.', met: [['Verified runs', '65,201 / 65,201'], ['Puzzles', '52,458'], ['Hardest, median', '102 ms']] },
+    vicsek: { note: 'The Vicsek reproduction: 1,000 self-propelled particles align with their neighbours under noise and order into a common heading.', met: [['Particles', '1,000'], ['Model', 'Vicsek et al. 1995']] },
+    zebra: { note: 'Clues: ' + ZEBRA.clues.map((c, i) => `(${i + 1}) ${c}`).join(' '), met: [] },
+    robot: { note: 'The P.C.B robot in a corridor test run.', met: [['Control', 'Arduino Mega'], ['Mission', 'Jetson Nano'], ['Landmarks', 'ArUco']] },
   };
-  const ghost = document.getElementById('ghost') as HTMLCanvasElement;
-  const fade = () => { if (reduce()) return; ghost.width = cv.width; ghost.height = cv.height; ghost.getContext('2d')!.drawImage(cv, 0, 0); ghost.getAnimations().forEach((a) => a.cancel()); ghost.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 900, easing: 'cubic-bezier(.4,0,.2,1)' }); };
-  const set = (m: string) => { if (m === mode) return; fade(); mode = m; note.textContent = notes[m]; hud.innerHTML = ''; if (m === 'robot') { vid.preload = 'auto'; vid.play().catch(() => {}); } else vid.pause(); if (reduce()) still(); };
-  note.textContent = notes.evo;
+  const show = (m: string) => { items.forEach((el) => { const on = el.dataset.v === m; el.classList.toggle('on', on); if (el instanceof HTMLVideoElement) { if (on) { el.preload = 'auto'; if (!reduce()) el.play().catch(() => {}); } else el.pause(); } }); note.textContent = info[m].note; metrics(hud, info[m].met); };
+  const set = (m: string) => { if (m === mode) return; mode = m; show(m); };
+  show(mode);
   const eps = [...document.querySelectorAll<HTMLElement>('.ep')]; let want = mode, timer = 0, queued = false;
   const stick = document.querySelector<HTMLElement>('.stick')!;
   const pick = () => { queued = false; const stacked = innerWidth <= 860, bottom = stick.getBoundingClientRect().bottom, line = stacked ? bottom + (innerHeight - bottom) * 0.4 : innerHeight * 0.5; let best = eps[0].dataset.m!; eps.forEach((e) => { if (e.getBoundingClientRect().top <= line) best = e.dataset.m!; }); if (best !== want) { want = best; clearTimeout(timer); timer = window.setTimeout(() => set(want), 50); } };
   const onScroll = () => { if (!queued) { queued = true; requestAnimationFrame(pick); } };
   addEventListener('scroll', onScroll, { passive: true });
-  const ro = new ResizeObserver(() => { f = fit(cv); if (reduce()) still(); }); ro.observe(cv);
-  const still = () => {
-    if (mode === 'evo') { rd.step(1500); rd.draw(f.g, f.W, f.H); }
-    if (mode === 'ants') { for (let i = 0; i < 900; i++) ants.step(); ants.draw(f.g, f.W, f.H); }
-    if (mode === 'sudoku') sud.draw(f.g, f.W, f.H);
-    if (mode === 'vicsek') { for (let i = 0; i < 200; i++) vic.step(); vic.draw(f.g, f.W, f.H); }
-    if (mode === 'zebra') { ZEBRA.steps.forEach((s) => s.rm.forEach((x) => gone.add(x))); drawZebra(f.g, f.W, f.H, gone); }
-    if (mode === 'robot') { vid.preload = 'auto'; vid.addEventListener('loadeddata', () => drawVideo(f.g, f.W, f.H, vid), { once: true }); vid.load(); }
-  };
+  const ro = new ResizeObserver(() => { f = fit(cv); drawZebra(f.g, f.W, f.H, gone); }); ro.observe(cv);
   const step = () => {
-    raf = requestAnimationFrame(step); const r = cv.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
-    if (mode === 'evo') { rd.step(10); if (rd.t > 9000) rd.next(); rd.draw(f.g, f.W, f.H); metrics(hud, [['Regime', rd.params.name], ['F', rd.params.F], ['k', rd.params.k], ['Steps', rd.t]], true); }
-    if (mode === 'ants') { ants.step(); ants.step(); ants.draw(f.g, f.W, f.H); metrics(hud, ants.metrics(), true); }
-    if (mode === 'sudoku') { sud.step(); sud.draw(f.g, f.W, f.H); metrics(hud, sud.metrics(), true); }
-    if (mode === 'vicsek') { vic.step(); vic.draw(f.g, f.W, f.H); metrics(hud, vic.metrics(), true); }
-    if (mode === 'zebra') { zt++; if (zt % 110 === 0) { if (zi < ZEBRA.steps.length) { ZEBRA.steps[zi].rm.forEach((x) => gone.add(x)); zi++; } else { zi = 0; gone = new Set(); } } drawZebra(f.g, f.W, f.H, gone); metrics(hud, [['Step', `${zi}/${ZEBRA.steps.length}`], ['Removed', `${gone.size}/12`]]); note.textContent = zi ? ZEBRA.steps[zi - 1].say : notes.zebra; }
-    if (mode === 'robot') { drawVideo(f.g, f.W, f.H, vid); metrics(hud, [['Control', 'Arduino Mega'], ['Mission', 'Jetson Nano'], ['Landmarks', 'ArUco']]); }
+    raf = requestAnimationFrame(step); if (mode !== 'zebra') return;
+    zt++; if (zt % 110 === 0) { if (zi < ZEBRA.steps.length) { ZEBRA.steps[zi].rm.forEach((x) => gone.add(x)); zi++; } else { zi = 0; gone = new Set(); } }
+    drawZebra(f.g, f.W, f.H, gone); metrics(hud, [['Step', `${zi}/${ZEBRA.steps.length}`], ['Removed', `${gone.size}/12`]]); note.textContent = zi ? ZEBRA.steps[zi - 1].say : info.zebra.note;
   };
-  if (!reduce()) raf = requestAnimationFrame(step); else still();
-  cleanup.push(() => { cancelAnimationFrame(raf); cancelAnimationFrame(lraf); ro.disconnect(); lro.disconnect(); removeEventListener('scroll', onScroll); clearTimeout(timer); vid.pause(); });
+  if (!reduce()) raf = requestAnimationFrame(step); else { ZEBRA.steps.forEach((s) => s.rm.forEach((x) => gone.add(x))); drawZebra(f.g, f.W, f.H, gone); }
+  cleanup.push(() => { cancelAnimationFrame(raf); cancelAnimationFrame(lraf); ro.disconnect(); lro.disconnect(); removeEventListener('scroll', onScroll); clearTimeout(timer); items.forEach((el) => el instanceof HTMLVideoElement && el.pause()); });
 });
 document.addEventListener('astro:before-swap', () => { cleanup.forEach((f) => f()); cleanup = []; });
 </script>

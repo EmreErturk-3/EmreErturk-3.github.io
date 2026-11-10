@@ -3,8 +3,69 @@ import Base from '../layouts/Base.astro';
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const rules = [['B3/S23', 'Conway'], ['B36/S23', 'HighLife'], ['B2/S', 'Seeds'], ['B3678/S34678', 'Day & Night']];
 const seeds = [['gun', 'Glider gun'], ['rpent', 'R-pentomino'], ['acorn', 'Acorn'], ['soup', 'Random soup']];
-// TODO(Emre): add books as { t: 'Title', a: 'Author', img: 'file-name-in-public/media/books' }.
-const books: { t: string; a: string; img?: string; note?: string }[] = [];
+// Reading list. Draft: Emre will weed it out. Each entry: [title, author, year, optional note].
+type Book = [string, string, string, string?];
+const shelves: { id: string; name: string; blurb: string; books: Book[] }[] = [
+  { id: 'cyb1', name: 'Cybernetics', blurb: 'Control and communication in animals and machines: feedback, regulation, requisite variety.', books: [
+    ['Cybernetics: Or Control and Communication in the Animal and the Machine', 'Norbert Wiener', '1948'],
+    ['The Human Use of Human Beings', 'Norbert Wiener', '1950'],
+    ['Design for a Brain', 'W. Ross Ashby', '1952', 'the homeostat'],
+    ['An Introduction to Cybernetics', 'W. Ross Ashby', '1956', 'the law of requisite variety'],
+    ['An Approach to Cybernetics', 'Gordon Pask', '1961'],
+    ['Brain of the Firm', 'Stafford Beer', '1972'],
+  ] },
+  { id: 'cyb2', name: 'Second-order cybernetics and autopoiesis', blurb: 'The observer inside the system; living systems as self-producing networks.', books: [
+    ['Observing Systems', 'Heinz von Foerster', '1981'],
+    ['Understanding Understanding: Essays on Cybernetics and Cognition', 'Heinz von Foerster', '2003'],
+    ['Autopoiesis and Cognition: The Realization of the Living', 'Humberto Maturana, Francisco Varela', '1980'],
+    ['The Tree of Knowledge', 'Humberto Maturana, Francisco Varela', '1987'],
+    ['The Embodied Mind', 'Francisco Varela, Evan Thompson, Eleanor Rosch', '1991'],
+    ['Steps to an Ecology of Mind', 'Gregory Bateson', '1972'],
+  ] },
+  { id: 'sys', name: 'Systems theory', blurb: 'Wholes, boundaries and the organisation of complexity, from biology to society.', books: [
+    ['General System Theory', 'Ludwig von Bertalanffy', '1968'],
+    ['Social Systems', 'Niklas Luhmann', '1984', 'Soziale Systeme; English 1995'],
+    ['Introduction to Systems Theory', 'Niklas Luhmann', '2002', 'lectures; English 2013'],
+    ['The Sciences of the Artificial', 'Herbert A. Simon', '1969'],
+    ['Thinking in Systems', 'Donella H. Meadows', '2008'],
+  ] },
+  { id: 'fep', name: 'Free energy and the predictive mind', blurb: 'Self-organisation as inference: organisms that model and anticipate their world.', books: [
+    ['Active Inference: The Free Energy Principle in Mind, Brain, and Behavior', 'Thomas Parr, Giovanni Pezzulo, Karl J. Friston', '2022'],
+    ['Surfing Uncertainty', 'Andy Clark', '2016'],
+  ] },
+  { id: 'alife', name: 'Artificial life, swarms and evolutionary robotics', blurb: 'Life as it could be, collective behaviour from local rules, bodies and controllers found by evolution.', books: [
+    ['Artificial Life', 'Christopher G. Langton (ed.)', '1989', 'proceedings of the first A-life workshop'],
+    ['The Origins of Order', 'Stuart A. Kauffman', '1993'],
+    ['Hidden Order: How Adaptation Builds Complexity', 'John H. Holland', '1995'],
+    ['Vehicles: Experiments in Synthetic Psychology', 'Valentino Braitenberg', '1984'],
+    ['Swarm Intelligence: From Natural to Artificial Systems', 'Eric Bonabeau, Marco Dorigo, Guy Theraulaz', '1999'],
+    ['Self-Organization in Biological Systems', 'Scott Camazine et al.', '2001'],
+    ['The Ants', 'Bert Hölldobler, E. O. Wilson', '1990'],
+    ['Honeybee Democracy', 'Thomas D. Seeley', '2010'],
+    ['Evolutionary Robotics', 'Stefano Nolfi, Dario Floreano', '2000'],
+    ['How the Body Shapes the Way We Think', 'Rolf Pfeifer, Josh Bongard', '2006'],
+    ['Swarm Robotics: A Formal Approach', 'Heiko Hamann', '2018'],
+    ['Complexity: A Guided Tour', 'Melanie Mitchell', '2009'],
+  ] },
+  { id: 'soc', name: 'Society and collective behaviour', blurb: 'Crowds, social facts and the macro behaviour that individual motives produce.', books: [
+    ['The Division of Labour in Society', 'Émile Durkheim', '1893'],
+    ['The Rules of Sociological Method', 'Émile Durkheim', '1895'],
+    ['The Crowd: A Study of the Popular Mind', 'Gustave Le Bon', '1895'],
+    ['Crowds and Power', 'Elias Canetti', '1960'],
+    ['Micromotives and Macrobehavior', 'Thomas C. Schelling', '1978', 'an early agent-based model'],
+    ['Simulacra and Simulation', 'Jean Baudrillard', '1981'],
+  ] },
+  { id: 'fic', name: 'Fiction', blurb: 'Dystopias, machines and minds.', books: [
+    ['We', 'Yevgeny Zamyatin', '1924'],
+    ['Brave New World', 'Aldous Huxley', '1932'],
+    ['Nineteen Eighty-Four', 'George Orwell', '1949'],
+    ['Solaris', 'Stanisław Lem', '1961'],
+    ['The Invincible', 'Stanisław Lem', '1964', 'a swarm of tiny machines'],
+    ['Do Androids Dream of Electric Sheep?', 'Philip K. Dick', '1968'],
+    ['Neuromancer', 'William Gibson', '1984'],
+    ['Permutation City', 'Greg Egan', '1994', 'artificial life in a cellular automaton'],
+  ] },
+];
 ---
 <Base title="About" description="About Emre Ertürk.">
 <div class="wrap pagehead abt"><div><span class="kicker">About</span><h1>Emre Ertürk</h1><p class="lead">Computer engineering student at <a href="https://en.iyte.edu.tr/">İzmir Institute of Technology</a>, working on evolutionary computation, artificial life and robotics.</p></div><img src={`${b}/media/emre.webp`} alt="Portrait of Emre Ertürk"></div>
@@ -25,9 +86,9 @@ const books: { t: string; a: string; img?: string; note?: string }[] = [];
   </div>
 </div>
 
-<div class="wrap section"><hr class="rule"><h2 class="h2 rv" style="margin-top:26px">Books</h2>
-  {books.length === 0 ? <div class="todo rv"><b>TODO(Emre):</b> books you are reading and recommend, with covers in <span class="mono">public/media/books/</span>.</div> :
-  <div class="shelf rv">{books.map(k=><figure class="book">{k.img?<img src={`${b}/media/books/${k.img}.webp`} alt={`Cover of ${k.t}`} loading="lazy">:<div class="plain"><span>{k.t}</span><small>{k.a}</small></div>}<figcaption><i>{k.t}</i><span>{k.a}</span>{k.note&&<em>{k.note}</em>}</figcaption></figure>)}</div>}
+<div class="wrap section" id="reading"><hr class="rule"><div class="rhead rv"><h2 class="h2" style="margin-top:26px">Reading list</h2><p class="prose">Books behind the way I think about systems: cybernetics of the first and second order, systems theory, artificial life and swarms, the social sciences of collective behaviour, and some fiction.</p></div>
+  <nav class="shelfnav rv" aria-label="Reading list sections">{shelves.map((sh) => <a href={`#${sh.id}`} class={`sp-${sh.id}`}>{sh.name}</a>)}</nav>
+  {shelves.map((sh) => <section class={`shelf2 rv sp-${sh.id}`} id={sh.id}><div class="sh"><h3>{sh.name}</h3><p>{sh.blurb}</p></div><ol>{sh.books.map(([t, a, y, n]) => <li><i>{t}</i><span>{a} · {y}</span>{n && <em>{n}</em>}</li>)}</ol></section>)}
 </div>
 </Base>
 <style is:global>
@@ -36,6 +97,16 @@ const books: { t: string; a: string; img?: string; note?: string }[] = [];
 .lab{min-width:0}#lab{width:100%;aspect-ratio:4/3;cursor:crosshair}
 .sub{font:500 13px var(--mono);color:var(--mut);margin:30px 0 8px;letter-spacing:0}
 .mem{list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}.mem li{display:flex;justify-content:space-between;gap:6px 16px;flex-wrap:wrap;padding-block:9px;border-bottom:1px solid var(--line)}.mem span{color:var(--mut)}
+/* reading list */
+.rhead .prose{margin-top:6px}
+.shelfnav{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 8px}.shelfnav a{font:12.5px var(--mono);text-decoration:none;padding:5px 9px;border:1px solid var(--line);background:var(--panel);box-shadow:inset 3px 0 0 var(--sp)}
+.shelf2{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:28px;padding-block:22px;border-bottom:1px solid var(--line)}
+.shelf2 .sh{border-left:4px solid var(--sp);padding-left:14px}.shelf2 h3{font-size:22px}.shelf2 .sh p{font-size:15px;color:var(--mut);margin-top:6px}
+.shelf2 ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 26px}
+.shelf2 li{display:flex;flex-direction:column;line-height:1.35;padding-left:10px;border-left:1px solid var(--line)}.shelf2 li i{font-family:var(--serif);font-size:16.5px}.shelf2 li span{font:12.5px var(--mono);color:var(--mut);margin-top:3px}.shelf2 li em{font:12px var(--mono);color:var(--sp);font-style:normal;margin-top:2px}
+.sp-cyb1{--sp:#b4432b}.sp-cyb2{--sp:#b9822a}.sp-sys{--sp:#6b5b8e}.sp-fep{--sp:#8a5a44}.sp-alife{--sp:#2d7650}.sp-soc{--sp:#2f5b98}.sp-fic{--sp:#4a4a44}
+[data-theme=dark] .sp-fic{--sp:#a8a294}
+@media(max-width:860px){.shelf2{grid-template-columns:minmax(0,1fr);gap:12px}.shelf2 ol{grid-template-columns:minmax(0,1fr)}}
 .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:30px 26px;margin-top:12px}
 .book{margin:0;min-width:0}.book img,.book .plain{width:100%;aspect-ratio:2/3;object-fit:cover;border:1px solid var(--line);display:block;box-shadow:0 8px 18px -10px rgba(0,0,0,.45)}
 .book .plain{background:#5b3a29;color:#f5ead8;padding:16px 14px;display:flex;flex-direction:column;justify-content:space-between}.book .plain span{font-size:19px;font-weight:600;line-height:1.15}.book .plain small{font:12px var(--mono);opacity:.85}

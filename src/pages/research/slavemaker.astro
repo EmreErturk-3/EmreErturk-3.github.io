@@ -30,10 +30,9 @@ const cite = `@misc{erturk2026slavemaker,
   <p>Slave-making (dulosis) has evolved several times in ants. Obligate slavemakers such as <i>Polyergus</i> cannot forage, dig or care for brood: their sickle-shaped mandibles are made for fighting. They raid nests of <i>Formica fusca</i>-group hosts and carry the brood home, and the workers that eclose there become a slave workforce that does everything else.</p>
   <p>The model follows the documented raid sequence step by step. Scouts search for host nests and judge their size. A successful scout returns laying a trail. The colony musters and leaves in a column in the late afternoon. Raiders take one brood item each and snatch brood from fleeing hosts, and the loot is reared at home.</p>
   <p>Hosts defend with alarm-recruited fighters and partial brood evacuation. Mated slavemaker queens found colonies only by usurping a host nest, and enslaved workers can rebel by killing slavemaker pupae. Colony traits are inherited through dispersing queens with mutation, so host defence and raid strategy <b>coevolve with no explicit fitness function</b>.</p></div>
- <div class="rv"><div class="arena"><canvas id="ants" style="width:100%;aspect-ratio:1" aria-label="2-D sketch of a slave raid"></canvas></div><div class="met" id="anth"></div><p class="note">A 2-D sketch of the raid cycle for this page. Scouts (red) find a host nest and lay a raid trail (shaded) home, the column follows it and returns with brood, and the brood ecloses as slaves (green). The real model is 3-D, with five pheromone fields and about 4,000 agents.</p></div>
+ <div class="rv"><figure class="fig"><video src={`${b}/media/research/sm_teaser.mp4`} poster={`${b}/media/research/sm_poster.webp`} autoplay muted loop playsinline></video><figcaption>The simulation running in the browser (WebGL2), with the camera following a raid. Red-brown Polyergus raiders leave in a column along the scout’s trail, swarm a Formica nest (blue ring) and carry its brood home (orange ring).</figcaption></figure></div>
 </div>
 
-<div class="wrap section"><figure class="fig rv"><video src={`${b}/media/research/sm_teaser.mp4`} poster={`${b}/media/research/sm_poster.webp`} autoplay muted loop playsinline></video><figcaption>The real simulation (WebGL2), with the camera following a raid. Red-brown Polyergus raiders leave in a column along the scout’s trail, swarm a Formica nest (blue ring) and carry its brood home (orange ring).</figcaption></figure></div>
 
 <div class="wrap section"><h2 class="h2 rv">Chemical communication</h2><p class="prose rv">Each signal is its own grid, updated with a five-point diffusion stencil and multiplicative evaporation, at rates suited to its function. A raid trail must last for a whole raid; alarm must fade within seconds. Homing uses path integration.</p>
 <div class="tw rv" style="margin-top:14px"><table class="tbl lin"><thead><tr><th>Channel</th><th>Laid by</th><th>Read by</th><th>Evaporation / step</th><th>Diffusion</th></tr></thead><tbody>{fields.map((r)=><tr>{r.map((c)=><td>{c}</td>)}</tr>)}</tbody></table></div></div>
@@ -52,10 +51,3 @@ const cite = `@misc{erturk2026slavemaker,
 .lin td,.lin th{text-align:left!important;vertical-align:top}.lin td:first-child{font-weight:500;white-space:nowrap}
 @media(max-width:760px){.finds{grid-template-columns:minmax(0,1fr)}}
 </style>
-<script>
-import { Ants, fit, reduce, metrics } from '../../scripts/sims';
-let raf=0;
-document.addEventListener('astro:page-load',()=>{const c=document.getElementById('ants') as HTMLCanvasElement;if(!c)return;let f=fit(c);const w=new Ants(),h=document.getElementById('anth')!;new ResizeObserver(()=>{f=fit(c);w.draw(f.g,f.W,f.H)}).observe(c);
-const l=()=>{raf=requestAnimationFrame(l);const r=c.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;w.step();w.step();w.draw(f.g,f.W,f.H);metrics(h,w.metrics(),true)};if(reduce()){for(let i=0;i<900;i++)w.step();w.draw(f.g,f.W,f.H);metrics(h,w.metrics())}else l()});
-document.addEventListener('astro:before-swap',()=>cancelAnimationFrame(raf));
-</script>

@@ -37,7 +37,7 @@ const alife = ['Lenia (Chan 2019)', 'Flow-Lenia (Plantec et al. 2023)', 'Physaru
  <div class="rv"><span class="kicker">Reproductions</span><h2 class="h2" style="margin-top:8px">Swarm and evolutionary computation</h2><div class="prose"><p>Before building on a model, I re-implement it from the paper alone and run the published experiments again. Each reproduction reports what matched, what did not, and why. Faithful baselines matter more than new variants.</p></div>
   <ul class="rlist">{repro.map((r) => <li><a href={r.href}><b>{r.name}</b></a><span class="kicker">{r.src}</span><p>{r.status}</p></li>)}</ul>
   <p style="margin-top:12px"><a class="mono" style="font-size:14px" href="https://github.com/EmreErturk-3/swarm-reproductions">All code and results on GitHub →</a></p></div>
- <div class="rv"><div class="arena"><canvas id="vk" aria-label="Vicsek particles aligning"></canvas></div><div class="met" id="vkh"></div><p class="note">Live Vicsek model: each particle aligns with its neighbours, with noise. The noise sweeps slowly through the ordering transition.</p>
+ <div class="rv"><figure class="fig"><video src={`${b}/media/research/vicsek.mp4`} poster={`${b}/media/research/vicsek_poster.webp`} autoplay muted loop playsinline style="background:#fff"></video><figcaption>Vicsek reproduction: 1,000 self-propelled particles aligning with their neighbours under noise.</figcaption></figure>
   <figure class="fig" style="margin-top:18px"><img src={`${b}/media/research/beeclust_fig5.webp`} alt="BEECLUST reproduction: fraction of robots aggregated against swarm size" loading="lazy"><figcaption>BEECLUST reproduction, the counterpart of Fig. 5 in Bodi et al. (2009): fraction of Kilobots aggregated in the light against swarm size.</figcaption></figure></div>
 </div>
 <div class="rv" style="margin-top:36px"><h3 class="sub">A-life models reproduced for EvoMaxx</h3><p class="prose">Twelve more models are reproduced in the EvoMaxx repository, each from its paper, and all of them <a href="/evomaxx/reproductions/live/">run live in the browser</a>:</p><ul class="chips">{alife.map((a) => <li>{a}</li>)}</ul></div>
@@ -48,15 +48,7 @@ const alife = ['Lenia (Chan 2019)', 'Flow-Lenia (Plantec et al. 2023)', 'Physaru
 .wcards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.wcard{background:var(--panel);border:2px solid var(--wall);padding:20px;text-decoration:none;display:flex;flex-direction:column;gap:8px;align-items:flex-start;transition:transform .25s,box-shadow .25s;min-width:0}.wcard:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--wall);color:inherit}.wcard h3{font-size:27px}
 .pubs{margin:0;padding-left:22px;display:grid;gap:16px;max-width:90ch}.pubs li{line-height:1.5}.pubs a{text-decoration:none}.pubs a:hover b{text-decoration:underline}.pubs .v{color:var(--mut);font-style:italic;font-family:var(--serif)}.pubs .pl{display:inline-flex;gap:10px;margin-left:10px;font-size:13px}
 .rlist{list-style:none;margin:18px 0 0;padding:0;border-top:1px solid var(--line)}.rlist li{padding-block:12px;border-bottom:1px solid var(--line)}.rlist a{text-decoration:none}.rlist .kicker{display:block}.rlist p{font-size:15.5px;margin-top:4px}
-#vk{width:100%;aspect-ratio:1}
 .sub{font:500 13px var(--mono);color:var(--mut);margin:0 0 8px;letter-spacing:0}
 .chips{list-style:none;padding:0;margin:12px 0 0;display:flex;flex-wrap:wrap;gap:8px}.chips li{font:13px var(--mono);border:1px solid var(--line);background:var(--panel);padding:5px 9px}
 @media(max-width:860px){.rgrid,.wcards{grid-template-columns:minmax(0,1fr);gap:18px}}
 </style>
-<script>
-import { Vicsek, fit, reduce, metrics } from '../../scripts/sims';
-let raf=0;
-document.addEventListener('astro:page-load',()=>{const c=document.getElementById('vk') as HTMLCanvasElement;if(!c)return;let f=fit(c);const w=new Vicsek(),h=document.getElementById('vkh')!;new ResizeObserver(()=>{f=fit(c);w.draw(f.g,f.W,f.H)}).observe(c);
-const l=()=>{raf=requestAnimationFrame(l);const r=c.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;w.step();w.draw(f.g,f.W,f.H);metrics(h,w.metrics(),true)};if(reduce()){for(let i=0;i<300;i++)w.step();w.draw(f.g,f.W,f.H);metrics(h,w.metrics())}else l()});
-document.addEventListener('astro:before-swap',()=>cancelAnimationFrame(raf));
-</script>

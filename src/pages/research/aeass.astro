@@ -33,10 +33,9 @@ const cite = `@misc{erturk2026aeass,
   <p>Sudoku is NP-complete and a standard test problem for evolutionary computation. Exact solvers are far faster on 9×9 puzzles; the interest here is the evolutionary method itself, and what it needs in order to work on such a tightly constrained problem.</p>
   <p>The original course version (v1) needed 39–106 s per run on one SudokuWiki “unsolvable” puzzle and often stalled. A rewrite (v2) seemed to solve the hardest known puzzles in about a second, but an audit showed that its row-swap operator moved the given clues: only 2 of the 205 solutions it reported were valid. v3 fixes this, checks every reported solution independently against the givens, and comes with a Python reference, an operator-for-operator C99 port and a WebGL2 web solver.</p>
   <div class="stats"><div><b>65,201 / 65,201</b><span>C runs solved and verified within 60 s</span></div><div><b>52,458</b><span>benchmark puzzles</span></div><div><b>≈50%</b><span>of hard runs solved by the GA without local search</span></div></div></div>
- <div class="rv"><div class="arena"><canvas id="sud" style="width:100%;aspect-ratio:1" aria-label="Logic reduction and min-conflicts search on a Sudoku"></canvas></div><div class="met" id="sudh"></div><p class="note">A simplified live sketch of two AEASS ingredients: logic reduction fills forced cells (blue), then min-conflicts swaps within rows remove clashes (red). The real solver wraps this local search in a genetic algorithm with ILS escapes. Puzzles come from its benchmark set.</p></div>
+ <div class="rv"><figure class="fig"><video src={`${b}/media/research/ae_teaser.mp4`} poster={`${b}/media/research/ae_poster.webp`} autoplay muted loop playsinline></video><figcaption>The web solver on AI Escargot, slowed down to show individual moves. Logic-derived cells are purple, evolved cells blue and conflicts red. The run ends with “Solved in 5.15 s · verified”. <a href="/aeass/">Try it yourself</a>.</figcaption></figure></div>
 </div>
 
-<div class="wrap section"><figure class="fig rv"><video src={`${b}/media/research/ae_teaser.mp4`} poster={`${b}/media/research/ae_poster.webp`} autoplay muted loop playsinline></video><figcaption>The web solver on AI Escargot, with playback slowed to show individual moves. Logic-derived cells are purple, evolved cells blue and conflicts red. The run ends with “Solved in 5.15 s · verified”.</figcaption></figure></div>
 
 <div class="wrap section"><h2 class="h2 rv">Method</h2><div class="grid2"><div class="finds one">{parts.map(([h,p])=><div class="rv"><h3>{h}</h3><p>{p}</p></div>)}</div><figure class="fig rv"><img src={`${b}/media/research/aeass_fig_pipeline.webp`} alt="AEASS v3 pipeline" loading="lazy"><figcaption>Pipeline. Logic reduction runs first. Each generation then applies tournament selection, row crossover, filtered-swap mutation and Lamarckian min-conflicts local search, with ILS escapes after τ generations without improvement.</figcaption></figure></div></div>
 
@@ -52,10 +51,3 @@ const cite = `@misc{erturk2026aeass,
 <style is:global>
 .finds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 36px}.finds.one{grid-template-columns:minmax(0,1fr);gap:16px}.finds h3{font-size:21px;margin-bottom:5px}.finds>div{min-width:0;border-top:1px solid var(--line);padding-top:10px}
 </style>
-<script>
-import { Sudoku, fit, reduce, metrics } from '../../scripts/sims';
-let raf=0;
-document.addEventListener('astro:page-load',()=>{const c=document.getElementById('sud') as HTMLCanvasElement;if(!c)return;let f=fit(c);const w=new Sudoku(),h=document.getElementById('sudh')!;new ResizeObserver(()=>{f=fit(c);w.draw(f.g,f.W,f.H)}).observe(c);
-let t0=0;const l=(t:number)=>{raf=requestAnimationFrame(l);const r=c.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;if(t-t0>30){t0=t;w.step();w.draw(f.g,f.W,f.H);metrics(h,w.metrics(),true)}};if(reduce()){w.draw(f.g,f.W,f.H);metrics(h,w.metrics())}else raf=requestAnimationFrame(l)});
-document.addEventListener('astro:before-swap',()=>cancelAnimationFrame(raf));
-</script>

@@ -1,10 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import { languages } from '../data/site';
+import Text from '../components/Text.astro';
+import { languages, hobbies, education } from '../data/site';
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const rules = [['B3/S23', 'Conway'], ['B36/S23', 'HighLife'], ['B2/S', 'Seeds'], ['B3678/S34678', 'Day & Night']];
 const seeds = [['gun', 'glider gun'], ['rpent', 'R-pentomino'], ['acorn', 'acorn'], ['soup', 'random soup']];
-const hobbies = ['Hiking', 'Cycling', 'Painting and sketching', 'Sightseeing', 'Reading'];
 
 // Reading list (a draft to weed out). Book: [title, author, year, cover file in /media/books or '', note?]
 type Book = [string, string, string, string, string?];
@@ -84,7 +84,7 @@ const lastName = (a: string) => a.split(',')[0].trim().split(' ').slice(-1)[0];
     <p class="eyebrow">About</p>
     <h1>Emre Ertürk</h1>
     <p class="dek">Computer Engineering, İzmir Institute of Technology</p>
-    <p class="bio">I am a senior undergraduate student at <a href="https://en.iyte.edu.tr/">İzmir Institute of Technology</a> and plan to pursue graduate study in robotics at <a href="https://www.metu.edu.tr/">METU</a>. I am interested in bio-inspired computing; my work so far is mostly on evolutionary computation and artificial life.</p>
+    <Text name="about-intro" class="bio" />
   </div>
   <figure class="print"><img src={`${b}/media/emre.webp`} alt="Portrait of Emre Ertürk" width="640" height="640"></figure>
 </header>
@@ -92,12 +92,9 @@ const lastName = (a: string) => a.split(',')[0].trim().split(' ').slice(-1)[0];
 <section class="wrap block two">
   <div>
     <h2 class="sh">Background</h2>
-    <div class="todo"><b>TODO(Emre)</b>: a few paragraphs: where you are from, how you came to artificial life and evolutionary systems, and what draws you to robots.</div>
+    <Text name="about-background" class="bgtext" />
     <h2 class="sh" style="margin-top:44px">Education</h2>
-    <ul class="edu">
-      <li><b><a href="https://en.iyte.edu.tr/">İzmir Institute of Technology</a></b>; İzmir<span>B.Sc. in Computer Engineering, 2022–present</span><span class="sub2">Senior thesis: Smart Zebra, advised by Selma Tekir (TÜBİTAK 2209-A)</span></li>
-      <li><b>İzmir Atatürk Lisesi</b>; İzmir<span>High school</span><span class="sub2">Member of IALHUK, the school aviation club</span></li>
-    </ul>
+    <ul class="edu">{education.map((e) => <li><b>{e.url ? <a href={e.url}>{e.school}</a> : e.school}</b>; {e.city}<span>{e.degree}</span>{e.note && <span class="sub2">{e.note}</span>}</li>)}</ul>
     <h2 class="sh" style="margin-top:44px">Away from the desk</h2>
     <ul class="hob">{hobbies.map((h) => <li>{h}</li>)}</ul>
     <h2 class="sh" style="margin-top:44px">Languages</h2>
@@ -138,7 +135,7 @@ const lastName = (a: string) => a.split(',')[0].trim().split(' ').slice(-1)[0];
 .eyebrow{font:500 13px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
 .mast h1{font-family:var(--serif);font-weight:500;font-size:clamp(56px,9vw,124px);line-height:.92;letter-spacing:-.025em;margin-top:14px}
 .dek{font-family:var(--serif);font-style:italic;font-size:clamp(21px,2.3vw,28px);line-height:1.25;color:var(--mut);margin-top:18px;max-width:28ch}
-.bio{font-size:17.5px;line-height:1.65;max-width:58ch;margin-top:22px}
+.bio{font-size:17.5px;line-height:1.65;max-width:58ch;margin-top:22px}.bgtext{font-size:17px;line-height:1.65;max-width:60ch}.bgtext em{color:var(--mut)}
 .print{margin:0;background:var(--panel);padding:14px 14px 40px;border:1px solid var(--line);box-shadow:0 1px 0 var(--line),0 18px 30px -22px rgba(30,25,15,.45);transform:rotate(.6deg)}
 .print img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;filter:saturate(.9) sepia(.05) contrast(1.02)}
 

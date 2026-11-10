@@ -1,0 +1,124 @@
+{
+  "_note": "Edit the lists below. Keep the quotes and commas. The site rebuilds when you commit.",
+  "interests": [
+    "Evolutionary computation",
+    "Artificial life",
+    "Bio-inspired robotics and systems",
+    "Swarm robotics",
+    "Evolutionary and developmental robotics",
+    "Robot locomotion",
+    "Simulation and computer graphics"
+  ],
+  "alsoInterested": "Psychology, cognitive science, biology and neuroscience",
+  "hobbies": [
+    "Hiking",
+    "Cycling",
+    "Painting and sketching",
+    "Sightseeing",
+    "Reading"
+  ],
+  "languages": [
+    {
+      "name": "Turkish",
+      "level": "native"
+    },
+    {
+      "name": "English",
+      "level": "C1 · YDS 93.5"
+    },
+    {
+      "name": "Chinese",
+      "level": "elementary · Chinese I (AA), Chinese II in progress"
+    },
+    {
+      "name": "German",
+      "level": "learning"
+    }
+  ],
+  "education": [
+    {
+      "school": "İzmir Institute of Technology",
+      "url": "https://en.iyte.edu.tr/",
+      "city": "İzmir",
+      "degree": "B.Sc. in Computer Engineering, 2022–present",
+      "note": "Senior thesis: Smart Zebra, advised by Selma Tekir (TÜBİTAK 2209-A)"
+    },
+    {
+      "school": "İzmir Atatürk Lisesi",
+      "url": "",
+      "city": "İzmir",
+      "degree": "High school",
+      "note": "Member of IALHUK, the school aviation club"
+    }
+  ],
+  "scores": [
+    {
+      "value": "3.12",
+      "label": "cumulative GPA (3.83 in fall 2025–26)"
+    },
+    {
+      "value": "93.5",
+      "label": "YDS, English (C1)"
+    },
+    {
+      "value": "85",
+      "label": "ALES"
+    }
+  ],
+  "coursesRelevant": [
+    {
+      "code": "CENG483",
+      "name": "Behavioral Robotics",
+      "grade": "AA"
+    },
+    {
+      "code": "CENG482",
+      "name": "Evolutionary Computation",
+      "grade": "BA"
+    },
+    {
+      "code": "CENG415/416",
+      "name": "Senior Thesis and Seminar I, II",
+      "grade": "AA, AA"
+    },
+    {
+      "code": "CENG467",
+      "name": "Natural Language Understanding and Generation",
+      "grade": "AA"
+    },
+    {
+      "code": "CENG424",
+      "name": "Embedded Computer Systems",
+      "grade": "BA"
+    },
+    {
+      "code": "CENG218",
+      "name": "Analysis and Design of Algorithms",
+      "grade": "BA"
+    },
+    {
+      "code": "CENG322",
+      "name": "Operating Systems",
+      "grade": "BA"
+    },
+    {
+      "code": "MATH255",
+      "name": "Differential Equations",
+      "grade": "AA"
+    }
+  ],
+  "coursesCurrent": [
+    {
+      "code": "CENG487",
+      "name": "Introduction to Computer Graphics"
+    },
+    {
+      "code": "CENG391",
+      "name": "Introduction to Image Understanding"
+    },
+    {
+      "code": "CHN202",
+      "name": "Elementary Chinese II"
+    }
+  ]
+}

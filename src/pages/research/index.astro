@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Text from '../../components/Text.astro';
 import { interests, alsoInterested, papers, plates, REPRO } from '../../data/site';
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const work = [
@@ -20,13 +21,12 @@ const repro = [
 ];
 ---
 <Base title="Research & Projects" description="Research and projects of Emre Ertürk: evolutionary computation, artificial life, agent-based simulation, and EvoMaxx.">
-<div class="wrap pagehead"><span class="kicker">Research & Projects</span><h1>Research and projects</h1><p class="lead">I am interested in bio-inspired computing. Most of my work so far uses evolutionary methods and agent-based simulation.</p></div>
+<div class="wrap pagehead"><span class="kicker">Research & Projects</span><h1>Research and projects</h1><Text name="research-intro" class="lead" /></div>
 
 <div class="wrap section" style="padding-top:10px"><hr class="rule"><div class="rgrid">
  <div class="rv"><h2 class="h2">Interests</h2><ul class="ilist">{interests.map((i) => <li>{i}</li>)}</ul><p class="also">Also {alsoInterested.toLowerCase()}.</p></div>
  <div class="rv prose"><h2 class="h2">Current direction</h2>
-  <p>I want to move from simulation-only work to robots: swarm robotics, evolutionary and developmental robotics, and robot locomotion. I plan to do this by building simulators detailed enough to test controllers before they are run on hardware.</p>
-  <p>Before building on a published model, I re-implement it from the paper and check the results. The twelve reproductions in EvoMaxx and the ones under Ongoing below come from this habit.</p>
+  <Text name="research-direction" />
  </div>
 </div></div>
 
@@ -34,9 +34,7 @@ const repro = [
 <div class="evo">
   <div class="evv rv"><video id="pv" src={`${b}/media/research/evo_sound.mp4`} poster={`${b}/media/research/evo_sound_poster.webp`} autoplay muted loop playsinline></video><button type="button" class="snd" id="psnd" aria-pressed="false"><span aria-hidden="true">♪</span><span class="lb">Sound on</span></button></div>
   <div class="evt rv">
-    <p>An artificial chemistry on the GPU. Every pixel holds three chemicals, its red, green and blue values, and eight genes decide how each chemical grows or decays depending on its neighbourhood. The organisms that appear are not drawn; they follow from the rule.</p>
-    <p>The world also produces its own music: the genome selects the instruments and the colour balance selects the harmony.</p>
-    <p>I compared 24,480 rule variants in controlled experiments on about 18,000 worlds. The default rule makes 95% of random genomes lifelike, against 7% for the first version.</p>
+    <Text name="evomaxx-summary" />
     <p class="lnk"><a class="btn" href="/evomaxx/">Open EvoMaxx</a><a class="btn" href={`${b}/research/evomaxx/`}>Details and experiments</a><a class="btn" href="https://github.com/EmreErturk-3/evomaxx">Code</a></p>
   </div>
 </div>

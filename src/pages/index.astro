@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Text from '../components/Text.astro';
 import { interests, papers, plates, REPRO, courses, record, TRANSCRIPT } from '../data/site';
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
@@ -9,8 +10,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div class="idrow"><img src={`${b}/media/emre.webp`} alt="Portrait of Emre Ertürk" width="640" height="640"><div><h1>Emre Ertürk</h1><p class="kicker">Computer Engineering · İzmir Institute of Technology</p></div></div>
     <div class="hgrid">
       <div class="intro">
-        <p>I am a senior undergraduate student in Computer Engineering at <a href="https://en.iyte.edu.tr/">İzmir Institute of Technology</a>. I am interested in bio-inspired computing. Most of my work so far is on evolutionary computation, artificial life and agent-based simulation.</p>
-        <p>I want to continue in swarm, evolutionary and developmental robotics and in robot locomotion, with simulation as the main tool. I plan to pursue graduate study in robotics at <a href="https://www.metu.edu.tr/">METU</a>.</p>
+        <Text name="home-intro" />
         <div class="cta"><a class="btn" href={`${b}/research/`}>Research</a><a class="btn" href={`${b}/research/#evomaxx`}>EvoMaxx</a><a class="btn" href={`${b}/robotics/`}>Robotics</a><a class="btn" href={`${b}/cv/`}>CV</a><a class="btn" href="https://github.com/EmreErturk-3">GitHub</a></div>
       </div>
       <div class="live"><span class="kicker">Conway's Game of Life, Gosper glider gun. Click to add gliders.</span><div class="arena"><canvas id="life" aria-label="Conway's Game of Life with a Gosper glider gun"></canvas></div><div class="hudline" id="lifeh"></div></div>
@@ -32,7 +32,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
     <article class="ep" data-m="evo"><span class="kicker">Main project · since spring 2026, now v10</span><h2>EvoMaxx</h2><p>An artificial chemistry on the GPU in which the red, green and blue values of each pixel are three interacting chemicals. The world generates its own music, so turn the sound on.</p><p>Along the way I reproduced twelve artificial-life papers it builds on:</p>
       <div class="mini-plates">{plates.map(([n, t, a, dir, anim]) => <a href={REPRO + dir} title={`${t} (${a})`}>{anim ? <video src={`${b}/media/research/repro/r${n}.mp4`} poster={`${b}/media/research/repro/r${n}.webp`} muted loop playsinline autoplay></video> : <img src={`${b}/media/research/repro/r${n}.webp`} alt={t} loading="lazy" />}</a>)}</div>
       <p class="lk"><a href={`${b}/research/#evomaxx`}>EvoMaxx</a> · <a href="/evomaxx/">open it in the browser</a> · <a href="/evomaxx/reproductions/live/">reproductions, live</a></p></article>
-    <article class="ep" data-m="zebra"><span class="kicker">B.Sc. thesis · TÜBİTAK 2209-A</span><h2>Smart Zebra</h2><p>With Onur Kansoy (equal contribution), advised by Selma Tekir. We trained a 3B language model on logic-grid puzzles with supervised fine-tuning and GRPO, using a prompt based on the AC-3 algorithm.</p><p class="lk"><a href={`${b}/research/smart-zebra/`}>Details</a></p></article>
+    <article class="ep" data-m="zebra"><span class="kicker">B.Sc. thesis · TÜBİTAK 2209-A</span><h2>Smart Zebra</h2><p>With Onur Kansoy (equal contribution), advised by Selma Tekir. We trained a 3B language model on logic-grid puzzles with supervised fine-tuning and GRPO, using a prompt based on the AC-3 algorithm.</p><p class="lk"><a href={`${b}/research/smart-zebra/`}>Details</a> · <a href="/docs/smart-zebra.pdf">paper</a></p></article>
     <article class="ep" data-m="sudoku"><span class="kicker">Paper · evolutionary computation</span><h2>AEASS</h2><p>A memetic algorithm for Sudoku, extended from my CENG 482 project. It solved all 65,201 verified runs on 52,458 benchmark puzzles.</p><p class="lk"><a href={`${b}/research/aeass/`}>Details</a> · <a href="https://github.com/EmreErturk-3/aeass/blob/main/paper/AEASS_v3_paper.pdf">paper</a></p></article>
     <article class="ep" data-m="ants"><span class="kicker">Agent-based model</span><h2>Slavemaker Swarm</h2><p>A model of slave-raiding Polyergus ants and their Formica hosts. About 4,000 agents coordinate only through pheromone fields.</p><p class="lk"><a href={`${b}/research/slavemaker/`}>Details</a> · <a href="/slavemaker-swarm/">open it in the browser</a></p></article>
     <article class="ep" data-m="robot"><span class="kicker">CENG 483 Behavioral Robotics</span><h2>P.C.B delivery robot</h2><p>An indoor delivery robot built by a team of four over three prototypes. An Arduino Mega handles control and a Jetson Nano handles the mission; ArUco markers mark the start and the target.</p><p class="lk"><a href={`${b}/robotics/`}>Robotics</a></p></article>

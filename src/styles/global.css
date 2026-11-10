@@ -24,7 +24,7 @@ p{margin:0}
 .kicker{font:13px/1.4 var(--mono);color:var(--mut)}
 .pagehead{padding-block:48px 26px;position:relative}
 .pagehead h1{font-size:clamp(38px,5.6vw,68px);line-height:1.08;letter-spacing:-.028em;margin-top:8px}
-.pagehead .lead{font-size:clamp(18px,1.9vw,21px);line-height:1.42;max-width:52ch;margin-top:12px}
+.pagehead .lead p{margin:0}.pagehead .lead{font-size:clamp(18px,1.9vw,21px);line-height:1.42;max-width:52ch;margin-top:12px}
 .section{padding-block:56px}
 .section>h2,.h2{font-size:clamp(26px,3.2vw,36px);margin-bottom:14px}
 .rule{border:0;border-top:2px solid var(--wall);margin:0}
@@ -88,3 +88,13 @@ figure{margin:0}
 main a:not(.btn):not(.rimg):not(.plate):not(.wcard):not(.toc a):not(.mini-plates a),.foot a:not(.big){text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent)}
 main a:not(.btn):not(.rimg):not(.plate):not(.wcard):not(.toc a):not(.mini-plates a):hover,.foot a:hover{text-decoration-color:currentColor;text-decoration-thickness:2px}
 .toc a .tt{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent)}
+
+/* in-page editing (?edit) */
+.md>p+p{margin-top:14px}
+[contenteditable=true]{outline:1.5px dashed var(--amber);outline-offset:6px;border-radius:2px;cursor:text}
+[contenteditable=true]:focus{outline-style:solid;background:color-mix(in srgb,var(--amber) 6%,transparent)}
+#edit-bar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:100;display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;max-width:calc(100vw - 24px);padding:8px 10px;background:var(--fg);color:var(--bg);border-radius:10px;font:13px var(--sans);box-shadow:0 10px 30px -10px rgba(0,0,0,.5)}
+#edit-bar b{font-weight:600}#edit-bar .n{opacity:.7;margin-right:6px}
+#edit-bar button{font:inherit;background:transparent;color:inherit;border:1px solid color-mix(in srgb,var(--bg) 40%,transparent);border-radius:6px;padding:4px 9px;cursor:pointer}
+#edit-bar button:hover{background:color-mix(in srgb,var(--bg) 15%,transparent)}#edit-bar button.pri{background:var(--bg);color:var(--fg)}
+#edit-bar .st{opacity:.85;margin-left:4px}

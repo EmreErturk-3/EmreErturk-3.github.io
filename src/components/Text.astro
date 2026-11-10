@@ -1,0 +1,10 @@
+---
+// Renders a Markdown file from src/content/ and marks it as editable in ?edit mode.
+// Usage: <Text name="home-intro" class="intro-md" />
+const { name, class: cls } = Astro.props;
+const files = import.meta.glob('../content/*.md', { eager: true }) as Record<string, any>;
+const mod = files[`../content/${name}.md`];
+if (!mod) throw new Error(`Missing src/content/${name}.md`);
+const { Content } = mod;
+---
+<div class={`md ${cls ?? ''}`} data-edit={`src/content/${name}.md`}><Content /></div>

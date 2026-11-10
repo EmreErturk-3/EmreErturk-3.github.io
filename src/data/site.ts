@@ -1,16 +1,16 @@
+// Editable lists (interests, courses, scores, languages, education, hobbies) live in src/content/site.json.
+import S from '../content/site.json';
+export const interests: string[] = S.interests;
+export const alsoInterested: string = S.alsoInterested;
+export const hobbies: string[] = S.hobbies;
+export const education = S.education;
+export const courses = { relevant: S.coursesRelevant.map((c) => [c.code, c.name, c.grade]), current: S.coursesCurrent.map((c) => [c.code, c.name]) };
+export const record = S.scores.map((x) => [x.value, x.label]);
+export const languages = S.languages.map((l) => [l.name, l.level]);
+
 export type Link = { label: string; href: string };
 const gh = (r: string): Link[] => [{ label: 'GitHub', href: `https://github.com/EmreErturk-3/${r}` }];
 
-export const interests = [
-  'Evolutionary computation',
-  'Artificial life',
-  'Bio-inspired robotics and systems',
-  'Swarm robotics',
-  'Evolutionary and developmental robotics',
-  'Robot locomotion',
-  'Simulation and computer graphics',
-];
-export const alsoInterested = 'Psychology, cognitive science, biology and neuroscience';
 
 export const papers = [
   {
@@ -18,7 +18,7 @@ export const papers = [
     title: 'Smart Zebra: A Prompt-to-GRPO Recipe for Logic-Grid Reasoning in Small Language Models',
     venue: 'Manuscript in revision, 2026. B.Sc. thesis, advised by Assoc. Prof. Selma Tekir. Funded by TÜBİTAK 2209-A.',
     to: '/research/smart-zebra/',
-    links: [],
+    links: [{ label: 'PDF', href: '/docs/smart-zebra.pdf' }],
   },
   {
     authors: '<b>E. Ertürk</b>',
@@ -73,33 +73,4 @@ export const plates = [
  ['12', 'Edge of chaos', 'Langton 1990', '12_edge_of_chaos_langton1990', false],
 ] as const;
 
-// Academic record (from the transcript issued 09.11.2026)
-export const courses = {
-  relevant: [
-    ['CENG483', 'Behavioral Robotics', 'AA'],
-    ['CENG482', 'Evolutionary Computation', 'BA'],
-    ['CENG415/416', 'Senior Thesis and Seminar I, II', 'AA, AA'],
-    ['CENG467', 'Natural Language Understanding and Generation', 'AA'],
-    ['CENG424', 'Embedded Computer Systems', 'BA'],
-    ['CENG218', 'Analysis and Design of Algorithms', 'BA'],
-    ['CENG322', 'Operating Systems', 'BA'],
-    ['MATH255', 'Differential Equations', 'AA'],
-  ],
-  current: [
-    ['CENG487', 'Introduction to Computer Graphics'],
-    ['CENG391', 'Introduction to Image Understanding'],
-    ['CHN202', 'Elementary Chinese II'],
-  ],
-};
-export const record = [
-  ['3.12', 'cumulative GPA (3.83 in fall 2025–26)'],
-  ['93.5', 'YDS, English (C1)'],
-  ['85', 'ALES'],
-];
-export const languages = [
-  ['Turkish', 'native'],
-  ['English', 'C1 · YDS 93.5'],
-  ['Chinese', 'elementary · Chinese I (AA), Chinese II in progress'],
-  ['German', 'learning'],
-];
 export const TRANSCRIPT = '/docs/emre-erturk-transcript.pdf';

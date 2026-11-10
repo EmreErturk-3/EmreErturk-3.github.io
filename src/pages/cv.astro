@@ -11,7 +11,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <h2>Education</h2>
 <div class="r"><b>B.Sc. in Computer Engineering, <a href="https://en.iyte.edu.tr/">İzmir Institute of Technology</a></b><span>2022–present</span></div>
-<p>Planning graduate study in robotics at Middle East Technical University (METU).</p>
+<p>Planning to continue with the <a href="https://rob.metu.edu.tr/en/master-science-robotics">M.Sc. in Robotics</a> at Middle East Technical University (METU).</p>
 <p>CGPA 3.12 (fall 2025–26 term: 3.83). YDS 93.5 (English, C1). ALES 85. <a href={`${b}${TRANSCRIPT}`}>Transcript (PDF)</a>.</p>
 <p><b>Relevant coursework:</b> {courses.relevant.map(([c, n, g]) => `${n} (${g})`).join(', ')}. <b>This term:</b> {courses.current.map(([c, n]) => n).join(', ')}.</p>
 <p>Senior thesis: Smart Zebra (with Onur Kansoy, equal contribution), advised by Assoc. Prof. Selma Tekir, funded by TÜBİTAK 2209-A.</p>

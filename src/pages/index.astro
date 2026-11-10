@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { interests, papers } from '../data/site';
+import { interests, papers, plates, REPRO, courses, record, TRANSCRIPT } from '../data/site';
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <Base>
@@ -22,19 +22,33 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <section class="worlds wrap">
   <div class="stick"><div class="arena stage">
-    <video data-v="evo" src={`${b}/media/research/evo_teaser.mp4`} poster={`${b}/media/research/evo_poster.webp`} muted loop playsinline preload="metadata" class="on"></video>
+    <video data-v="evo" id="evov" src={`${b}/media/research/evo_sound.mp4`} poster={`${b}/media/research/evo_sound_poster.webp`} muted loop playsinline preload="metadata" class="on"></video>
     <video data-v="ants" src={`${b}/media/research/sm_teaser.mp4`} poster={`${b}/media/research/sm_poster.webp`} muted loop playsinline preload="none"></video>
     <video data-v="sudoku" src={`${b}/media/research/ae_teaser.mp4`} poster={`${b}/media/research/ae_poster.webp`} muted loop playsinline preload="none" style="object-position:30% 50%"></video>
+    <button type="button" class="snd on" id="snd" aria-pressed="false"><span class="ic" aria-hidden="true">♪</span><span class="lb">Sound on</span></button>
     <canvas data-v="zebra" id="world" aria-label="AC-3 constraint propagation on a three-house Zebra puzzle"></canvas>
     <video data-v="robot" src={`${b}/media/robotics/pcb.mp4`} poster={`${b}/media/robotics/pcb_photo.webp`} muted loop playsinline preload="none"></video>
   </div><div class="met" id="whud"></div><p class="note" id="wnote"></p></div>
 
   <div>
-    <article class="ep" data-m="evo"><span class="kicker">Artificial life · ongoing</span><h2>EvoMaxx v10</h2><p>An artificial chemistry on the GPU. The red, green and blue of every pixel are three chemicals, and an eight-gene regulatory network decides how each one grows from what its neighbourhood senses. The rule space was mapped by controlled experiments on about 18,000 worlds, and the A-life models it builds on, from Lenia to Physarum, are reproduced one by one.</p><a href={`${b}/research/evomaxx/`}>How it works →</a></article>
+    <article class="ep" data-m="evo"><span class="kicker">Artificial life · ongoing, now at v10</span><h2>EvoMaxx v10</h2><p>An artificial chemistry on the GPU. The red, green and blue of every pixel are three chemicals, and an eight-gene regulatory network decides how each one grows from what its neighbourhood senses. The rule space was mapped by controlled experiments on about 18,000 worlds. <b>And the world plays itself as music:</b> the genome picks the instruments, the colours pick the harmony, and bodies forming and fading ring as bells. Turn the sound on.</p>
+      <div class="mini-plates">{plates.map(([n, t, a, dir, anim]) => <a href={REPRO + dir} title={`${t} (${a})`}>{anim ? <video src={`${b}/media/research/repro/r${n}.mp4`} poster={`${b}/media/research/repro/r${n}.webp`} muted loop playsinline autoplay></video> : <img src={`${b}/media/research/repro/r${n}.webp`} alt={t} loading="lazy" />}</a>)}</div>
+      <p class="mpnote">Twelve artificial-life models it builds on, each reproduced from its paper first: Lenia, Flow-Lenia, Physarum, Turing patterns, MAP-Elites and more. <a href="/evomaxx/reproductions/live/">Run them live</a>.</p>
+      <a href={`${b}/research/evomaxx/`}>How it works →</a></article>
     <article class="ep" data-m="ants"><span class="kicker">Agent-based model · 2026</span><h2>Slavemaker Swarm</h2><p>An individual-based model of slave-making ants. Polyergus scouts find a Formica nest and lay a raid trail home. The colony musters, follows the trail and carries the brood back, where it ecloses as slaves that work for their captors. Every agent senses only locally, through five pheromone fields.</p><a href={`${b}/research/slavemaker/`}>The model and results →</a></article>
     <article class="ep" data-m="sudoku"><span class="kicker">Evolutionary computation · paper</span><h2>AEASS v3</h2><p>A memetic algorithm for Sudoku: a genetic algorithm with Lamarckian min-conflicts local search, running on candidate domains already shrunk by logic. It solved all 65,201 verified runs over 52,458 benchmark puzzles, and an ablation shows why the local search is essential.</p><a href={`${b}/research/aeass/`}>Read about it →</a></article>
     <article class="ep" data-m="zebra"><span class="kicker">B.Sc. thesis · TÜBİTAK 2209-A</span><h2>Smart Zebra</h2><p>With Onur Kansoy, equal contribution. A training recipe that teaches a 3B language model to solve logic-grid puzzles, with a prompt that follows AC-3 constraint propagation. Puzzle accuracy on small instances rose from 18.75% to 66.56% after fine-tuning.</p><a href={`${b}/research/smart-zebra/`}>Read about it →</a></article>
     <article class="ep" data-m="robot"><span class="kicker">Robotics · CENG 483</span><h2>P.C.B delivery robot</h2><p>An indoor robot built through three prototypes on a small budget. An Arduino Mega runs real-time control and a Jetson Nano runs the mission. It follows corridors with a servo-scanned ultrasonic sensor, holds its heading with IMU-aided PID, and stops at ArUco markers.</p><a href={`${b}/robotics/`}>Robotics →</a></article>
+  </div>
+</section>
+
+<section class="wrap section rec" id="record">
+  <div class="rechead rv"><span class="kicker">Academic record</span><h2 class="h2">B.Sc. Computer Engineering, İzmir Institute of Technology</h2><p>Planning an M.Sc. in robotics at METU.</p></div>
+  <div class="recgrid">
+    <div class="rv"><h3 class="rh">Relevant coursework</h3><table class="ctab"><tbody>{courses.relevant.map(([c, n, g]) => <tr><td class="mono">{c}</td><td>{n}</td><td class="gr">{g}</td></tr>)}</tbody></table></div>
+    <div class="rv"><h3 class="rh">This term</h3><ul class="cur">{courses.current.map(([c, n]) => <li><span class="mono">{c}</span> {n}</li>)}</ul>
+      <h3 class="rh" style="margin-top:28px">Record</h3><div class="stats">{record.map(([v, l]) => <div><b>{v}</b><span>{l}</span></div>)}</div>
+      <p style="margin-top:14px"><a class="btn" href={`${b}${TRANSCRIPT}`}>Transcript (PDF)</a></p></div>
   </div>
 </section>
 
@@ -69,6 +83,17 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 .clist{list-style:none;padding:0;margin:0;display:grid;gap:0}.clist li{padding-block:7px;border-bottom:1px solid var(--line)}
 .plist{list-style:none;padding:0;margin:0;display:grid;gap:12px}.plist a{font-weight:500;text-decoration:none;line-height:1.35;display:block}.plist a:hover{text-decoration:underline}.plist span{display:block;font:13px var(--mono);color:var(--mut);margin-top:3px}
 @media(max-width:860px){.hgrid,.worlds{grid-template-columns:minmax(0,1fr);gap:18px}.stick{top:calc(var(--navh,100px) + 6px);z-index:4;background:var(--bg);padding-bottom:6px}.stage{aspect-ratio:auto;height:34svh;max-height:none}.ep{min-height:56svh}}
+.snd{position:absolute;inset:auto 12px 12px auto!important;width:auto!important;height:auto!important;opacity:0;pointer-events:none;z-index:3;display:flex;align-items:center;gap:8px;font:500 13px var(--sans);background:rgba(10,10,12,.62);color:#f3efe6;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:7px 13px;cursor:pointer;backdrop-filter:blur(4px);transition:opacity .5s}
+.snd.on{opacity:1;pointer-events:auto}.snd .ic{font-size:15px;line-height:1}.snd[aria-pressed=true]{background:rgba(243,239,230,.92);color:#141411}
+.mini-plates{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;max-width:440px;margin-top:4px}.mini-plates a{display:block;aspect-ratio:1;overflow:hidden;border:1px solid var(--wall);background:#fff}.mini-plates img,.mini-plates video{width:100%;height:100%;object-fit:cover;transition:transform .3s}.mini-plates a:hover img,.mini-plates a:hover video{transform:scale(1.08)}
+.mpnote{font-size:14.5px;color:var(--mut);max-width:52ch}
+.rec{border-top:2px solid var(--wall)}.rechead .h2{margin-top:6px}.rechead p{color:var(--mut);margin-top:4px}
+.recgrid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:48px;margin-top:26px}
+.rh{font:500 13px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-bottom:10px}
+.ctab{width:100%;border-collapse:collapse;font-size:16px}.ctab td{padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:baseline}.ctab td.mono{font-size:13px;color:var(--mut);white-space:nowrap;width:1%}.ctab .gr{text-align:right;font:500 14px var(--mono);white-space:nowrap}
+.cur{list-style:none;margin:0;padding:0}.cur li{padding-block:8px;border-bottom:1px solid var(--line)}.cur .mono{font-size:13px;color:var(--mut);margin-right:8px}
+.rec .stats{margin-top:4px;gap:14px 28px}.rec .stats b{font-size:clamp(26px,3vw,34px)}
+@media(max-width:860px){.recgrid{grid-template-columns:minmax(0,1fr)}}
 </style>
 <script>
 import { fit, reduce, metrics, Life, ZEBRA, drawZebra } from '../scripts/sims';
@@ -91,13 +116,15 @@ document.addEventListener('astro:page-load', () => {
   const items = [...document.querySelectorAll<HTMLElement>('.stage [data-v]')];
   let f = fit(cv), mode = 'evo', raf = 0, gone = new Set<string>(), zi = 0, zt = 0;
   const info: Record<string, { note: string; met: [string, string][] }> = {
-    evo: { note: 'EvoMaxx, recorded live at 60 fps: cell-like bodies as a lava lamp, physarum creatures in the flat view, and a colour-flocking world.', met: [['Worlds tested', '≈18,000'], ['Lifelike genomes', '7% → 95%'], ['Creatures', '22% → 82%']] },
+    evo: { note: 'EvoMaxx recorded live, with its own music: the lava-lamp view of a world of cell-like bodies. Every note is generated from the genome and the colours on screen.', met: [['Worlds tested', '≈18,000'], ['Lifelike genomes', '7% → 95%'], ['Creatures', '22% → 82%']] },
     ants: { note: 'Slavemaker Swarm, recorded live: Polyergus raiders (red-brown) follow the scout’s trail to a Formica nest (blue ring), take its brood and carry it home (orange ring).', met: [['Agents', '≈4,000'], ['Pheromone fields', '5'], ['Raids', '≈1 per day']] },
     sudoku: { note: 'The AEASS web solver on AI Escargot, slowed down: logic-derived cells purple, evolved cells blue, conflicts red. Every solution is verified against the givens.', met: [['Verified runs', '65,201 / 65,201'], ['Puzzles', '52,458'], ['Hardest, median', '102 ms']] },
     zebra: { note: 'Clues: ' + ZEBRA.clues.map((c, i) => `(${i + 1}) ${c}`).join(' '), met: [] },
     robot: { note: 'The P.C.B robot in a corridor test run.', met: [['Control', 'Arduino Mega'], ['Mission', 'Jetson Nano'], ['Landmarks', 'ArUco']] },
   };
-  const show = (m: string) => { items.forEach((el) => { const on = el.dataset.v === m; el.classList.toggle('on', on); if (el instanceof HTMLVideoElement) { if (on) { el.preload = 'auto'; if (!reduce()) el.play().catch(() => {}); } else el.pause(); } }); note.textContent = info[m].note; metrics(hud, info[m].met); };
+  const snd = document.getElementById('snd') as HTMLButtonElement, evov = document.getElementById('evov') as HTMLVideoElement;
+  snd.onclick = () => { const on = evov.muted; evov.muted = !on; snd.setAttribute('aria-pressed', String(on)); snd.querySelector('.lb')!.textContent = on ? 'Sound off' : 'Sound on'; if (on) evov.play().catch(() => {}); };
+  const show = (m: string) => { snd.classList.toggle('on', m === 'evo'); if (m !== 'evo' && !evov.muted) { evov.muted = true; snd.setAttribute('aria-pressed', 'false'); snd.querySelector('.lb')!.textContent = 'Sound on'; } items.forEach((el) => { const on = el.dataset.v === m; el.classList.toggle('on', on); if (el instanceof HTMLVideoElement) { if (on) { el.preload = 'auto'; if (!reduce()) el.play().catch(() => {}); } else el.pause(); } }); note.textContent = info[m].note; metrics(hud, info[m].met); };
   const set = (m: string) => { if (m === mode) return; mode = m; show(m); };
   show(mode);
   const eps = [...document.querySelectorAll<HTMLElement>('.ep')]; let want = mode, timer = 0, queued = false;

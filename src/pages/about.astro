@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { languages } from '../data/site';
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const rules = [['B3/S23', 'Conway'], ['B36/S23', 'HighLife'], ['B2/S', 'Seeds'], ['B3678/S34678', 'Day & Night']];
 const seeds = [['gun', 'glider gun'], ['rpent', 'R-pentomino'], ['acorn', 'acorn'], ['soup', 'random soup']];
@@ -95,7 +96,7 @@ const lastName = (a: string) => a.split(',')[0].trim().split(' ').slice(-1)[0];
     <h2 class="sh" style="margin-top:44px">Away from the desk</h2>
     <ul class="hob">{hobbies.map((h) => <li>{h}</li>)}</ul>
     <h2 class="sh" style="margin-top:44px">Languages</h2>
-    <dl class="lang"><dt>Turkish</dt><dd>native</dd><dt>English</dt><dd><!-- TODO(Emre): level -->…</dd></dl>
+    <dl class="lang">{languages.map(([l, d]) => <><dt>{l}</dt><dd>{d}</dd></>)}</dl>
   </div>
   <figure class="plate1">
     <div class="labwrap"><canvas id="lab" aria-label="Life-like cellular automaton playground"></canvas></div>

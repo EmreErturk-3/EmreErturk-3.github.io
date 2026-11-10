@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import { courses, record, TRANSCRIPT } from '../data/site';
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const pdf = `${b}${TRANSCRIPT}`;
+---
+<Base title="Transcript" description="Academic transcript of Emre Ertürk, İzmir Institute of Technology.">
+<div class="wrap pagehead"><span class="kicker">Transcript</span><h1>Academic transcript</h1><p class="lead">B.Sc. in Computer Engineering, İzmir Institute of Technology. Issued 9 November 2026; the national ID number and date of birth are redacted.</p>
+ <div class="cta" style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href={pdf}>Open the PDF</a><a class="btn" href={pdf} download>Download</a></div></div>
+<div class="wrap tgrid">
+ <div class="rv"><div class="stats">{record.map(([v, l]) => <div><b>{v}</b><span>{l}</span></div>)}</div>
+  <h2 class="rh">Relevant coursework</h2><ul class="tlist">{courses.relevant.map(([c, n, g]) => <li><span class="mono">{c}</span><span>{n}</span><b>{g}</b></li>)}</ul>
+  <h2 class="rh">This term</h2><ul class="tlist">{courses.current.map(([c, n]) => <li><span class="mono">{c}</span><span>{n}</span><b>·</b></li>)}</ul></div>
+ <div class="rv pdfwrap"><object data={`${pdf}#view=FitH`} type="application/pdf" aria-label="Transcript PDF"><p>Your browser cannot show the PDF here. <a href={pdf}>Open it directly</a>.</p></object></div>
+</div>
+</Base>
+<style is:global>
+.tgrid{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:44px;padding-bottom:40px;align-items:start}
+.rh{font:500 13px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin:28px 0 8px}
+.tlist{list-style:none;margin:0;padding:0}.tlist li{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:10px;padding-block:8px;border-bottom:1px solid var(--line);font-size:15.5px}.tlist .mono{font-size:12.5px;color:var(--mut);padding-top:2px}.tlist b{font:500 13.5px var(--mono)}
+.pdfwrap{position:sticky;top:calc(var(--navh,84px) + 16px);border:2px solid var(--wall);background:#fff;height:calc(100svh - var(--navh,84px) - 40px)}.pdfwrap object{width:100%;height:100%;display:block}.pdfwrap p{padding:20px}
+@media(max-width:860px){.tgrid{grid-template-columns:minmax(0,1fr)}.pdfwrap{position:static;height:75svh}}
+</style>

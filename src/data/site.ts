@@ -72,3 +72,34 @@ export const plates = [
  ['11', 'Random Boolean networks', 'Kauffman 1969', '11_boolean_networks_kauffman1969', false],
  ['12', 'Edge of chaos', 'Langton 1990', '12_edge_of_chaos_langton1990', false],
 ] as const;
+
+// Academic record (from the transcript issued 09.11.2026)
+export const courses = {
+  relevant: [
+    ['CENG483', 'Behavioral Robotics', 'AA'],
+    ['CENG482', 'Evolutionary Computation', 'BA'],
+    ['CENG415/416', 'Senior Thesis and Seminar I, II', 'AA, AA'],
+    ['CENG467', 'Natural Language Understanding and Generation', 'AA'],
+    ['CENG424', 'Embedded Computer Systems', 'BA'],
+    ['CENG218', 'Analysis and Design of Algorithms', 'BA'],
+    ['CENG322', 'Operating Systems', 'BA'],
+    ['MATH255', 'Differential Equations', 'AA'],
+  ],
+  current: [
+    ['CENG487', 'Introduction to Computer Graphics'],
+    ['CENG391', 'Introduction to Image Understanding'],
+    ['CHN202', 'Elementary Chinese II'],
+  ],
+};
+export const record = [
+  ['3.12', 'cumulative GPA, rising: 3.83 in fall 2025–26'],
+  ['93.5', 'YDS, English (C1)'],
+  ['85', 'ALES'],
+];
+export const languages = [
+  ['Turkish', 'native'],
+  ['English', 'C1 · YDS 93.5'],
+  ['Chinese', 'elementary · Chinese I (AA), Chinese II in progress'],
+  ['German', 'learning'],
+];
+export const TRANSCRIPT = '/docs/emre-erturk-transcript.pdf';

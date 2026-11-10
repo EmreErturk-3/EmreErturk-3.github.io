@@ -2,117 +2,195 @@
 import Base from '../layouts/Base.astro';
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const rules = [['B3/S23', 'Conway'], ['B36/S23', 'HighLife'], ['B2/S', 'Seeds'], ['B3678/S34678', 'Day & Night']];
-const seeds = [['gun', 'Glider gun'], ['rpent', 'R-pentomino'], ['acorn', 'Acorn'], ['soup', 'Random soup']];
-// Reading list. Draft: Emre will weed it out. Each entry: [title, author, year, optional note].
-type Book = [string, string, string, string?];
-const shelves: { id: string; name: string; blurb: string; books: Book[] }[] = [
-  { id: 'cyb1', name: 'Cybernetics', blurb: 'Control and communication in animals and machines: feedback, regulation, requisite variety.', books: [
-    ['Cybernetics: Or Control and Communication in the Animal and the Machine', 'Norbert Wiener', '1948'],
-    ['The Human Use of Human Beings', 'Norbert Wiener', '1950'],
-    ['Design for a Brain', 'W. Ross Ashby', '1952', 'the homeostat'],
-    ['An Introduction to Cybernetics', 'W. Ross Ashby', '1956', 'the law of requisite variety'],
-    ['An Approach to Cybernetics', 'Gordon Pask', '1961'],
-    ['Brain of the Firm', 'Stafford Beer', '1972'],
+const seeds = [['gun', 'glider gun'], ['rpent', 'R-pentomino'], ['acorn', 'acorn'], ['soup', 'random soup']];
+const hobbies = ['Hiking', 'Cycling', 'Painting and sketching', 'Sightseeing', 'Reading'];
+
+// Reading list (a draft to weed out). Book: [title, author, year, cover file in /media/books or '', note?]
+type Book = [string, string, string, string, string?];
+const shelves: { id: string; n: string; name: string; blurb: string; books: Book[] }[] = [
+  { id: 'cybernetics', n: 'I', name: 'Cybernetics', blurb: 'Control and communication in the animal and the machine: feedback, regulation, requisite variety.', books: [
+    ['Cybernetics: Or Control and Communication in the Animal and the Machine', 'Norbert Wiener', '1948', 'wiener-cybernetics'],
+    ['An Introduction to Cybernetics', 'W. Ross Ashby', '1956', 'ashby-intro', 'the law of requisite variety'],
+    ['Brain of the Firm', 'Stafford Beer', '1972', 'beer-brain'],
+    ['The Human Use of Human Beings', 'Norbert Wiener', '1950', ''],
+    ['Design for a Brain', 'W. Ross Ashby', '1952', '', 'the homeostat'],
+    ['An Approach to Cybernetics', 'Gordon Pask', '1961', ''],
   ] },
-  { id: 'cyb2', name: 'Second-order cybernetics and autopoiesis', blurb: 'The observer inside the system; living systems as self-producing networks.', books: [
-    ['Observing Systems', 'Heinz von Foerster', '1981'],
-    ['Understanding Understanding: Essays on Cybernetics and Cognition', 'Heinz von Foerster', '2003'],
-    ['Autopoiesis and Cognition: The Realization of the Living', 'Humberto Maturana, Francisco Varela', '1980'],
-    ['The Tree of Knowledge', 'Humberto Maturana, Francisco Varela', '1987'],
-    ['The Embodied Mind', 'Francisco Varela, Evan Thompson, Eleanor Rosch', '1991'],
-    ['Steps to an Ecology of Mind', 'Gregory Bateson', '1972'],
+  { id: 'second-order', n: 'II', name: 'Second-order cybernetics', blurb: 'The observer inside the system; living systems as networks that produce themselves.', books: [
+    ['The Tree of Knowledge', 'Humberto Maturana, Francisco Varela', '1987', 'maturana-tree'],
+    ['Autopoiesis and Cognition: The Realization of the Living', 'Humberto Maturana, Francisco Varela', '1980', 'maturana-autopoiesis'],
+    ['Understanding Understanding', 'Heinz von Foerster', '2003', 'foerster-understanding'],
+    ['Steps to an Ecology of Mind', 'Gregory Bateson', '1972', 'bateson-steps'],
+    ['Observing Systems', 'Heinz von Foerster', '1981', ''],
+    ['The Embodied Mind', 'Francisco Varela, Evan Thompson, Eleanor Rosch', '1991', ''],
   ] },
-  { id: 'sys', name: 'Systems theory', blurb: 'Wholes, boundaries and the organisation of complexity, from biology to society.', books: [
-    ['General System Theory', 'Ludwig von Bertalanffy', '1968'],
-    ['Social Systems', 'Niklas Luhmann', '1984', 'Soziale Systeme; English 1995'],
-    ['Introduction to Systems Theory', 'Niklas Luhmann', '2002', 'lectures; English 2013'],
-    ['The Sciences of the Artificial', 'Herbert A. Simon', '1969'],
-    ['Thinking in Systems', 'Donella H. Meadows', '2008'],
+  { id: 'systems', n: 'III', name: 'Systems theory', blurb: 'Wholes, boundaries and the organisation of complexity, from biology to society.', books: [
+    ['General System Theory', 'Ludwig von Bertalanffy', '1968', 'bertalanffy-gst'],
+    ['Social Systems', 'Niklas Luhmann', '1984', 'luhmann-social'],
+    ['The Sciences of the Artificial', 'Herbert A. Simon', '1969', 'simon-sciences'],
+    ['Thinking in Systems', 'Donella H. Meadows', '2008', 'meadows-thinking'],
+    ['Introduction to Systems Theory', 'Niklas Luhmann', '2002', ''],
   ] },
-  { id: 'fep', name: 'Free energy and the predictive mind', blurb: 'Self-organisation as inference: organisms that model and anticipate their world.', books: [
-    ['Active Inference: The Free Energy Principle in Mind, Brain, and Behavior', 'Thomas Parr, Giovanni Pezzulo, Karl J. Friston', '2022'],
-    ['Surfing Uncertainty', 'Andy Clark', '2016'],
+  { id: 'alife', n: 'IV', name: 'Artificial life, swarms and robots', blurb: 'Life as it could be, collective behaviour from local rules, and bodies and controllers found by evolution.', books: [
+    ['Vehicles: Experiments in Synthetic Psychology', 'Valentino Braitenberg', '1984', 'braitenberg-vehicles'],
+    ['Swarm Intelligence: From Natural to Artificial Systems', 'Eric Bonabeau, Marco Dorigo, Guy Theraulaz', '1999', 'bonabeau-swarm'],
+    ['Evolutionary Robotics', 'Stefano Nolfi, Dario Floreano', '2000', 'nolfi-evorobotics'],
+    ['How the Body Shapes the Way We Think', 'Rolf Pfeifer, Josh Bongard', '2006', 'pfeifer-body'],
+    ['The Ants', 'Bert Hölldobler, E. O. Wilson', '1990', 'holldobler-ants'],
+    ['Honeybee Democracy', 'Thomas D. Seeley', '2010', 'seeley-honeybee'],
+    ['The Origins of Order', 'Stuart A. Kauffman', '1993', 'kauffman-origins'],
+    ['Artificial Life', 'Christopher G. Langton (ed.)', '1989', '', 'the first A-life workshop'],
+    ['Hidden Order: How Adaptation Builds Complexity', 'John H. Holland', '1995', ''],
+    ['Self-Organization in Biological Systems', 'Scott Camazine et al.', '2001', ''],
+    ['Swarm Robotics: A Formal Approach', 'Heiko Hamann', '2018', ''],
+    ['Complexity: A Guided Tour', 'Melanie Mitchell', '2009', ''],
   ] },
-  { id: 'alife', name: 'Artificial life, swarms and evolutionary robotics', blurb: 'Life as it could be, collective behaviour from local rules, bodies and controllers found by evolution.', books: [
-    ['Artificial Life', 'Christopher G. Langton (ed.)', '1989', 'proceedings of the first A-life workshop'],
-    ['The Origins of Order', 'Stuart A. Kauffman', '1993'],
-    ['Hidden Order: How Adaptation Builds Complexity', 'John H. Holland', '1995'],
-    ['Vehicles: Experiments in Synthetic Psychology', 'Valentino Braitenberg', '1984'],
-    ['Swarm Intelligence: From Natural to Artificial Systems', 'Eric Bonabeau, Marco Dorigo, Guy Theraulaz', '1999'],
-    ['Self-Organization in Biological Systems', 'Scott Camazine et al.', '2001'],
-    ['The Ants', 'Bert Hölldobler, E. O. Wilson', '1990'],
-    ['Honeybee Democracy', 'Thomas D. Seeley', '2010'],
-    ['Evolutionary Robotics', 'Stefano Nolfi, Dario Floreano', '2000'],
-    ['How the Body Shapes the Way We Think', 'Rolf Pfeifer, Josh Bongard', '2006'],
-    ['Swarm Robotics: A Formal Approach', 'Heiko Hamann', '2018'],
-    ['Complexity: A Guided Tour', 'Melanie Mitchell', '2009'],
+  { id: 'mind', n: 'V', name: 'Mind, brain and life', blurb: 'Outside my main line of work, and close to it: perception, prediction, growth and form.', books: [
+    ['On Growth and Form', "D'Arcy Wentworth Thompson", '1917', 'thompson-growth'],
+    ['Endless Forms Most Beautiful', 'Sean B. Carroll', '2005', 'carroll-endless', 'evo-devo'],
+    ['Vision', 'David Marr', '1982', 'marr-vision'],
+    ['Gödel, Escher, Bach', 'Douglas R. Hofstadter', '1979', 'hofstadter-geb'],
+    ['Active Inference: The Free Energy Principle in Mind, Brain, and Behavior', 'Thomas Parr, Giovanni Pezzulo, Karl J. Friston', '2022', ''],
+    ['Surfing Uncertainty', 'Andy Clark', '2016', 'clark-surfing'],
   ] },
-  { id: 'soc', name: 'Society and collective behaviour', blurb: 'Crowds, social facts and the macro behaviour that individual motives produce.', books: [
-    ['The Division of Labour in Society', 'Émile Durkheim', '1893'],
-    ['The Rules of Sociological Method', 'Émile Durkheim', '1895'],
-    ['The Crowd: A Study of the Popular Mind', 'Gustave Le Bon', '1895'],
-    ['Crowds and Power', 'Elias Canetti', '1960'],
-    ['Micromotives and Macrobehavior', 'Thomas C. Schelling', '1978', 'an early agent-based model'],
-    ['Simulacra and Simulation', 'Jean Baudrillard', '1981'],
+  { id: 'society', n: 'VI', name: 'Society and collective behaviour', blurb: 'Crowds, social facts, and the macro behaviour that individual motives produce.', books: [
+    ['The Division of Labour in Society', 'Émile Durkheim', '1893', 'durkheim-division'],
+    ['Micromotives and Macrobehavior', 'Thomas C. Schelling', '1978', 'schelling-micro', 'an early agent-based model'],
+    ['Crowds and Power', 'Elias Canetti', '1960', 'canetti-crowds'],
+    ['Simulacra and Simulation', 'Jean Baudrillard', '1981', 'baudrillard-simulacra'],
+    ['The Rules of Sociological Method', 'Émile Durkheim', '1895', ''],
+    ['The Crowd: A Study of the Popular Mind', 'Gustave Le Bon', '1895', ''],
   ] },
-  { id: 'fic', name: 'Fiction', blurb: 'Dystopias, machines and minds.', books: [
-    ['We', 'Yevgeny Zamyatin', '1924'],
-    ['Brave New World', 'Aldous Huxley', '1932'],
-    ['Nineteen Eighty-Four', 'George Orwell', '1949'],
-    ['Solaris', 'Stanisław Lem', '1961'],
-    ['The Invincible', 'Stanisław Lem', '1964', 'a swarm of tiny machines'],
-    ['Do Androids Dream of Electric Sheep?', 'Philip K. Dick', '1968'],
-    ['Neuromancer', 'William Gibson', '1984'],
-    ['Permutation City', 'Greg Egan', '1994', 'artificial life in a cellular automaton'],
+  { id: 'fiction', n: 'VII', name: 'Fiction', blurb: 'Dystopias, machines and minds.', books: [
+    ['Brave New World', 'Aldous Huxley', '1932', 'huxley-bnw'],
+    ['Neuromancer', 'William Gibson', '1984', 'gibson-neuromancer'],
+    ['We', 'Yevgeny Zamyatin', '1924', 'zamyatin-we'],
+    ['Solaris', 'Stanisław Lem', '1961', 'lem-solaris'],
+    ['The Invincible', 'Stanisław Lem', '1964', '', 'a swarm of tiny machines'],
+    ['Nineteen Eighty-Four', 'George Orwell', '1949', 'orwell-1984'],
+    ['Permutation City', 'Greg Egan', '1994', '', 'life in a cellular automaton'],
+    ['Do Androids Dream of Electric Sheep?', 'Philip K. Dick', '1968', ''],
   ] },
 ];
+// books shown on the shelf: those with covers, plus up to one designed cover per shelf
+const shelfOf = (bs: Book[]) => { const c = bs.filter((x) => x[3]).slice(0, 5); const d = bs.filter((x) => !x[3]).slice(0, c.length < 5 ? 1 : 0); return [...c, ...d]; };
+const short = (t: string) => t.split(':')[0];
+const lastName = (a: string) => a.split(',')[0].trim().split(' ').slice(-1)[0];
 ---
-<Base title="About" description="About Emre Ertürk.">
-<div class="wrap pagehead abt"><div><span class="kicker">About</span><h1>Emre Ertürk</h1><p class="lead">Computer engineering student at <a href="https://en.iyte.edu.tr/">İzmir Institute of Technology</a>, working on evolutionary computation, artificial life and robotics.</p></div><img src={`${b}/media/emre.webp`} alt="Portrait of Emre Ertürk"></div>
-
-<div class="wrap section me">
-  <div class="rv mtext">
-    <h2 class="h2">Hello</h2>
-    <div class="todo"><b>TODO(Emre):</b> a few paragraphs in your own words: where you are from, how you got into artificial life and evolutionary systems, and what you do away from the desk.</div>
-    <h3 class="sub">Languages</h3>
-    <ul class="mem"><li><b>Turkish</b><span>Native</span></li><li><b>English</b><span><!-- TODO(Emre): level -->…</span></li></ul>
+<Base title="About" description="About Emre Ertürk: background, interests away from the desk, and a reading list.">
+<header class="wrap mast">
+  <div class="mtx">
+    <p class="eyebrow">About</p>
+    <h1>Emre Ertürk</h1>
+    <p class="dek">Bio-inspired computing, evolution, and the simulators in which to try them.</p>
+    <p class="bio">I am completing a B.Sc. in Computer Engineering at <a href="https://en.iyte.edu.tr/">İzmir Institute of Technology</a> and plan to continue with an M.Sc. in robotics at <a href="https://www.metu.edu.tr/">METU</a>. My work so far is mostly evolutionary: artificial chemistries, agent-based colonies and memetic search. I want to bring it to swarm, developmental and bio-inspired robotics.</p>
   </div>
-  <div class="rv lab">
-    <div class="arena"><canvas id="lab" aria-label="Life-like cellular automaton playground"></canvas></div>
-    <div class="ctrl" role="group" aria-label="Rule">{rules.map(([r, n], i) => <button type="button" data-rule={r} aria-pressed={i === 0 ? 'true' : 'false'}>{n}</button>)}</div>
-    <div class="ctrl" role="group" aria-label="Start">{seeds.map(([s, n], i) => <button type="button" data-seed={s} aria-pressed={i === 0 ? 'true' : 'false'}>{n}</button>)}</div>
-    <div class="hudline" id="labh"></div>
-    <p class="note">Life-like cellular automata: a cell is born with B neighbours and survives with S. Conway’s rule B3/S23 is one point in a space of 2¹⁸ rules; a few of its neighbours are here. Click the grid to draw.</p>
-  </div>
-</div>
+  <figure class="print"><img src={`${b}/media/emre.webp`} alt="Portrait of Emre Ertürk" width="640" height="640"></figure>
+</header>
 
-<div class="wrap section" id="reading"><hr class="rule"><div class="rhead rv"><h2 class="h2" style="margin-top:26px">Reading list</h2><p class="prose">Books behind the way I think about systems: cybernetics of the first and second order, systems theory, artificial life and swarms, the social sciences of collective behaviour, and some fiction.</p></div>
-  <nav class="shelfnav rv" aria-label="Reading list sections">{shelves.map((sh) => <a href={`#${sh.id}`} class={`sp-${sh.id}`}>{sh.name}</a>)}</nav>
-  {shelves.map((sh) => <section class={`shelf2 rv sp-${sh.id}`} id={sh.id}><div class="sh"><h3>{sh.name}</h3><p>{sh.blurb}</p></div><ol>{sh.books.map(([t, a, y, n]) => <li><i>{t}</i><span>{a} · {y}</span>{n && <em>{n}</em>}</li>)}</ol></section>)}
-</div>
+<section class="wrap block two">
+  <div>
+    <h2 class="sh">In my own words</h2>
+    <div class="todo"><b>TODO(Emre)</b>: a few paragraphs: where you are from, how you came to artificial life and evolutionary systems, and what draws you to robots.</div>
+    <h2 class="sh" style="margin-top:44px">Away from the desk</h2>
+    <ul class="hob">{hobbies.map((h) => <li>{h}</li>)}</ul>
+    <h2 class="sh" style="margin-top:44px">Languages</h2>
+    <dl class="lang"><dt>Turkish</dt><dd>native</dd><dt>English</dt><dd><!-- TODO(Emre): level -->…</dd></dl>
+  </div>
+  <figure class="plate1">
+    <div class="labwrap"><canvas id="lab" aria-label="Life-like cellular automaton playground"></canvas></div>
+    <div class="tog" role="group" aria-label="Rule"><span>rule</span>{rules.map(([r, n], i) => <button type="button" data-rule={r} aria-pressed={i === 0 ? 'true' : 'false'}>{n}</button>)}</div>
+    <div class="tog" role="group" aria-label="Start"><span>start</span>{seeds.map(([s, n], i) => <button type="button" data-seed={s} aria-pressed={i === 0 ? 'true' : 'false'}>{n}</button>)}</div>
+    <figcaption><b>Plate I.</b> Life-like cellular automata. A cell is born with <i>B</i> neighbours and survives with <i>S</i>; Conway’s rule B3/S23 is one point in a space of 2<sup>18</sup> rules, and three of its neighbours are here. Draw on the grid. <span class="lh" id="labh"></span></figcaption>
+  </figure>
+</section>
+
+<section class="wrap block" id="reading">
+  <div class="rlhead">
+    <h2 class="big">Reading list</h2>
+    <p class="intro">The books behind the way I think about systems: cybernetics of the first and second order, systems theory, artificial life, the sciences of mind and of society, and some fiction.</p>
+  </div>
+  <ol class="toc">{shelves.map((sh) => <li><a href={`#${sh.id}`}><span class="rn">{sh.n}</span><span class="tt">{sh.name}</span><span class="dots"></span><span class="ct">{sh.books.length}</span></a></li>)}</ol>
+
+  {shelves.map((sh) => (
+    <section class="shelfsec" id={sh.id} style={`--sp:var(--sp-${sh.id})`}>
+      <div class="shead"><span class="rn">{sh.n}</span><h3>{sh.name}</h3><p>{sh.blurb}</p></div>
+      <div class="shelf">{shelfOf(sh.books).map(([t, a, y, img]) => img
+        ? <figure class="bk"><img src={`${b}/media/books/${img}.webp`} alt={`${t}, ${a}`} loading="lazy" /><figcaption>{short(t)}</figcaption></figure>
+        : <figure class="bk made"><div class="cov"><span class="ca">{a.split(',')[0]}</span><span class="ctt">{short(t)}</span><span class="cy">{y}</span></div><figcaption>{short(t)}</figcaption></figure>)}</div>
+      <ol class="bib">{sh.books.map(([t, a, y, , note]) => <li><span class="au">{a}</span> <span class="yr">({y})</span>. <cite>{t}</cite>.{note && <span class="nt"> {note}</span>}</li>)}</ol>
+    </section>
+  ))}
+</section>
 </Base>
 <style is:global>
-.abt{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,280px);gap:34px;align-items:end}.abt img{width:100%;border:2px solid var(--wall);filter:saturate(.92) sepia(.06)}
-.me{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;align-items:start}.mtext{min-width:0}.mtext p{max-width:58ch}.mtext p+p{margin-top:14px}
-.lab{min-width:0}#lab{width:100%;aspect-ratio:4/3;cursor:crosshair}
-.sub{font:500 13px var(--mono);color:var(--mut);margin:30px 0 8px;letter-spacing:0}
-.mem{list-style:none;padding:0;margin:0;border-top:1px solid var(--line)}.mem li{display:flex;justify-content:space-between;gap:6px 16px;flex-wrap:wrap;padding-block:9px;border-bottom:1px solid var(--line)}.mem span{color:var(--mut)}
+:root{--sp-cybernetics:#a2412a;--sp-second-order:#a8762a;--sp-systems:#5e5288;--sp-alife:#2d6e4a;--sp-mind:#8a4f6a;--sp-society:#2f5590;--sp-fiction:#3f3e39}
+[data-theme=dark]{--sp-cybernetics:#de7a5f;--sp-second-order:#dcab5c;--sp-systems:#a598d8;--sp-alife:#69c08f;--sp-mind:#d690b0;--sp-society:#86a8e4;--sp-fiction:#b8b2a2}
+
+/* masthead */
+.mast{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(220px,.65fr);gap:clamp(28px,5vw,72px);align-items:end;padding-block:56px 40px;border-bottom:1px solid var(--line)}
+.eyebrow{font:500 13px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.mast h1{font-family:var(--serif);font-weight:500;font-size:clamp(56px,9vw,124px);line-height:.92;letter-spacing:-.025em;margin-top:14px}
+.dek{font-family:var(--serif);font-style:italic;font-size:clamp(21px,2.3vw,28px);line-height:1.25;color:var(--mut);margin-top:18px;max-width:28ch}
+.bio{font-size:17.5px;line-height:1.65;max-width:58ch;margin-top:22px}
+.print{margin:0;background:var(--panel);padding:14px 14px 40px;border:1px solid var(--line);box-shadow:0 1px 0 var(--line),0 18px 30px -22px rgba(30,25,15,.45);transform:rotate(.6deg)}
+.print img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;filter:saturate(.9) sepia(.05) contrast(1.02)}
+
+/* blocks */
+.block{padding-block:64px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:start}
+.sh{font-family:var(--serif);font-weight:500;font-size:28px;letter-spacing:-.01em;margin-bottom:14px}
+.todo{border:0;border-left:2px solid var(--amber);background:none;padding:2px 0 2px 14px;font:italic 16px/1.55 var(--serif);color:var(--mut)}.todo b{font:500 12px var(--mono);color:var(--amber);font-style:normal}
+.hob{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 0;font-family:var(--serif);font-size:clamp(22px,2.4vw,28px);line-height:1.35}
+.hob li:not(:last-child)::after{content:"·";color:var(--mut);margin:0 .45em}
+.lang{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;margin:0;font-size:17px}.lang dt{font-weight:500}.lang dd{margin:0;color:var(--mut);font-family:var(--serif);font-style:italic}
+
+/* plate */
+.plate1{margin:0}
+.labwrap{background:var(--panel);border:1px solid var(--wall);padding:10px}
+#lab{width:100%;aspect-ratio:4/3;cursor:crosshair;display:block}
+.tog{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 14px;margin-top:10px;font-size:15px}
+.tog span{font:500 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--mut);width:46px}
+.tog button{background:none;border:0;padding:2px 0;font:inherit;color:var(--mut);cursor:pointer;border-bottom:1px solid transparent}
+.tog button:hover{color:var(--fg)}.tog button[aria-pressed=true]{color:var(--fg);border-bottom-color:var(--fg)}
+.plate1 figcaption{font-family:var(--serif);font-size:16px;line-height:1.5;color:var(--mut);margin-top:14px}.plate1 figcaption b{color:var(--fg);font-weight:500}
+.lh{display:block;font:12px var(--mono);margin-top:6px;font-variant-numeric:tabular-nums}
+
 /* reading list */
-.rhead .prose{margin-top:6px}
-.shelfnav{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 8px}.shelfnav a{font:12.5px var(--mono);text-decoration:none;padding:5px 9px;border:1px solid var(--line);background:var(--panel);box-shadow:inset 3px 0 0 var(--sp)}
-.shelf2{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:28px;padding-block:22px;border-bottom:1px solid var(--line)}
-.shelf2 .sh{border-left:4px solid var(--sp);padding-left:14px}.shelf2 h3{font-size:22px}.shelf2 .sh p{font-size:15px;color:var(--mut);margin-top:6px}
-.shelf2 ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 26px}
-.shelf2 li{display:flex;flex-direction:column;line-height:1.35;padding-left:10px;border-left:1px solid var(--line)}.shelf2 li i{font-family:var(--serif);font-size:16.5px}.shelf2 li span{font:12.5px var(--mono);color:var(--mut);margin-top:3px}.shelf2 li em{font:12px var(--mono);color:var(--sp);font-style:normal;margin-top:2px}
-.sp-cyb1{--sp:#b4432b}.sp-cyb2{--sp:#b9822a}.sp-sys{--sp:#6b5b8e}.sp-fep{--sp:#8a5a44}.sp-alife{--sp:#2d7650}.sp-soc{--sp:#2f5b98}.sp-fic{--sp:#4a4a44}
-[data-theme=dark] .sp-fic{--sp:#a8a294}
-@media(max-width:860px){.shelf2{grid-template-columns:minmax(0,1fr);gap:12px}.shelf2 ol{grid-template-columns:minmax(0,1fr)}}
-.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:30px 26px;margin-top:12px}
-.book{margin:0;min-width:0}.book img,.book .plain{width:100%;aspect-ratio:2/3;object-fit:cover;border:1px solid var(--line);display:block;box-shadow:0 8px 18px -10px rgba(0,0,0,.45)}
-.book .plain{background:#5b3a29;color:#f5ead8;padding:16px 14px;display:flex;flex-direction:column;justify-content:space-between}.book .plain span{font-size:19px;font-weight:600;line-height:1.15}.book .plain small{font:12px var(--mono);opacity:.85}
-.book figcaption{margin-top:12px;font-size:15.5px;line-height:1.35}.book i{display:block;font-style:normal;font-weight:600}.book figcaption span{display:block;color:var(--mut);font-size:13px;margin-top:2px}
-@media(max-width:860px){.me{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:700px){.abt{grid-template-columns:minmax(0,1fr);gap:22px}.abt img{max-width:220px}}
+#reading{border-top:1px solid var(--line)}
+.rlhead{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,5vw,72px);align-items:end}
+.big{font-family:var(--serif);font-weight:500;font-size:clamp(46px,6.5vw,88px);line-height:.95;letter-spacing:-.025em}
+.intro{font-family:var(--serif);font-size:20px;line-height:1.45;color:var(--mut);max-width:44ch}
+.toc{list-style:none;margin:40px 0 0;padding:0;columns:2;column-gap:56px;max-width:860px}
+.toc li{break-inside:avoid}.toc a{display:flex;align-items:baseline;gap:10px;text-decoration:none;padding:7px 0;font-size:16.5px}
+.toc .rn{font:italic 16px var(--serif);color:var(--mut);width:30px}.toc .dots{flex:1;border-bottom:1px dotted var(--mut);opacity:.6;transform:translateY(-4px)}.toc .ct{font:12.5px var(--mono);color:var(--mut)}
+.toc a:hover .tt{text-decoration:underline}
+
+.shelfsec{display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1.38fr);gap:22px clamp(28px,5vw,64px);padding-top:64px;margin-top:8px}
+.shead{grid-row:span 2;position:sticky;top:calc(var(--navh,84px) + 24px);align-self:start}
+.shead .rn{display:block;font:italic 500 clamp(54px,6vw,80px)/1 var(--serif);color:var(--sp)}
+.shead h3{font-family:var(--serif);font-weight:500;font-size:clamp(26px,2.8vw,34px);line-height:1.1;margin-top:10px}
+.shead p{font:italic 17px/1.5 var(--serif);color:var(--mut);margin-top:10px;max-width:30ch}
+
+.shelf{display:flex;align-items:flex-end;gap:clamp(10px,1.3vw,18px);flex-wrap:nowrap;padding:0 4px 0;border-bottom:2px solid var(--wall);position:relative;row-gap:28px}
+.shelf::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:10px;background:linear-gradient(var(--ray),transparent)}
+.bk{margin:0;flex:0 1 auto;min-width:0;height:clamp(118px,12.5vw,180px);display:flex;flex-direction:column;justify-content:flex-end;position:relative;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.bk img,.bk .cov{height:100%;width:auto;aspect-ratio:auto 2/3;display:block;box-shadow:0 1px 1px rgba(0,0,0,.18),0 10px 18px -10px rgba(0,0,0,.55);border-radius:1px 3px 3px 1px}
+.bk::before{content:"";position:absolute;left:0;top:0;bottom:0;width:9%;background:linear-gradient(90deg,rgba(0,0,0,.22),rgba(255,255,255,.14) 45%,rgba(0,0,0,0));pointer-events:none;border-radius:1px 0 0 1px;z-index:1}
+.bk figcaption{position:absolute;left:0;right:0;top:calc(100% + 14px);font:12px/1.3 var(--sans);color:var(--mut);opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk:hover{transform:translateY(-6px)}.bk:hover figcaption{opacity:1}
+.bk.made .cov{aspect-ratio:2/3;background:var(--sp);color:#f6efe2;padding:12% 11%;display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box}
+.bk.made .ca{font:500 10.5px var(--sans);letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.bk.made .ctt{font:500 clamp(16px,1.6vw,21px)/1.1 var(--serif);letter-spacing:-.01em}
+.bk.made .cy{font:italic 13px var(--serif);opacity:.8;border-top:1px solid rgba(246,239,226,.4);padding-top:6px}
+
+.bib{list-style:none;margin:20px 0 0;padding:0;columns:2;column-gap:40px}
+.bib li{break-inside:avoid;padding-left:1.4em;text-indent:-1.4em;margin-bottom:10px;font-size:15.5px;line-height:1.45}
+.bib .au{font-variant:small-caps;letter-spacing:.02em;font-weight:500;text-transform:lowercase;font-size:1.05em}
+.bib .yr{color:var(--mut)}.bib cite{font-family:var(--serif);font-size:1.08em}.bib .nt{font-family:var(--serif);font-style:italic;color:var(--sp)}
+
+@media(max-width:900px){.mast,.two,.rlhead{grid-template-columns:minmax(0,1fr)}.print{max-width:300px;transform:none}.shelfsec{grid-template-columns:minmax(0,1fr)}.shead{position:static;grid-row:auto}.toc,.bib{columns:1}}
+@media(max-width:520px){.bk{height:auto}.bk img,.bk .cov{height:auto;width:100%;max-height:150px;object-fit:contain;object-position:bottom}.shelf{gap:8px}}
 </style>
 <script>
 import { Life, fit, reduce } from '../scripts/sims';
@@ -128,7 +206,7 @@ document.addEventListener('astro:page-load', () => {
     if (seed === 'soup') life.soup(cx - 14, cy - 10, 28, rule === 'B2/S' ? 0.08 : 0.38);
   };
   const cell = () => Math.min(f.W / W, f.H / H);
-  const draw = () => { life.draw(f.g, f.W, f.H, cell()); h.textContent = `${rule} · generation ${life.gen} · ${life.pop()} live`; };
+  const draw = () => { life.draw(f.g, f.W, f.H, cell()); h.textContent = `${rule}  ·  generation ${life.gen}  ·  ${life.pop()} alive`; };
   const group = (attr: string, onPick: (v: string) => void) => document.querySelectorAll<HTMLButtonElement>(`[${attr}]`).forEach((btn, _, all) => btn.onclick = () => { all.forEach((x) => x.setAttribute('aria-pressed', String(x === btn))); onPick(btn.getAttribute(attr)!); start(); draw(); });
   group('data-rule', (v) => rule = v); group('data-seed', (v) => seed = v);
   let down = false; const paint = (e: PointerEvent) => { const r = c.getBoundingClientRect(), s = cell(), x = Math.floor((e.clientX - r.left) / s), y = Math.floor((e.clientY - r.top) / s); if (x >= 0 && y >= 0 && x < W && y < H) { life.a[y * W + x] = 1; draw(); } };

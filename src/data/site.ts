@@ -4,17 +4,19 @@ const gh = (r: string): Link[] => [{ label: 'GitHub', href: `https://github.com/
 export const interests = [
   'Evolutionary computation',
   'Artificial life',
+  'Bio-inspired robotics and systems',
   'Swarm robotics',
-  'Evolutionary robotics',
-  'Morphogenetic robotics',
+  'Evolutionary and developmental robotics',
+  'Robot locomotion',
   'Simulation and computer graphics',
 ];
+export const alsoInterested = 'Psychology, cognitive science, biology and neuroscience';
 
 export const papers = [
   {
     authors: '<b>E. Ertürk</b>',
     title: 'AEASS v3: Revisiting an Adaptive Evolutionary Algorithm for Solving Sudokus',
-    venue: 'Technical report, 2026. Extends a CENG 482 Evolutionary Computation project (2025).',
+    venue: 'Technical report, 2026. Revises and extends a CENG 482 Evolutionary Computation project (2025).',
     to: '/research/aeass/',
     links: [{ label: 'PDF', href: 'https://github.com/EmreErturk-3/aeass/blob/main/paper/AEASS_v3_paper.pdf' }, ...gh('aeass')],
   },
@@ -42,15 +44,31 @@ export const papers = [
 ];
 
 export const projects = [
-  { name: 'EvoMaxx', when: 'Nov 2026', tags: ['Research', 'Artificial life'], text: 'An artificial chemistry on the GPU: the R, G and B of every pixel are three chemicals, wired by an evolving eight-gene network. Its rule space was searched by controlled experiments on about 18,000 worlds, and twelve A-life papers it draws on are reproduced alongside it.', links: [{ label: 'Live', href: '/evomaxx/' }, ...gh('evomaxx')], to: '/research/evomaxx/' },
-  { name: 'Slavemaker Swarm', when: 'Nov 2026', tags: ['Research', 'Swarm'], text: 'An individual-based 3-D model of dulosis. Polyergus colonies scout, recruit along a raid trail and steal Formica brood, which ecloses as a slave workforce. Colony traits coevolve with no explicit fitness function.', links: [{ label: 'Live', href: '/slavemaker-swarm/' }, ...gh('slavemaker-swarm')], to: '/research/slavemaker/' },
-  { name: 'AEASS v3', when: 'Nov 2026', tags: ['Research', 'Evolutionary computation'], text: 'A memetic algorithm for Sudoku: a GA with Lamarckian min-conflicts local search on logic-reduced domains. Every one of 65,201 verified runs over 52,458 benchmark puzzles was solved.', links: [{ label: 'Live', href: '/aeass/' }, ...gh('aeass')], to: '/research/aeass/' },
-  { name: 'Swarm and EC reproductions', when: 'Nov 2026', tags: ['Research', 'Swarm'], text: 'Classic papers re-implemented from the text and run again: BEECLUST aggregation with simulated Kilobots in ARGoS, the Vicsek ordering transition, NEAT on XOR and Gray–Scott patterns.', links: gh('swarm-reproductions'), to: '/research/#reproductions' },
-  { name: 'P.C.B delivery robot', when: 'Jun 2026', tags: ['Robotics'], text: 'A low-budget indoor robot built through three prototypes: Arduino Mega control, Jetson Nano mission logic, servo-scanned ultrasound, IMU-aided PID and ArUco landmarks.', links: [{ label: 'Videos', href: 'https://youtube.com/playlist?list=PLwDQJAClSxDNaZMpJzPJgvE02jZJuD9hk' }, ...gh('robotics')], to: '/robotics/#pcb' },
-  { name: 'PartyBot', when: 'Jun 2026', tags: ['Robotics'], text: 'A gesture-controlled mecanum robot: a sensor glove talks to the robot over ESP-NOW between two ESP32 boards.', links: gh('robotics'), to: '/robotics/#partybot' },
-  { name: 'Smart Zebra', when: 'May 2026', tags: ['Research'], text: 'B.Sc. thesis with Onur Kansoy (equal contribution): an SFT-to-GRPO recipe that teaches a 3B language model to solve logic-grid puzzles, with an AC-3 constraint-propagation prompt.', links: [], to: '/research/smart-zebra/' },
-  { name: 'Acil Okey', when: 'Jun 2025', tags: ['Apps'], text: 'A mobile app for finding players for an Okey game nearby. Human–Computer Interaction group project.', links: gh('AcilOkeyApp-master') },
-  { name: 'AEASS v1', when: 'Jan 2025', tags: ['Evolutionary computation'], text: 'The original course project: a GA with local search and population reset for Sudoku, the starting point that v3 revisits.', links: [{ label: 'v1', href: 'https://github.com/EmreErturk-3/aeass/tree/v1' }] },
-  { name: 'Passport MRZ reader', when: 'Aug 2025', tags: ['Apps'], text: 'Reads and cleans the machine-readable zone of Turkish passports with Tesseract.', links: gh('passport-ocr') },
-  { name: 'WhatsApp assistant', when: 'Aug 2025', tags: ['Apps'], text: 'A Turkish customer-service chatbot on WhatsApp, answering from a knowledge base with a local LLM.', links: gh('whatsapp-assistant-bot') },
+  { name: 'EvoMaxx v10', when: '2026, ongoing', tags: ['Research', 'Artificial life'], text: 'A long-running research and creative project, now at v10: an artificial chemistry on the GPU in which the R, G and B of every pixel are three chemicals, wired by an evolving eight-gene network, and the world plays its own music. Its rule space was searched by controlled experiments on about 18,000 worlds, and twelve A-life papers it draws on are reproduced alongside it.', links: [{ label: 'Live', href: '/evomaxx/' }, ...gh('evomaxx')], to: '/research/evomaxx/' },
+  { name: 'Slavemaker Swarm', when: '2026', tags: ['Research', 'Swarm'], text: 'An individual-based 3-D model of dulosis. Polyergus colonies scout, recruit along a raid trail and steal Formica brood, which ecloses as a slave workforce. Colony traits coevolve with no explicit fitness function.', links: [{ label: 'Live', href: '/slavemaker-swarm/' }, ...gh('slavemaker-swarm')], to: '/research/slavemaker/' },
+  { name: 'AEASS v3', when: 'Fall 2026', tags: ['Research', 'Evolutionary computation'], text: 'A memetic algorithm for Sudoku: a GA with Lamarckian min-conflicts local search on logic-reduced domains. Every one of 65,201 verified runs over 52,458 benchmark puzzles was solved.', links: [{ label: 'Live', href: '/aeass/' }, ...gh('aeass')], to: '/research/aeass/' },
+  { name: 'P.C.B delivery robot', when: 'Spring 2026', tags: ['Robotics'], text: 'A low-budget indoor robot built through three prototypes: Arduino Mega control, Jetson Nano mission logic, servo-scanned ultrasound, IMU-aided PID and ArUco landmarks.', links: [{ label: 'Videos', href: 'https://youtube.com/playlist?list=PLwDQJAClSxDNaZMpJzPJgvE02jZJuD9hk' }, ...gh('robotics')], to: '/robotics/#pcb' },
+  { name: 'PartyBot', when: 'Spring 2026', tags: ['Robotics'], text: 'A gesture-controlled mecanum robot: a sensor glove talks to the robot over ESP-NOW between two ESP32 boards.', links: gh('robotics'), to: '/robotics/#partybot' },
+  { name: 'Smart Zebra', when: '2025–26', tags: ['Research'], text: 'B.Sc. thesis with Onur Kansoy (equal contribution): an SFT-to-GRPO recipe that teaches a 3B language model to solve logic-grid puzzles, with an AC-3 constraint-propagation prompt.', links: [], to: '/research/smart-zebra/' },
+  { name: 'Acil Okey', when: 'Spring 2025', tags: ['Apps'], text: 'A mobile app for finding players for an Okey game nearby. Human–Computer Interaction group project.', links: gh('AcilOkeyApp-master') },
+  { name: 'AEASS v1', when: '2025', tags: ['Evolutionary computation'], text: 'The original course project: a GA with local search and population reset for Sudoku, the starting point that v3 revisits.', links: [{ label: 'v1', href: 'https://github.com/EmreErturk-3/aeass/tree/v1' }] },
+  { name: 'Passport MRZ reader', when: 'Summer 2025', tags: ['Apps'], text: 'Reads and cleans the machine-readable zone of Turkish passports with Tesseract.', links: gh('passport-ocr') },
+  { name: 'WhatsApp assistant', when: 'Summer 2025', tags: ['Apps'], text: 'A Turkish customer-service chatbot on WhatsApp, answering from a knowledge base with a local LLM.', links: gh('whatsapp-assistant-bot') },
 ];
+
+// EvoMaxx's twelve A-life reproductions: [number, model, source, folder, animated]
+export const REPRO = 'https://github.com/EmreErturk-3/evomaxx/tree/main/reproductions/';
+export const plates = [
+ ['01', 'Lenia', 'Chan 2019', '01_lenia_chan2019', true],
+ ['02', 'Flow-Lenia', 'Plantec et al. 2023', '02_flow_lenia_plantec2023', true],
+ ['03', 'Activator–inhibitor', 'Young 1984', '03_activator_inhibitor_young1984', false],
+ ['04', 'Physarum networks', 'Jones 2010', '04_physarum_jones2010', true],
+ ['05', 'Cyclic dominance', 'May & Leonard 1975', '05_cyclic_dominance_mayleonard1975', false],
+ ['06', 'Kuramoto synchrony', 'Kuramoto 1975', '06_kuramoto1975', false],
+ ['07', 'MAP-Elites', 'Mouret & Clune 2015', '07_map_elites_mouret2015', false],
+ ['08', 'Phyllotaxis', 'Vogel 1979', '08_phyllotaxis_vogel1979', false],
+ ['09', 'Euclidean rhythms', 'Toussaint 2005', '09_euclidean_rhythms_toussaint2005', false],
+ ['10', 'Turing patterns', 'Gierer & Meinhardt 1972', '10_turing_gierer_meinhardt1972', false],
+ ['11', 'Random Boolean networks', 'Kauffman 1969', '11_boolean_networks_kauffman1969', false],
+ ['12', 'Edge of chaos', 'Langton 1990', '12_edge_of_chaos_langton1990', false],
+] as const;

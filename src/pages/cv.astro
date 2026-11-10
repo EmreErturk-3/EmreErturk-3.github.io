@@ -1,31 +1,32 @@
 ---
 import Base from '../layouts/Base.astro';
-import { interests, papers } from '../data/site';
+import { interests, alsoInterested, papers } from '../data/site';
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <Base title="CV" description="Curriculum vitae of Emre Ertürk.">
 <div class="wrap cv">
 <header><h1>Emre Ertürk</h1><p class="ct"><span>emreerturk@std.iyte.edu.tr</span><span>emreerturk4585@gmail.com</span><span>github.com/EmreErturk-3</span><span>emreerturk-3.github.io</span></p></header>
 
-<h2>Research interests</h2><p>{interests.join(', ')}.</p>
+<h2>Research interests</h2><p>{interests.join(', ')}. Also: {alsoInterested.toLowerCase()}.</p>
 
 <h2>Education</h2>
 <div class="r"><b>B.Sc. in Computer Engineering, <a href="https://en.iyte.edu.tr/">İzmir Institute of Technology</a></b><span><!-- TODO(Emre): dates -->20XX to 20XX</span></div>
-<p class="todo noprint"><b>TODO(Emre):</b> expected graduation, CGPA if you want it shown.</p>
+<p>Planning an M.Sc. in robotics at Middle East Technical University (METU).</p>
+<p class="todo noprint"><b>TODO(Emre):</b> dates, expected graduation, CGPA if you want it shown.</p>
 <p>Senior thesis: Smart Zebra (with Onur Kansoy, equal contribution), advised by Assoc. Prof. Selma Tekir, funded by TÜBİTAK 2209-A.</p>
 
 <h2>Papers and reports</h2>
 {papers.map((p) => <p class="pub"><span set:html={p.authors} />. <b>{p.title}</b>. <i>{p.venue}</i></p>)}
 
 <h2>Research projects</h2>
-<div class="r"><b><a href={`${b}/research/evomaxx/`}>EvoMaxx</a>: an evolving artificial chemistry</b><span>Apr to Nov 2026</span></div><p>GPU artificial-life system (WebGL2) in which an eight-gene regulatory network drives three chemicals. Mapped a 24,480-rule space with controlled experiments on about 18,000 worlds (exact McNemar tests on held-out genomes); raised the share of lifelike genomes from 7% to 95%. Reproduced twelve A-life papers (Lenia, Flow-Lenia, Physarum, MAP-Elites and others).</p>
+<div class="r"><b><a href={`${b}/research/evomaxx/`}>EvoMaxx v10</a>: an evolving artificial chemistry</b><span>2026, ongoing</span></div><p>GPU artificial-life system (WebGL2) in which an eight-gene regulatory network drives three chemicals. Mapped a 24,480-rule space with controlled experiments on about 18,000 worlds (exact McNemar tests on held-out genomes); raised the share of lifelike genomes from 7% to 95%. Reproduced twelve A-life papers (Lenia, Flow-Lenia, Physarum, MAP-Elites and others).</p>
 <div class="r"><b><a href={`${b}/research/slavemaker/`}>Slavemaker Swarm</a>: individual-based model of dulosis</b><span>2026</span></div><p>3-D agent-based simulation of Polyergus raids with five pheromone fields, an enslavement pipeline, queen usurpation, slave rebellion and colony-level coevolution. Calibrated against field observations of raid cadence.</p>
-<div class="r"><b><a href={`${b}/research/aeass/`}>AEASS v3</a>: memetic algorithm for constraint satisfaction</b><span>Jan 2025; revised Nov 2026</span></div><p>GA with Lamarckian min-conflicts local search and ILS escapes on logic-reduced domains, in Python, C99 and WebGL2. 65,201 of 65,201 verified runs solved over 52,458 benchmark puzzles; audit of an invalid earlier version; full ablation.</p>
-<div class="r"><b><a href={`${b}/research/#reproductions`}>Swarm and EC reproductions</a></b><span>2026</span></div><p>BEECLUST aggregation with simulated Kilobots in ARGoS, the Vicsek ordering transition, NEAT on XOR, Gray–Scott patterns.</p>
+<div class="r"><b><a href={`${b}/research/aeass/`}>AEASS v3</a>: memetic algorithm for constraint satisfaction</b><span>2025; revised fall 2026</span></div><p>GA with Lamarckian min-conflicts local search and ILS escapes on logic-reduced domains, in Python, C99 and WebGL2. 65,201 of 65,201 verified runs solved over 52,458 benchmark puzzles; audit of an invalid earlier version; full ablation.</p>
+<h2>Ongoing</h2><p><a href={`${b}/research/#reproductions`}>Reproductions in evolutionary computation and swarm robotics</a>: BEECLUST aggregation with simulated Kilobots in ARGoS, the Vicsek ordering transition, NEAT on XOR, Gray–Scott patterns.</p>
 
 <h2>Robotics</h2>
-<div class="r"><b><a href={`${b}/robotics/#pcb`}>P.C.B indoor delivery robot</a>, CENG 483</b><span>2026</span></div><p>Team of four. Arduino Mega and Jetson Nano; IMU-aided PID heading control with gyro- and motor-bias calibration; reactive ultrasonic navigation; ArUco landmarks; three prototypes.</p>
-<div class="r"><b><a href={`${b}/robotics/#partybot`}>PartyBot</a>, CENG 424 Embedded Computer Systems</b><span>2026</span></div><p>Team of four. Gesture-controlled mecanum robot; two ESP32 boards over ESP-NOW.</p>
+<div class="r"><b><a href={`${b}/robotics/#pcb`}>P.C.B indoor delivery robot</a>, CENG 483</b><span>Spring 2026</span></div><p>Team of four. Arduino Mega and Jetson Nano; IMU-aided PID heading control with gyro- and motor-bias calibration; reactive ultrasonic navigation; ArUco landmarks; three prototypes.</p>
+<div class="r"><b><a href={`${b}/robotics/#partybot`}>PartyBot</a>, CENG 424 Embedded Computer Systems</b><span>Spring 2026</span></div><p>Team of four. Gesture-controlled mecanum robot; two ESP32 boards over ESP-NOW.</p>
 
 <h2>Skills</h2><p><b>Languages:</b> Python, C, JavaScript/TypeScript, GLSL. <b>Simulation and graphics:</b> WebGL2, GPU compute, agent-based modelling, ARGoS. <b>Robotics:</b> Arduino, Jetson Nano, ESP32, OpenCV. <b>Methods:</b> evolutionary algorithms, local search, experimental design and statistical testing.</p>
 <p class="todo noprint"><b>TODO(Emre):</b> check the skills line, and add coursework, awards and languages.</p>

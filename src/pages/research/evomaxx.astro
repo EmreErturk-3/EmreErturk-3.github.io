@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { plates, REPRO } from '../../data/site';
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
 const cite = `@misc{erturk2026evomaxx,
   author = {Ertürk, Emre},
@@ -30,7 +31,7 @@ const own = [
 ];
 ---
 <Base title="EvoMaxx" description="EvoMaxx: an evolving artificial chemistry on the GPU, its lineage in artificial life, and controlled experiments on 18,000 worlds.">
-<div class="wrap pagehead"><span class="tag live">Artificial life · 2026</span><h1>EvoMaxx</h1><p class="lead">An evolving artificial chemistry on the GPU, and what controlled experiments say about which rules produce life.</p><p class="kicker" style="margin-top:12px">Emre Ertürk · v1 April 2026, v10 November 2026 · <a href="/evomaxx/">Open the live sandbox</a> · <a href="https://github.com/EmreErturk-3/evomaxx">Code</a> · <a href="https://github.com/EmreErturk-3/evomaxx/blob/main/EXPLAINED.md">Full explainer</a></p></div>
+<div class="wrap pagehead"><span class="tag live">Artificial life · ongoing</span><h1>EvoMaxx v10</h1><p class="lead">An evolving artificial chemistry on the GPU, what controlled experiments say about which rules produce life, and a world that plays its own music.</p><p class="kicker" style="margin-top:12px">Emre Ertürk · a long-running research and creative project, ongoing since spring 2026, now at v10 · <a href="/evomaxx/">Open the live sandbox</a> · <a href="https://github.com/EmreErturk-3/evomaxx">Code</a> · <a href="https://github.com/EmreErturk-3/evomaxx/blob/main/EXPLAINED.md">Full explainer</a></p></div>
 
 <div class="wrap"><figure class="fig rv"><video src={`${b}/media/research/evo_teaser.mp4`} poster={`${b}/media/research/evo_poster.webp`} autoplay muted loop playsinline></video><figcaption>Three organisms from the preset menu, recorded live at 60 fps: cell-like bodies seen as a lava lamp, physarum creatures in the flat view, and a colour-flocking world.</figcaption></figure></div>
 
@@ -44,6 +45,7 @@ const own = [
 </div>
 
 <div class="wrap section"><h2 class="h2 rv">Lineage: what it borrows, reproduced first</h2><p class="prose rv">Each idea EvoMaxx takes from the artificial-life literature was first re-implemented on its own from the original paper, and its published results measured again, including what did not reproduce. All of them <a href="/evomaxx/reproductions/live/">run live in the browser</a>.</p>
+<div class="plates rv">{plates.map(([n, t, a, dir, anim]) => <a class="plate" href={REPRO + dir}>{anim ? <video src={`${b}/media/research/repro/r${n}.mp4`} poster={`${b}/media/research/repro/r${n}.webp`} autoplay muted loop playsinline></video> : <img src={`${b}/media/research/repro/r${n}.webp`} alt={t} loading="lazy" />}<span class="pn">{n}</span><b>{t}</b><i>{a}</i></a>)}</div>
 <div class="tw rv" style="margin-top:14px"><table class="tbl lin"><thead><tr><th>Part</th><th>In EvoMaxx</th><th>Source</th><th>Reproduction</th></tr></thead><tbody>{lineage.map(([p,e,s,r])=><tr><td>{p}</td><td>{e}</td><td>{s}</td><td><a class="mono" href={R + r}>{r.split('_')[0]}</a></td></tr>)}</tbody></table></div></div>
 
 <div class="wrap section"><h2 class="h2 rv">What is new</h2><div class="finds">{own.map(([h,p])=><div class="rv"><h3>{h}</h3><p>{p}</p></div>)}</div></div>
@@ -59,6 +61,11 @@ const own = [
 <div class="wrap section"><h2 class="h2 rv">Cite</h2><pre class="cite rv">{cite}</pre></div>
 </Base>
 <style is:global>
+.plates{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;margin-top:18px}
+.plate{text-decoration:none;display:flex;flex-direction:column;position:relative;min-width:0}.plate img,.plate video{width:100%;aspect-ratio:1;object-fit:cover;border:1px solid var(--wall);background:#fff}
+.plate .pn{position:absolute;top:6px;left:6px;font:500 11px var(--mono);background:var(--bg);padding:1px 5px;border:1px solid var(--wall)}
+.plate b{font-weight:500;font-size:14.5px;line-height:1.25;margin-top:7px}.plate i{font:12px var(--mono);font-style:normal;color:var(--mut);margin-top:2px}
+@media(max-width:980px){.plates{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(max-width:700px){.plates{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .dl{padding-left:18px;margin:0}.dl li{margin-block:8px}
 .finds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 36px}.finds h3{font-size:21px;margin-bottom:5px}.finds>div{min-width:0;border-top:1px solid var(--line);padding-top:10px}
 .lin td,.lin th{text-align:left!important;vertical-align:top}.lin td:first-child{font-weight:500;white-space:nowrap}.lin td:nth-child(3){color:var(--mut)}

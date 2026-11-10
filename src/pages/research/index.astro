@@ -1,29 +1,27 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { interests, papers } from '../../data/site';
+import { interests, alsoInterested, papers, plates, REPRO } from '../../data/site';
 const b = import.meta.env.BASE_URL.replace(/\/$/, '');
-const cards = [
- { href:'/research/evomaxx', tag:'Artificial life', cls:'live', title:'EvoMaxx', when:'Apr to Nov 2026', text:'An evolving artificial chemistry on the GPU, with its rule space mapped by controlled experiments and twelve A-life papers reproduced.' },
- { href:'/research/slavemaker', tag:'Agent-based model', cls:'work', title:'Slavemaker Swarm', when:'2026', text:'Polyergus raids on Formica colonies: pheromone recruitment, enslavement, usurpation and host–parasite coevolution.' },
- { href:'/research/aeass', tag:'Paper', cls:'pause', title:'AEASS v3', when:'2025, revised 2026', text:'A memetic algorithm that solves the hardest known 9×9 Sudokus, with an audit of a broken earlier version and a full ablation.' },
- { href:'/research/smart-zebra', tag:'B.Sc. thesis', cls:'', title:'Smart Zebra', when:'2025 to 2026', text:'Teaching a 3B language model logic-grid reasoning with SFT, GRPO and an AC-3 prompt. With Onur Kansoy, equal contribution.' },
+const work = [
+ { href: '/research/slavemaker', title: 'Slavemaker Swarm', when: '2026', kind: 'Agent-based model', img: 'sm_poster.webp', text: 'Polyergus raids on Formica colonies: thousands of agents coordinated only by five pheromone fields, an enslavement pipeline, queen usurpation, and host–parasite coevolution without an explicit fitness function.' },
+ { href: '/research/aeass', title: 'AEASS v3', when: 'CENG 482 (2025), revised fall 2026', kind: 'Paper', img: 'ae_poster.webp', text: 'A memetic algorithm that solves the hardest known 9×9 Sudokus: every one of 65,201 verified runs. An audit of a broken earlier version, and an ablation that shows why local search is essential.' },
+ { href: '/research/smart-zebra', title: 'Smart Zebra', when: 'B.Sc. thesis, 2025–26', kind: 'With Onur Kansoy, equal contribution', img: '', text: 'Teaching a 3B language model logic-grid reasoning with SFT and GRPO, using a prompt that follows AC-3 constraint propagation. Funded by TÜBİTAK 2209-A.' },
 ];
 const repro = [
- { name: 'BEECLUST aggregation with Kilobots', src: 'Bodi, Thenius, Schmickl, Crailsheim (2009)', status: 'Fig. 5 and the aggregation times of Fig. 7 reproduced in ARGoS with simulated Kilobots; the two-swarm experiments are still to do.', href: 'https://github.com/EmreErturk-3/swarm-reproductions/tree/main/01_beeclust' },
- { name: 'Onset of collective motion', src: 'Vicsek et al. (1995)', status: 'Simulation and figures done; the write-up of the critical exponents is pending.', href: 'https://github.com/EmreErturk-3/swarm-reproductions/tree/main/02_vicsek1995' },
- { name: 'NEAT on XOR', src: 'Stanley & Miikkulainen (2002)', status: 'Solved in 100 of 100 runs as in the paper, but with about 35% more evaluations and larger networks.', href: 'https://github.com/EmreErturk-3/swarm-reproductions/tree/main/03_neat2002' },
- { name: 'Gray–Scott patterns', src: 'Pearson (1993)', status: 'Phase diagram and pattern classes reproduced, including the chaos of pattern ε.', href: 'https://github.com/EmreErturk-3/swarm-reproductions/tree/main/04_pearson1993' },
+ { name: 'BEECLUST aggregation with Kilobots', src: 'Bodi, Thenius, Schmickl, Crailsheim 2009', status: 'Fig. 5 and the aggregation times of Fig. 7 reproduced in ARGoS; the two-swarm experiments are next.', href: 'https://github.com/EmreErturk-3/swarm-reproductions/tree/main/01_beeclust' },
+ { name: 'Onset of collective motion', src: 'Vicsek et al. 1995', status: 'Simulation and figures done; critical exponents still to write up.', href: 'https://github.com/EmreErturk-3/swarm-reproductions/tree/main/02_vicsek1995' },
+ { name: 'NEAT on XOR', src: 'Stanley & Miikkulainen 2002', status: 'Solved in 100 of 100 runs, with about 35% more evaluations than the paper.', href: 'https://github.com/EmreErturk-3/swarm-reproductions/tree/main/03_neat2002' },
+ { name: 'Gray–Scott patterns', src: 'Pearson 1993', status: 'Phase diagram and pattern classes reproduced.', href: 'https://github.com/EmreErturk-3/swarm-reproductions/tree/main/04_pearson1993' },
 ];
-const alife = ['Lenia (Chan 2019)', 'Flow-Lenia (Plantec et al. 2023)', 'Physarum transport networks (Jones 2010)', 'Activator–inhibitor (Young 1984)', 'Turing patterns (Gierer & Meinhardt 1972)', 'Cyclic dominance (May & Leonard 1975)', 'Kuramoto synchrony (1975)', 'Random Boolean networks (Kauffman 1969)', 'Edge of chaos (Langton 1990)', 'MAP-Elites (Mouret & Clune 2015)', 'Phyllotaxis (Vogel 1979)', 'Euclidean rhythms (Toussaint 2005)'];
 ---
-<Base title="Research" description="Research of Emre Ertürk in evolutionary computation, artificial life and swarm systems.">
-<div class="wrap pagehead"><span class="kicker">Research</span><h1>Local rules, collective behaviour</h1><p class="lead">How do simple, local interactions, between cells, ants or robots, produce structure and adaptive behaviour that none of them was given? I approach this question through evolutionary search, artificial life and agent-based simulation.</p></div>
+<Base title="Research" description="Research of Emre Ertürk in bio-inspired computing: evolutionary computation, artificial life, swarm and agent-based systems.">
+<div class="wrap pagehead"><span class="kicker">Research</span><h1>Bio-inspired computing</h1><p class="lead">How evolution, development and local interaction produce adaptive behaviour, and how to build simulations faithful enough to test these ideas before they reach robots.</p></div>
+
 <div class="wrap section" style="padding-top:10px"><hr class="rule"><div class="rgrid">
- <div class="rv"><h2 class="h2">Interests</h2><ul class="ilist">{interests.map((i) => <li>{i}</li>)}</ul></div>
+ <div class="rv"><h2 class="h2">Interests</h2><ul class="ilist">{interests.map((i) => <li>{i}</li>)}</ul><p class="also">Also: {alsoInterested.toLowerCase()}.</p></div>
  <div class="rv prose"><h2 class="h2">Direction</h2>
-  <p>My projects so far are in simulation. EvoMaxx evolves the rules of an artificial chemistry and measures which rule families produce lifelike organisms. Slavemaker Swarm coordinates thousands of agents only through pheromone fields. AEASS asks what an evolutionary algorithm needs in order to work on a tightly constrained problem, and why it had to be memetic.</p>
-  <p>The natural next step is to put these ideas on robots: collective behaviour that comes from local sensing, controllers and morphologies found by evolution, and shape that develops from growth rules. That is why I am reproducing swarm robotics papers such as BEECLUST and the Vicsek model, and why I am learning computer graphics, to build the simulators this work needs.</p>
-  <!-- TODO(Emre): optional: add a sentence in your own words about the labs or problems you want to work on next. -->
+  <p>My interest is bio-inspired computing in general, and at present most of my work is evolutionary. EvoMaxx evolves the rules of an artificial chemistry and measures which rule families make life likely. Slavemaker Swarm coordinates thousands of agents only through pheromone fields. AEASS asks what an evolutionary algorithm needs in order to work on a tightly constrained problem.</p>
+  <p>I want to take these ideas further, into bio-inspired, swarm and developmental robotics and robot locomotion. The common thread is simulation: I focus on building realistic simulators in which controllers, collectives and growing bodies can be tried and measured before hardware. That is why I reproduce classic papers first, and why I am learning computer graphics.</p>
  </div>
 </div></div>
 
@@ -31,24 +29,36 @@ const alife = ['Lenia (Chan 2019)', 'Flow-Lenia (Plantec et al. 2023)', 'Physaru
  <ol class="pubs">{papers.map((p) => <li class="rv"><span set:html={p.authors} />. <a href={`${b}${p.to}`}><b>{p.title}</b></a>. <span class="v">{p.venue}</span>{p.links.length > 0 && <span class="pl">{p.links.map((l) => <a class="mono" href={l.href}>{l.label}</a>)}</span>}</li>)}</ol>
 </div>
 
-<div class="wrap section"><h2 class="h2 rv">Projects</h2><div class="wcards">{cards.map(c=><a class="wcard rv" href={`${b}${c.href}/`}><span class={`tag ${c.cls}`}>{c.tag}</span><h3>{c.title}</h3><span class="kicker">{c.when}</span><p>{c.text}</p></a>)}</div></div>
+<div class="wrap section"><hr class="rule"><h2 class="h2 rv" style="margin-top:26px">Projects</h2>
+ <article class="row rv"><a class="rimg" href={`${b}/research/evomaxx/`}><video src={`${b}/media/research/evo_teaser.mp4`} poster={`${b}/media/research/evo_poster.webp`} autoplay muted loop playsinline></video></a>
+  <div><span class="kicker">Artificial life · ongoing since spring 2026</span><h3><a href={`${b}/research/evomaxx/`}>EvoMaxx v10</a></h3><p>A long-running research and creative project. An artificial chemistry on the GPU in which the red, green and blue of every pixel are three chemicals, wired by an evolving eight-gene network; its rule space was mapped by controlled experiments on about 18,000 worlds, and the world plays its own music. Before borrowing from the artificial-life literature, each source was reproduced on its own:</p></div></article>
+ <div class="plates rv">{plates.map(([n, t, a, dir, anim]) => <a class="plate" href={REPRO + dir}>{anim ? <video src={`${b}/media/research/repro/r${n}.mp4`} poster={`${b}/media/research/repro/r${n}.webp`} autoplay muted loop playsinline></video> : <img src={`${b}/media/research/repro/r${n}.webp`} alt={t} loading="lazy" />}<span class="pn">{n}</span><b>{t}</b><i>{a}</i></a>)}</div>
+ <p class="rv platenote"><a href="/evomaxx/reproductions/live/">All twelve run live in the browser</a>, with the code, figures and a write-up of what did and did not reproduce in the <a href="https://github.com/EmreErturk-3/evomaxx/tree/main/reproductions">repository</a>.</p>
+ {work.map((w) => <article class="row rv"><a class="rimg" href={`${b}${w.href}/`}>{w.img ? <img src={`${b}/media/research/${w.img}`} alt={w.title} loading="lazy" /> : <img src={`${b}/media/research/zebra_reward.webp`} alt={w.title} loading="lazy" class="light" />}</a><div><span class="kicker">{w.kind} · {w.when}</span><h3><a href={`${b}${w.href}/`}>{w.title}</a></h3><p>{w.text}</p></div></article>)}
+</div>
 
 <div class="wrap section" id="reproductions"><hr class="rule"><div class="grid2" style="margin-top:28px">
- <div class="rv"><span class="kicker">Reproductions</span><h2 class="h2" style="margin-top:8px">Swarm and evolutionary computation</h2><div class="prose"><p>Before building on a model, I re-implement it from the paper alone and run the published experiments again. Each reproduction reports what matched, what did not, and why. Faithful baselines matter more than new variants.</p></div>
+ <div class="rv"><span class="kicker">Ongoing</span><h2 class="h2" style="margin-top:8px">Reproductions in evolutionary computation and swarm robotics</h2><div class="prose"><p>Not projects in their own right but continuing groundwork: classic papers re-implemented from the text alone, with the published experiments run again and the mismatches reported. These are the baselines my simulators have to agree with.</p></div>
   <ul class="rlist">{repro.map((r) => <li><a href={r.href}><b>{r.name}</b></a><span class="kicker">{r.src}</span><p>{r.status}</p></li>)}</ul>
-  <p style="margin-top:12px"><a class="mono" style="font-size:14px" href="https://github.com/EmreErturk-3/swarm-reproductions">All code and results on GitHub →</a></p></div>
+  <p style="margin-top:12px"><a class="mono" style="font-size:14px" href="https://github.com/EmreErturk-3/swarm-reproductions">Code and results on GitHub</a></p></div>
  <div class="rv"><figure class="fig"><video src={`${b}/media/research/vicsek.mp4`} poster={`${b}/media/research/vicsek_poster.webp`} autoplay muted loop playsinline style="background:#fff"></video><figcaption>Vicsek reproduction: 1,000 self-propelled particles aligning with their neighbours under noise.</figcaption></figure>
   <figure class="fig" style="margin-top:18px"><img src={`${b}/media/research/beeclust_fig5.webp`} alt="BEECLUST reproduction: fraction of robots aggregated against swarm size" loading="lazy"><figcaption>BEECLUST reproduction, the counterpart of Fig. 5 in Bodi et al. (2009): fraction of Kilobots aggregated in the light against swarm size.</figcaption></figure></div>
-</div>
-<div class="rv" style="margin-top:36px"><h3 class="sub">A-life models reproduced for EvoMaxx</h3><p class="prose">Twelve more models are reproduced in the EvoMaxx repository, each from its paper, and all of them <a href="/evomaxx/reproductions/live/">run live in the browser</a>:</p><ul class="chips">{alife.map((a) => <li>{a}</li>)}</ul></div>
-</div>
+</div></div>
 </Base>
 <style is:global>
 .rgrid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:44px;margin-top:28px}.ilist{list-style:none;margin:0;padding:0;font-size:19px}.ilist li{padding-block:8px;border-bottom:1px solid var(--line)}
-.wcards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.wcard{background:var(--panel);border:2px solid var(--wall);padding:20px;text-decoration:none;display:flex;flex-direction:column;gap:8px;align-items:flex-start;transition:transform .25s,box-shadow .25s;min-width:0}.wcard:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--wall);color:inherit}.wcard h3{font-size:27px}
-.pubs{margin:0;padding-left:22px;display:grid;gap:16px;max-width:90ch}.pubs li{line-height:1.5}.pubs a{text-decoration:none}.pubs a:hover b{text-decoration:underline}.pubs .v{color:var(--mut);font-style:italic;font-family:var(--serif)}.pubs .pl{display:inline-flex;gap:10px;margin-left:10px;font-size:13px}
+.also{font-size:15px;color:var(--mut);margin-top:12px}
+.pubs{margin:0;padding-left:22px;display:grid;gap:16px;max-width:90ch}.pubs li{line-height:1.5}.pubs a{text-decoration:none}.pubs a:hover b{text-decoration:underline}.pubs .v{color:var(--mut);font-style:italic;font-family:var(--serif);font-size:17px}.pubs .pl{display:inline-flex;gap:10px;margin-left:10px;font-size:13px}
+.row{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:34px;padding-block:28px;border-bottom:1px solid var(--line);align-items:center}
+.rimg{display:block;aspect-ratio:16/10;overflow:hidden;border:2px solid var(--wall);background:#0d0d0f}.rimg img,.rimg video{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}.rimg:hover img,.rimg:hover video{transform:scale(1.03)}.rimg img.light{object-fit:contain;background:#fff;padding:10px}
+.row h3{font-size:clamp(26px,3vw,34px);margin:6px 0 8px}.row h3 a{text-decoration:none}.row p{max-width:60ch}
+.plates{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;padding-top:22px}
+.plate{text-decoration:none;display:flex;flex-direction:column;position:relative;min-width:0}.plate img,.plate video{width:100%;aspect-ratio:1;object-fit:cover;border:1px solid var(--wall);background:#fff}
+.plate .pn{position:absolute;top:6px;left:6px;font:500 11px var(--mono);background:var(--bg);padding:1px 5px;border:1px solid var(--wall)}
+.plate b{font-weight:500;font-size:14.5px;line-height:1.25;margin-top:7px}.plate i{font:12px var(--mono);font-style:normal;color:var(--mut);margin-top:2px}
+.plate:hover b{text-decoration:underline}
+.platenote{font-size:15px;color:var(--mut);margin:14px 0 6px}
 .rlist{list-style:none;margin:18px 0 0;padding:0;border-top:1px solid var(--line)}.rlist li{padding-block:12px;border-bottom:1px solid var(--line)}.rlist a{text-decoration:none}.rlist .kicker{display:block}.rlist p{font-size:15.5px;margin-top:4px}
-.sub{font:500 13px var(--mono);color:var(--mut);margin:0 0 8px;letter-spacing:0}
-.chips{list-style:none;padding:0;margin:12px 0 0;display:flex;flex-wrap:wrap;gap:8px}.chips li{font:13px var(--mono);border:1px solid var(--line);background:var(--panel);padding:5px 9px}
-@media(max-width:860px){.rgrid,.wcards{grid-template-columns:minmax(0,1fr);gap:18px}}
+@media(max-width:980px){.plates{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:860px){.rgrid,.row{grid-template-columns:minmax(0,1fr);gap:18px}.plates{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>

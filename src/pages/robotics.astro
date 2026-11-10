@@ -18,7 +18,7 @@ const protos = [
   <p><b>Straight-line control.</b> On start-up the robot runs an 8 s calibration. For 3 s it estimates the gyroscope’s Z-axis bias at rest. For 5 s it drives open-loop straight and learns a bounded motor-bias term that compensates mismatched motors. A gentle PID correction on the integrated heading then keeps it straight.</p>
   <p><b>Reactive navigation.</b> If an obstacle appears within 200 cm, the robot stops and waits up to 10 s for it to clear before acting, which avoids needless detours around people. If the obstacle stays, a servo-scanned ultrasonic look-around chooses a way out, preferring the right, which gave consistent behaviour in L-shaped corridors.</p>
   <p><b>Landmarks instead of learning.</b> Our first plan used camera-based learning, but small datasets made it unreliable. ArUco markers at the base and target gave dependable start and stop triggers without full SLAM.</p>
-  <div class="cta"><a class="btn" href="https://github.com/EmreErturk-3/robotics/blob/main/pcb-delivery-robot/report.pdf">Paper (PDF)</a><a class="btn" href="https://youtube.com/playlist?list=PLwDQJAClSxDNaZMpJzPJgvE02jZJuD9hk">Test videos (YouTube)</a><a class="btn" href="https://github.com/EmreErturk-3/robotics/tree/main/pcb-delivery-robot">Repository</a></div>
+  <div class="cta"><a class="btn" href="/docs/pcb-robot-paper.pdf">Paper (PDF)</a><a class="btn" href="https://youtube.com/playlist?list=PLwDQJAClSxDNaZMpJzPJgvE02jZJuD9hk">Test videos (YouTube)</a></div>
   <!-- TODO(Emre): optionally add a line on which parts you personally built (e.g. calibration, navigation, Jetson side). -->
  </div>
  <div class="rv"><figure class="fig"><video src={`${b}/media/robotics/pcb.mp4`} poster={`${b}/media/robotics/pcb_photo.webp`} controls preload="none" playsinline></video><figcaption>Corridor test run of the final prototype.</figcaption></figure></div>
@@ -35,7 +35,7 @@ const protos = [
   <p><b>Wearable controller.</b> A glove carries motion sensors and push buttons on an ESP32. It filters the sensor data, interprets gestures and sends command packets.</p>
   <p><b>Link.</b> ESP-NOW, a low-latency peer-to-peer protocol between the two ESP32 boards, needing no external network.</p>
   <p><b>Robot.</b> A mecanum-wheel base on a second ESP32 that drives, strafes, plays music and shows expressions on a dot-matrix display, with basic fail-safes when the link drops.</p>
-  <div class="cta"><a class="btn" href="https://github.com/EmreErturk-3/robotics/blob/main/partybot/presentation.pdf">Slides (PDF)</a><a class="btn" href="https://github.com/EmreErturk-3/robotics/tree/main/partybot">Repository</a></div></div>
+  <div class="cta"><a class="btn" href="/docs/partybot-slides.pdf">Slides (PDF)</a></div></div>
 </div></div>
 
 <div class="wrap section"><hr class="rule"><div class="prose rv" style="margin-top:26px"><h2 class="h2">Next</h2><p>Both robots use hand-designed behaviours. I am interested in multi-robot systems with behaviour based on local interaction, and in controllers and morphologies obtained by evolution. My reproductions of <a href={`${b}/research/#reproductions`}>BEECLUST and the Vicsek model</a> are a start in that direction.</p></div></div>

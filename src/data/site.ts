@@ -16,7 +16,7 @@ export const papers = [
   {
     authors: 'O. Kansoy, <b>E. Ertürk</b> (equal contribution)',
     title: 'Smart Zebra: A Prompt-to-GRPO Recipe for Logic-Grid Reasoning in Small Language Models',
-    venue: 'Manuscript in revision, 2026. B.Sc. thesis, advised by Assoc. Prof. Selma Tekir. Funded by TÜBİTAK 2209-A.',
+    venue: 'Submitted to EMNLP 2026. B.Sc. thesis, advised by Assoc. Prof. Selma Tekir. Funded by TÜBİTAK 2209-A.',
     to: '/research/smart-zebra/',
     links: [{ label: 'PDF', href: '/docs/smart-zebra.pdf' }],
   },

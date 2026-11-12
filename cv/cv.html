@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Source of public/docs/emre-erturk-cv.pdf. Edit this file, then run: python3 cv/build.py -->
+<!-- Source of public/docs/emre-erturk-cv.pdf. Edit this file, then run: node cv/build.mjs -->
 <html lang="en"><head><meta charset="utf-8"><title>Emre Ertürk · CV</title>
 <link rel="stylesheet" href="../node_modules/@fontsource/newsreader/400.css">
 <link rel="stylesheet" href="../node_modules/@fontsource/newsreader/400-italic.css">
@@ -21,6 +21,7 @@ ul{margin:1px 0 0 18px}li{padding-left:2px;margin-top:1px}
 .pub{margin-top:8px}.pub i{font-style:italic}
 .k b{font-weight:700}
 .k p{margin-top:1px}
+.p2{break-before:page;padding-top:1px}.p2>h2:first-child{margin-top:0}
 </style></head><body>
 
 <header>
@@ -34,7 +35,7 @@ ul{margin:1px 0 0 18px}li{padding-left:2px;margin-top:1px}
 
 <h2>Education</h2>
 <div class="e"><div class="row"><span class="org">İzmir Institute of Technology</span><span>Urla, İzmir</span></div>
-<div class="row sub"><i>B.Sc. in Computer Engineering (GPA: 3.12; 3.83 in fall 2025–26; ALES: 85)</i><span>Sep 2022 – Feb 2027 (Expected)</span></div>
+<div class="row sub"><i>B.Sc. in Computer Engineering (GPA: 3.12)</i><span>Sep 2022 – Feb 2027 (Expected)</span></div>
 <ul><li>Relevant courses: Behavioral Robotics (AA), Evolutionary Computation (BA), Embedded Computer Systems (BA), Analysis and Design of Algorithms (BA), Differential Equations (AA)</li></ul></div>
 <div class="e"><div class="row"><span class="org">İzmir Atatürk Lisesi</span><span>İzmir</span></div>
 <div class="row sub"><i>High school; member of the Aviation and Space Club (İzmir Atatürk Lisesi Havacılık ve Uzay Kulübü, IALHUK)</i><span></span></div></div>
@@ -48,26 +49,27 @@ ul{margin:1px 0 0 18px}li{padding-left:2px;margin-top:1px}
 <ul><li>3-D agent-based model with five pheromone fields, colony takeover and colony-level coevolution</li></ul>
 
 <h2>Projects</h2>
-<div class="e"><div class="row"><span class="org">EvoMaxx (Artificial Life Sandbox)</span><span>2026 – Present</span></div>
+<div class="e"><div class="row"><span><span class="org">EvoMaxx</span>, artificial life sandbox</span><span>2026 – Present</span></div>
 <ul><li>GPU artificial-life system in WebGL2 with generated music; controlled experiments on about 18,000 worlds raised the share of lifelike genomes from 7% to 95%</li>
 <li>Re-implemented twelve papers it builds on, including Lenia, Flow-Lenia, Physarum and MAP-Elites</li></ul></div>
-<div class="e"><div class="row"><span class="org">P.C.B Indoor Delivery Robot (CENG 483, team of four)</span><span>Fall 2025</span></div>
-<ul><li>Arduino Mega and Jetson Nano robot with IMU-aided PID heading control, ultrasonic navigation and ArUco landmarks; three prototypes</li></ul></div>
-<div class="e"><div class="row"><span class="org">PartyBot (CENG 424, team of four)</span><span>Spring 2026</span></div>
+<div class="e"><div class="row"><span><span class="org">P.C.B Indoor Delivery Robot</span>, CENG 483, team of four</span><span>Fall 2025</span></div>
+<ul><li>Low-budget mobile robot with IMU-aided PID heading control, ultrasonic navigation and ArUco landmarks; three prototypes</li></ul></div>
+<div class="e"><div class="row"><span><span class="org">PartyBot</span>, CENG 424, team of four</span><span>Spring 2026</span></div>
 <ul><li>Gesture-controlled mecanum robot; sensor glove and robot linked by two ESP32 boards over ESP-NOW</li></ul></div>
 
+<section class="p2">
 <h2>Experience</h2>
 <div class="e"><div class="row"><span class="org">Code 35</span><span>İzmir</span></div>
-<div class="row sub"><i>Software Engineering Intern</i><span>Aug 2025</span></div>
-<ul><li>Built a passport OCR prototype (Tesseract, PassportEye) with MRZ-based error correction and check-digit validation</li>
-<li>Built a local Turkish customer-service chatbot with RAG on Ollama, compared small open models, and prototyped WhatsApp deployment</li>
-<li>Wrote feasibility studies and an interactive prototype for two new product ideas</li></ul></div>
+<div class="row sub"><i>Intern, research and prototyping</i><span>Aug 2025</span></div>
+<ul><li>Worked directly with the company owner on early-stage tasks: technical research, feasibility studies and preliminary prototypes for new product ideas</li>
+<li>Prototyped passport reading from the MRZ (Tesseract, PassportEye) with rule-based error correction and check-digit validation</li>
+<li>Prototyped a local Turkish customer-service chatbot with RAG on Ollama after comparing small open models</li></ul></div>
 
 <h2>Technical Skills</h2>
 <div class="k">
 <p><b>Programming:</b> Python, C, JavaScript</p>
 <p><b>Graphics &amp; Simulation:</b> WebGL2, GLSL, GPU compute, agent-based modelling</p>
-<p><b>Robotics &amp; Embedded:</b> Arduino, ESP32, Jetson Nano, OpenCV</p>
+<p><b>Robotics &amp; Embedded:</b> Arduino, ESP32, OpenCV</p>
 <p><b>Methods:</b> Evolutionary algorithms, local search, experimental design and statistical testing</p>
 </div>
 
@@ -75,8 +77,9 @@ ul{margin:1px 0 0 18px}li{padding-left:2px;margin-top:1px}
 <p>Turkish (Native) • English (C1, YDS 93.5) • Chinese (Elementary) • German (Beginner)</p>
 
 <h2>Leadership &amp; Communities</h2>
-<p><b>IZTECH Nature and Mountain Sports Club (DDST)</b> – President, Fall 2024</p>
+<p><b>IZTECH Nature and Mountain Sports Club (DDST)</b> – Former President (Fall 2024); member since Sep 2022</p>
 
 <h2>Interests</h2>
 <p>Hiking, cycling, painting and reading</p>
+</section>
 </body></html>
